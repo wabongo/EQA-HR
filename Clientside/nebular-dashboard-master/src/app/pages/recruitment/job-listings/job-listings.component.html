@@ -1,0 +1,29 @@
+<nb-card>
+  <nb-card-header>
+
+    <button nbButton status="primary" (click)="openCreateModal()">Create Job Post</button>
+  </nb-card-header>
+  <nb-card-body>
+    <div *ngIf="jobPosts?.length > 0; else noJobs">
+      <nb-card *ngFor="let job of jobPosts" class="job-card">
+        <nb-card-header>
+          <h4>{{ job.designation }}</h4>
+        </nb-card-header>
+        <nb-card-body>
+          <p><strong>Facility:</strong> {{ job.facility }}</p>
+          <p><strong>Description:</strong> {{ job.description }}</p>
+          <p><strong>Requirements:</strong> {{ job.requirements }}</p>
+          <p><strong>Deadline:</strong> {{ job.deadline | date }}</p>
+        </nb-card-body>
+        <nb-card-footer>
+          <button nbButton status="info" (click)="viewJob(job)">View</button>
+          <button nbButton status="success" (click)="openUpdateModal(job)">Update</button>
+          <button nbButton status="danger" (click)="deleteJob(job.id)">Delete</button>
+        </nb-card-footer>
+      </nb-card>
+    </div>
+    <ng-template #noJobs>
+      <p>No job posts available.</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

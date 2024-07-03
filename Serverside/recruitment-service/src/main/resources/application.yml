@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: recruitment-service
+
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=eqa_hr
+    username: sa
+    password: Ma4isto0302.@
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+
+eureka:
+  client:
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:9001/eureka/
+
+logging:
+  level:
+    root: INFO
+    com.eqa.recruitment_service: DEBUG
+
+server:
+  port: 9004

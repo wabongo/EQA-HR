@@ -1,0 +1,47 @@
+server:
+  port: 9003
+
+spring:
+  application:
+    name: auth-service
+
+  datasource:
+    url: jdbc:sqlserver://localhost;databaseName=eqa_hr
+    username: sa
+    password: Ma4isto0302.@
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dwabbz@gmail.com
+    password: ooug nyba iggp mywc
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    from: dwabbz@gmail.com
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9001/eureka/
+
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
