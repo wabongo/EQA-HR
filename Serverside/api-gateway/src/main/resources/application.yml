@@ -19,7 +19,7 @@ spring:
         - id: recruitment-service
           uri: http://localhost:9004
           predicates:
-            - Path=/api/v1/recruitment/**
+            - Path=/api/v1/job-posts/**,/api/v1/candidates/**,/api/v1/applications/**
           filters:
             - AuthenticationFilter
 

@@ -1,5 +1,4 @@
-package com.eqa.api_gateway.config;
-
+package com.eqa.auth_service.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

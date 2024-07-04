@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/job-posts")
 @Tag(name = "Job Posts")
 @RequiredArgsConstructor
 public class JobPostController {
@@ -18,7 +18,7 @@ public class JobPostController {
     private final JobPostService jobPostService;
     private static final Logger logger = LoggerFactory.getLogger(JobPostController.class);
 
-    @GetMapping("/job-posts")
+    @GetMapping("/")
     public ResponseEntity<?> getAllJobPosts() {
         ApiResponse<?> response = jobPostService.getAllJobPosts();
         logger.info("Received request for job posts from authenticated user");

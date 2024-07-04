@@ -47,8 +47,7 @@ public class AuthenticationService {
     private final ModelMapper modelMapper;
     private final AuditorAware auditorAware;
 
-
-public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request) {
         log.info("Starting user registration for email: {}", request.getEmail());
 
         // Check if email is unique
@@ -75,6 +74,15 @@ public AuthenticationResponse register(RegisterRequest request) {
             throw new RuntimeException("ID number already exists");
         }
 
+        // Validate role
+        Role role;
+        try {
+            role = Role.valueOf(request.getRole());
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid role: {}", request.getRole());
+            throw new RuntimeException("Invalid role: " + request.getRole());
+        }
+
         String generatedPassword = generateRandomPassword();
         var user = User.builder()
                 .username(request.getUsername())
@@ -86,9 +94,8 @@ public AuthenticationResponse register(RegisterRequest request) {
                 .password(passwordEncoder.encode(generatedPassword))
                 .systemGeneratedPassword(passwordEncoder.encode(generatedPassword))
                 .firstLogin(true)
-                .role(Role.valueOf(request.getRole()))
+                .role(role)
                 .terms(request.getTerms())
-//                .createdBy(securityContextHelper)
                 .build();
         var savedUser = repository.save(user);
         log.info("User registered successfully with email: {}", savedUser.getEmail());
@@ -103,9 +110,9 @@ public AuthenticationResponse register(RegisterRequest request) {
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
+                .firstLogin(savedUser.isFirstLogin())
                 .build();
     }
-
 
     public ApiResponse<?> authenticate(AuthenticationRequest request) {
         log.info("Authenticating user with email: {}", request.getEmail());
