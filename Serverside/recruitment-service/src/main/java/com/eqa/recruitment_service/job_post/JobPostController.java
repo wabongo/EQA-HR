@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,16 +19,19 @@ public class JobPostController {
     private final JobPostService jobPostService;
     private static final Logger logger = LoggerFactory.getLogger(JobPostController.class);
 
-    @GetMapping("/")
-    public ResponseEntity<?> getAllJobPosts() {
+    @GetMapping
+    public ResponseEntity<?> getAllJobPosts(Authentication authentication) {
+        logger.info("Received request for all job posts. User: {}", authentication.getName());
         ApiResponse<?> response = jobPostService.getAllJobPosts();
-        logger.info("Received request for job posts from authenticated user");
+        logger.info("Returning response with status: {}", response.getStatusCode());
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getJobPostById(@PathVariable Long id) {
+        logger.info("Received request for job post with ID: {}", id);
         ApiResponse<?> response = jobPostService.getJobPostById(id);
+        logger.info("Returning response with status: {}", response.getStatusCode());
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
@@ -35,18 +39,24 @@ public class JobPostController {
     public ResponseEntity<?> createJobPost(@RequestBody JobPostRequest jobPostRequest) {
         logger.info("Received request to create job post: {}", jobPostRequest);
         ApiResponse<?> response = jobPostService.createJobPost(jobPostRequest);
+        logger.info("Returning response with status: {}", response.getStatusCode());
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateJobPost(@PathVariable Long id, @RequestBody JobPostRequest jobPostRequest) {
+        logger.info("Received request to update job post with ID: {}", id);
+        logger.info("Job post request data: {}", jobPostRequest);
         ApiResponse<?> response = jobPostService.updateJobPost(id, jobPostRequest);
+        logger.info("Returning response with status: {}", response.getStatusCode());
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteJobPost(@PathVariable Long id) {
+        logger.info("Received request to delete job post with ID: {}", id);
         ApiResponse<?> response = jobPostService.deleteJobPost(id);
+        logger.info("Returning response with status: {}", response.getStatusCode());
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 }

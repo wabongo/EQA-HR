@@ -60,6 +60,7 @@ export class NgxLoginComponent extends NbLoginComponent {
           console.log('First login detected. Redirecting to change password page.');
           this.router.navigate(['/auth/reset-password']);
         } else if (response.message === "Authentication successful") {
+          this.showMessages.sucess = true;
           if (response.data && response.data.access_token && response.data.refresh_token) {
             console.log('Login successful. Storing tokens.');
             localStorage.setItem('access_token', response.data.access_token);

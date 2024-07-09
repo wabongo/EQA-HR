@@ -13,7 +13,7 @@ import java.util.Date;
 @Builder
 public class JobPostResponse {
     private Long id;
-    private String position;
+    private String designation;
     private String description;
     private String facility;
     private String requirements;

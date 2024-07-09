@@ -1,11 +1,11 @@
 <nb-card>
   <nb-card-header>
-
-    <button nbButton status="primary" (click)="openCreateModal()">Create Job Post</button>
+  
+    <button nbButton status="primary" class="float-right" (click)="openCreateModal()">Create Job Post</button>
   </nb-card-header>
   <nb-card-body>
-    <div *ngIf="jobPosts?.length > 0; else noJobs">
-      <nb-card *ngFor="let job of jobPosts" class="job-card">
+    <div *ngIf="jobPosts && jobPosts.length > 0; else noJobs" class="grid grid-cols-2 gap-4">
+      <nb-card *ngFor="let job of jobPosts" class="job-card shadow-lg">
         <nb-card-header>
           <h4>{{ job.designation }}</h4>
         </nb-card-header>
@@ -23,7 +23,21 @@
       </nb-card>
     </div>
     <ng-template #noJobs>
-      <p>No job posts available.</p>
+      <p class="text-center">No job posts available.</p>
     </ng-template>
   </nb-card-body>
 </nb-card>
+
+<Style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+
+  .job-card {
+    border-radius: 0.5rem;
+  }
+
+
+</Style>
