@@ -19,7 +19,7 @@ public class ApiResponse<T> {
     private static final Logger logger = LoggerFactory.getLogger(ApiResponse.class);
 
     private String message;
-    private T entity;
+    private T data;
     private Integer statusCode;
 
     public String toJsonString() {

@@ -23,7 +23,7 @@ public class JwtService {
 
     @Value("${application.security.jwt.secret-key}")
     private String secretKey;
-    @Value("${application.security.jwt.expiration}")
+    @Value("${application.security.jwt.expiration:900000}") // 15 minutes in milliseconds
     private long jwtExpiration;
     @Value("${application.security.jwt.refresh-token.expiration}")
     private long refreshExpiration;
@@ -54,8 +54,11 @@ public class JwtService {
         return buildToken(new HashMap<>(), userDetails, refreshExpiration);
     }
 
+//    public String generateToken(UserDetails userDetails) {
+//        return buildToken(new HashMap<>(), userDetails, jwtExpiration);
+//    }
+
     private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
-        log.debug("Building token for user: {} with expiration: {}", userDetails.getUsername(), expiration);
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())

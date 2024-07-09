@@ -33,6 +33,7 @@ public class JobPostController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createJobPost(@RequestBody JobPostRequest jobPostRequest) {
+        logger.info("Received request to create job post: {}", jobPostRequest);
         ApiResponse<?> response = jobPostService.createJobPost(jobPostRequest);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }

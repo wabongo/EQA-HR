@@ -23,21 +23,21 @@ public class JobPostService {
 
 
 
-        public ApiResponse<?> getAllJobPosts() {
-            try {
-                log.debug("Fetching all job posts");
-                List<JobPost> jobPosts = jobPostRepository.findAll();
-                List<JobPostResponse> jobPostResponses = jobPosts.stream()
-                        .map(jobPost -> modelMapper.map(jobPost, JobPostResponse.class))
-                        .collect(Collectors.toList());
-                log.debug("Fetched {} job posts", jobPostResponses.size());
-                return new ApiResponse<>("Job posts fetched successfully", jobPostResponses, HttpStatus.OK.value());
-            } catch (Exception e) {
-                log.error("Error fetching job posts: ", e);
-                return new ApiResponse<>("An error occurred while fetching job posts.", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
-            }
-        }
 
+    public ApiResponse<?> getAllJobPosts() {
+        try {
+            log.debug("Fetching all job posts");
+            List<JobPost> jobPosts = jobPostRepository.findAll();
+            List<JobPostResponse> jobPostResponses = jobPosts.stream()
+                    .map(jobPost -> modelMapper.map(jobPost, JobPostResponse.class))
+                    .collect(Collectors.toList());
+            log.debug("Fetched {} job posts", jobPostResponses.size());
+            return new ApiResponse<>("Job posts fetched successfully", jobPostResponses, HttpStatus.OK.value());
+        } catch (Exception e) {
+            log.error("Error fetching job posts: ", e);
+            return new ApiResponse<>("An error occurred while fetching job posts.", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+    }
 
     public ApiResponse<?> getJobPostById(Long id) {
         try {

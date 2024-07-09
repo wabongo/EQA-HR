@@ -8,7 +8,7 @@ spring:
   datasource:
     url: jdbc:sqlserver://localhost;databaseName=eqa_hr
     username: sa
-    password: MyPassword123.@
+    password: Ma4isto0302.@
     driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
   jpa:

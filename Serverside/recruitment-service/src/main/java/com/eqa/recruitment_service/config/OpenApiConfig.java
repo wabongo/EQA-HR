@@ -1,5 +1,6 @@
 package com.eqa.recruitment_service.config;
 
+
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -14,7 +15,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
         info = @Info(
                 contact = @Contact(
                         name = "EQA",
-                        email = "info@equityafia.co.ke"
+                        email = "david.wabongo@equityafia.co.ke"
 
                 ),
                 description = "OpenApi documentation EQA HR system",
@@ -29,7 +30,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
         servers = {
                 @Server(
                         description = "Local ENV",
-                        url = "http://localhost:9003"
+                        url = "http://localhost:9004"
 
                 ),
                 @Server(
@@ -53,4 +54,3 @@ import io.swagger.v3.oas.annotations.servers.Server;
 )
 public class OpenApiConfig {
 }
-

@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class JobPostRequest {
-    private String position;
+    private String designation;
     private String description;
     private String facility;
     private String requirements;

@@ -23,14 +23,16 @@ export class JobListingsComponent implements OnInit {
   }
 
   loadJobPosts(): void {
-    this.jobListingsService.getAllJobPosts().subscribe(
-      (data) => {
+    console.log('Loading job posts...');
+    this.jobListingsService.getAllJobPosts().subscribe({
+      next: (data) => {
+        console.log('Received job posts:', data);
         this.jobPosts = data;
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching job posts:', error);
       }
-    );
+    });
   }
 
   openCreateModal() {
@@ -53,15 +55,26 @@ export class JobListingsComponent implements OnInit {
   }
 
   createJobPost(jobPost: JoblistingsRequest) {
+    console.log('Attempting to create job post:', jobPost);
     this.jobListingsService.createJobPost(jobPost).subscribe(
-      () => {
+      (response) => {
+        console.log('Job post created successfully:', response);
+        // Add the new job post to the local array
+        if (response.entity) {
+          this.jobPosts.push(response.entity);
+        }
+        // Alternatively, you can refresh the entire list
         this.loadJobPosts();
       },
       (error) => {
-        console.error('Error creating job post', error);
+        console.error('Error creating job post:', error);
       }
     );
   }
+
+
+
+
 
   updateJobPost(id: number, jobPost: JoblistingsRequest) {
     this.jobListingsService.updateJobPost(id, jobPost).subscribe(

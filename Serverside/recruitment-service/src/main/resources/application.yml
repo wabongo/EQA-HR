@@ -5,7 +5,7 @@ spring:
   datasource:
     url: jdbc:sqlserver://localhost:1433;databaseName=eqa_hr
     username: sa
-    password: MyPassword123.@
+    password: Ma4isto0302.@
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
   jpa:
@@ -32,3 +32,12 @@ logging:
 
 server:
   port: 9004
+
+
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days

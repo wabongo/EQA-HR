@@ -1,5 +1,6 @@
 package com.eqa.api_gateway.util;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 
+
 @Component
 public class JwtUtil {
 
@@ -15,7 +17,13 @@ public class JwtUtil {
     private String secretKey;
 
     public void validateToken(final String token) {
-        Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token);
+        try {
+            Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token);
+            System.out.println("Token validated successfully in JwtUtil");
+        } catch (Exception e) {
+            System.out.println("Token validation failed in JwtUtil: " + e.getMessage());
+            throw e;
+        }
     }
 
     private Key getSignKey() {
@@ -23,3 +31,5 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
+
+

@@ -32,6 +32,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @Slf4j
@@ -114,7 +116,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public ApiResponse<?> authenticate(AuthenticationRequest request) {
+    public ApiResponse<AuthenticationResponse> authenticate(AuthenticationRequest request) {
         log.info("Authenticating user with email: {}", request.getEmail());
         try {
             // Find the user by email
@@ -135,22 +137,27 @@ public class AuthenticationService {
             if (isFirstLogin && matchesGeneratedPassword) {
                 log.info("First login detected for user: {}. Prompting password change.", user.getEmail());
                 // Return a special response indicating that the user needs to change their password
-                FirstLoginResponse firstLoginResponse = modelMapper.map(user, FirstLoginResponse.class);
+                AuthenticationResponse firstLoginResponse = AuthenticationResponse.builder()
+                        .firstLogin(true)
+                        .build();
                 return new ApiResponse<>("Change password then login", firstLoginResponse, HttpStatus.OK.value());
-            }else {
-                // Authenticate the user
-                try {
-                    authenticationManager.authenticate(
-                            new UsernamePasswordAuthenticationToken(
-                                    request.getEmail(),
-                                    request.getPassword()
-                            )
-                    );
-                    log.info("Authentication successful for email: {}", request.getEmail());
-                } catch (BadCredentialsException e) {
-                    log.error("Bad credentials for user: {}", request.getEmail());
-                    return new ApiResponse<>("Invalid credentials", null, HttpStatus.UNAUTHORIZED.value());
-                }
+            }
+
+            // Authenticate the user
+            try {
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                request.getEmail(),
+                                request.getPassword()
+                        )
+
+
+                );
+                log.info("Authentication successful for email: {}", request.getEmail());
+
+            } catch (BadCredentialsException e) {
+                log.error("Bad credentials for user: {}", request.getEmail());
+                return new ApiResponse<>("Invalid credentials", null, HttpStatus.UNAUTHORIZED.value());
             }
 
             // Generate JWT and refresh tokens
@@ -162,10 +169,12 @@ public class AuthenticationService {
             saveUserToken(user, jwtToken);
             log.info("User tokens saved and revoked previous tokens for user: {}", user.getEmail());
 
-            // Map the user to AuthenticationResponse
-            AuthenticationResponse authResponse = modelMapper.map(user, AuthenticationResponse.class);
-            authResponse.setAccessToken(jwtToken);
-            authResponse.setRefreshToken(refreshToken);
+            // Create AuthenticationResponse with tokens
+            AuthenticationResponse authResponse = AuthenticationResponse.builder()
+                    .accessToken(jwtToken)
+                    .refreshToken(refreshToken)
+                    .firstLogin(false)
+                    .build();
 
             log.info("User authenticated successfully: {}", user.getEmail());
             return new ApiResponse<>("Authentication successful", authResponse, HttpStatus.OK.value());

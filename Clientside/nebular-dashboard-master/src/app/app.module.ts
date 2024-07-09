@@ -26,10 +26,10 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-function filterInterceptorRequest(req: HttpRequest<any>): boolean {
-  return ['/api/v1/auth/login','/api/v1/auth/refresh-token']
-    .some(url => req.url.includes(url));
-}
+// function filterInterceptorRequest(req: HttpRequest<any>): boolean {
+//   return ['/api/v1/auth/authenticate','/api/v1/auth/refresh-token']
+//     .some(url => req.url.includes(url));
+// }
 
 @NgModule({
   declarations: [
@@ -78,7 +78,7 @@ function filterInterceptorRequest(req: HttpRequest<any>): boolean {
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true},
-    { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: filterInterceptorRequest },
+    // { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: filterInterceptorRequest },
     {provide: APP_BASE_HREF, useValue: "/" },
     { provide: NbTokenStorage, useClass: NbCustomTokenStorage },
     { provide: LOCALE_ID, useValue: 'it-IT'},
