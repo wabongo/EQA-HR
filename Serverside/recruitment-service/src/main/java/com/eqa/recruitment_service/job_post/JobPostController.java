@@ -27,7 +27,7 @@ public class JobPostController {
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/view/{id}")
     public ResponseEntity<?> getJobPostById(@PathVariable Long id) {
         logger.info("Received request for job post with ID: {}", id);
         ApiResponse<?> response = jobPostService.getJobPostById(id);
@@ -43,7 +43,7 @@ public class JobPostController {
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateJobPost(@PathVariable Long id, @RequestBody JobPostRequest jobPostRequest) {
         logger.info("Received request to update job post with ID: {}", id);
         logger.info("Job post request data: {}", jobPostRequest);

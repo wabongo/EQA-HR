@@ -45,7 +45,7 @@ export class JobListingsService {
 
   // Apply similar changes to other methods
   getJobPostById(id: number): Observable<JoblistingsRequest> {
-    return this.http.get<JoblistingsRequest>(`${this.userApi}/${id}`, { headers: this.getHeaders() });
+    return this.http.get<JoblistingsRequest>(`${this.userApi}/view/${id}`, { headers: this.getHeaders() });
   }
 
   createJobPost(jobPost: JoblistingsRequest): Observable<any> {
@@ -61,7 +61,7 @@ export class JobListingsService {
   }
 
   updateJobPost(id: number, jobPost: JoblistingsRequest): Observable<any> {
-    return this.http.put(`${this.userApi}/${id}`, jobPost, { headers: this.getHeaders() });
+    return this.http.put(`${this.userApi}/update/${id}`, jobPost, { headers: this.getHeaders() });
   }
 
   deleteJobPost(id: number): Observable<any> {
