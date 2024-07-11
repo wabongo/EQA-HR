@@ -16,8 +16,19 @@ public class RouteValidator {
             "/eureka"
     );
 
-    public Predicate<ServerHttpRequest> isSecured =
-            request -> openApiEndpoints
-                    .stream()
-                    .noneMatch(uri -> request.getURI().getPath().contains(uri));
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
+
+    public Predicate<ServerHttpRequest> isSecured = request -> {
+        boolean isSecured = openApiEndpoints
+                .stream()
+                .noneMatch(uri -> request.getURI().getPath().contains(uri));
+        Logger logger = LoggerFactory.getLogger(RouteValidator.class);
+        if (isSecured) {
+            logger.info("Request to {} is secured", request.getURI().getPath());
+        } else {
+            logger.info("Request to {} is not secured", request.getURI().getPath());
+        }
+        return isSecured;
+    };
 }
