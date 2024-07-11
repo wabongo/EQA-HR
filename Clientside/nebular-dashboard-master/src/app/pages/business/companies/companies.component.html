@@ -1,1 +1,43 @@
 <p>companies works!</p>
+<form>
+  <nb-alert *ngIf="errorMessage" status="danger">{{ errorMessage }}</nb-alert>
+  <nb-alert *ngIf="successMessage" status="success">{{ successMessage }}</nb-alert>
+
+  <div>
+    <label for="clinicName">Clinic Name</label>
+    <input id="clinicName" type="text" [(ngModel)]="clinic.name" name="clinicName">
+  </div>
+  <div>
+    <label for="location">Location</label>
+    <input id="location" type="text" [(ngModel)]="clinic.location" name="location">
+  </div>
+  <div>
+    <label for="county">County</label>
+    <input id="county" type="text" [(ngModel)]="clinic.county" name="county">
+  </div>
+  <div>
+    <label for="physicalAddress">Physical Address</label>
+    <input id="physicalAddress" type="text" [(ngModel)]="clinic.physicalAddress" name="physicalAddress">
+  </div>
+  <div>
+    <label for="admin">Admin</label>
+    <input id="admin" type="text" [(ngModel)]="clinic.admin" name="admin">
+  </div>
+  <div>
+    <label for="clinicContact">Clinic Contact</label>
+    <input id="clinicContact" type="text" [(ngModel)]="clinic.contact" name="clinicContact">
+  </div>
+  <div>
+    <label for="email">Email</label>
+    <input id="email" type="email" [(ngModel)]="clinic.email" name="email">
+  </div>
+  <div>
+    <label for="clinicType">Clinic Type</label>
+    <input id="clinicType" type="text" [(ngModel)]="clinic.type" name="clinicType">
+  </div>
+  <div>
+    <label for="companyName">Company Name</label>
+    <input id="companyName" type="text" [(ngModel)]="clinic.companyName" name="companyName">
+  </div>
+  <button type="submit">Submit</button>
+</form>
