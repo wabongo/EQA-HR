@@ -27,6 +27,23 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
+
+  {
+    title: 'Organisation',
+    icon: 'people-outline',
+    children: [
+      {
+        title: 'Facilities',
+        link: '/pages/business/facilities'
+      },
+      {
+        title: 'Companies',
+        link: '/pages/business/companies'
+      }
+    ]
+  },
+
+
   {
     title: 'Auth',
     icon: 'lock-outline',

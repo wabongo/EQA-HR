@@ -25,6 +25,15 @@ const routes: Routes = [{
       loadChildren: () => import('./recruitment/recruitment.module').then(m => m.RecruitmentModule),
     },
 
+    
+
+    {
+      path: 'business',
+      loadChildren: () => import('./business/business.module').then(m => m.BusinessModule),
+    },
+
+
+
     {
       path: 'reset-password',
       component: NgxResetPasswordComponent

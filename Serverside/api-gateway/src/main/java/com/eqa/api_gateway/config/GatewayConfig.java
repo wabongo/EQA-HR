@@ -20,6 +20,13 @@ public class GatewayConfig {
                         .path("/api/v1/job-posts/**", "/api/v1/candidates/**", "/api/v1/applications/**")
                         .filters(f -> f.filter(authFilter.apply(new AuthenticationFilter.Config())))
                         .uri("http://localhost:9004"))
+
+                .route("recruitment-service", r -> r
+                        .path("/api/v1/facilities/**")
+                        .filters(f -> f.filter(authFilter.apply(new AuthenticationFilter.Config())))
+                        .uri("http://localhost:9005"))
                 .build();
+
+
     }
     }
