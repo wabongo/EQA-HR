@@ -14,7 +14,7 @@
           <p><strong>Facility:</strong> {{ job.facility }}</p>
           <p><strong>Description:</strong> {{ job.description }}</p>
           <p><strong>Requirements:</strong> {{ job.requirements }}</p>
-          <p><strong>Deadline:</strong> {{ job.deadline | date }}</p>
+          <p><strong>Deadline:</strong> {{ job.deadline }}</p>
         </nb-card-body>
         <nb-card-footer class="button-container">
           <button nbButton status="info" (click)="viewJob(job)">

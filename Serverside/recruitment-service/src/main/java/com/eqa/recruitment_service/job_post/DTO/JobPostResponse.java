@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -17,5 +17,5 @@ public class JobPostResponse {
     private String description;
     private String facility;
     private String requirements;
-    private Date deadline;
+    private LocalDate deadline;
 }

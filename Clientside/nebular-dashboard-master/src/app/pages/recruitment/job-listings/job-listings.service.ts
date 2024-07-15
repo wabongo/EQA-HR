@@ -38,19 +38,29 @@ export class JobListingsService {
       }),
       catchError(error => {
         console.error('Error fetching job posts:', error);
-        throw error;
+        return throwError(() => error);
       })
     );
   }
 
-  // Apply similar changes to other methods
-  getJobPostById(id: number): Observable<JoblistingsRequest> {
-    return this.http.get<JoblistingsRequest>(`${this.userApi}/view/${id}`, { headers: this.getHeaders() });
-  }
+  getJobPostById(id: string): Observable<JoblistingsRequest> {
+    return this.http.get<any>(`${this.userApi}/view/${id}`, { headers: this.getHeaders() }).pipe(
+      map(response => {
+        if (response && response.entity) {
+          return response.entity as JoblistingsRequest;
+        } else {
+          console.error('Unexpected response structure:', response);
+          throw new Error('Unexpected response structure');
+        }
+      }),
+      catchError(error => {
+        console.error('Error fetching job post by ID:', error);
+        return throwError(() => error);
+      })
+    );
+  }  
 
   createJobPost(jobPost: JoblistingsRequest): Observable<any> {
-    console.log('Creating job post with data:', jobPost);
-    console.log('API endpoint:', `${this.userApi}/create`);
     return this.http.post(`${this.userApi}/create`, jobPost, { headers: this.getHeaders() }).pipe(
       tap(response => console.log('Response from create job post:', response)),
       catchError(error => {
@@ -60,11 +70,22 @@ export class JobListingsService {
     );
   }
 
-  updateJobPost(id: number, jobPost: JoblistingsRequest): Observable<any> {
-    return this.http.put(`${this.userApi}/update/${id}`, jobPost, { headers: this.getHeaders() });
-  }
+  updateJobPost(id: string, jobPost: JoblistingsRequest): Observable<any> {
+    return this.http.put(`${this.userApi}/update/${id}`, jobPost, { headers: this.getHeaders() }).pipe(
+      tap(response => console.log('Response from update job post:', response)),
+      catchError(error => {
+        console.error('Error updating job post:', error);
+        return throwError(() => error);
+      })
+    );
+  }    
 
-  deleteJobPost(id: number): Observable<any> {
-    return this.http.delete(`${this.userApi}/${id}`, { headers: this.getHeaders() });
+  deleteJobPost(id: string): Observable<any> {
+    return this.http.delete(`${this.userApi}/${id}`, { headers: this.getHeaders() }).pipe(
+      catchError(error => {
+        console.error('Error deleting job post:', error);
+        return throwError(() => error);
+      })
+    );
   }
 }

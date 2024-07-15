@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NbDialogRef } from '@nebular/theme';
 import { JoblistingsRequest } from './job-listings.model';
 
 @Component({
@@ -8,7 +9,7 @@ import { JoblistingsRequest } from './job-listings.model';
     <nb-card>
       <nb-card-header>Update Job Post</nb-card-header>
       <nb-card-body>
-        <form [formGroup]="jobForm" (ngSubmit)="submit()">
+        <form [formGroup]="jobForm" (ngSubmit)="submitForm()">
           <div class="form-group">
             <label for="designation">Designation</label>
             <input nbInput fullWidth id="designation" formControlName="designation" />
@@ -29,8 +30,10 @@ import { JoblistingsRequest } from './job-listings.model';
             <label for="deadline">Deadline</label>
             <input nbInput fullWidth type="date" id="deadline" formControlName="deadline" />
           </div>
-          <button nbButton status="primary" type="submit">Update</button>
-          <button nbButton status="basic" type="button" (click)="cancel()">Cancel</button>
+          <div class="button-group">
+            <button nbButton status="primary" type="submit" [disabled]="!jobForm.valid">Update</button>
+            <button nbButton status="basic" type="button" (click)="cancel()">Cancel</button>
+          </div>
         </form>
       </nb-card-body>
     </nb-card>
@@ -38,17 +41,18 @@ import { JoblistingsRequest } from './job-listings.model';
 })
 export class UpdateJobDialogComponent implements OnInit {
   jobForm: FormGroup;
-
   @Input() job: JoblistingsRequest | null = null;
-  @Output() jobUpdated = new EventEmitter<any>();
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private dialogRef: NbDialogRef<UpdateJobDialogComponent>
+  ) {
     this.jobForm = this.fb.group({
       designation: ['', Validators.required],
       facility: ['', Validators.required],
       description: ['', Validators.required],
       requirements: ['', Validators.required],
-      deadline: ['', Validators.required],
+      deadline: ['', Validators.required]
     });
   }
 
@@ -58,13 +62,14 @@ export class UpdateJobDialogComponent implements OnInit {
     }
   }
 
-  submit() {
+  submitForm() {
     if (this.jobForm.valid) {
-      this.jobUpdated.emit(this.jobForm.value);
+      const updatedJob: JoblistingsRequest = { ...this.job, ...this.jobForm.value };
+      this.dialogRef.close(updatedJob);
     }
   }
 
   cancel() {
-    this.jobUpdated.emit(null);
+    this.dialogRef.close();
   }
 }
