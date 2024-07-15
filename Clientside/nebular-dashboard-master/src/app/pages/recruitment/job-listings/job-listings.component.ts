@@ -4,6 +4,8 @@ import { JobListingsService } from './job-listings.service';
 import { JoblistingsRequest } from './job-listings.model';
 import { CreateJobDialogComponent } from './create-job-dialog.component';
 import { UpdateJobDialogComponent } from './update-job-dialog.component';
+import { ViewJobDialogComponent } from './view-job-dialog.component';
+import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog.component';
 
 @Component({
   selector: 'app-job-listings',
@@ -23,10 +25,8 @@ export class JobListingsComponent implements OnInit {
   }
 
   loadJobPosts(): void {
-    console.log('Loading job posts...');
     this.jobListingsService.getAllJobPosts().subscribe({
       next: (data) => {
-        console.log('Received job posts:', data);
         this.jobPosts = data;
       },
       error: (error) => {
@@ -44,21 +44,21 @@ export class JobListingsComponent implements OnInit {
       });
   }
 
-  openUpdateModal(job: JoblistingsRequest) {
-    this.dialogService.open(UpdateJobDialogComponent, {
+  openUpdateModal(job: JoblistingsRequest): void {
+    const dialogRef = this.dialogService.open(UpdateJobDialogComponent, {
       context: { job }
-    }).onClose.subscribe((result: JoblistingsRequest | null) => {
-      if (result && job.id !== undefined) {
-        this.updateJobPost(job.id, result);
+    });
+
+    dialogRef.onClose.subscribe((updatedJob: JoblistingsRequest | null) => {
+      if (updatedJob && updatedJob.id) {
+        this.updateJobPost(updatedJob.id, updatedJob);
       }
     });
   }
 
   createJobPost(jobPost: JoblistingsRequest) {
-    console.log('Attempting to create job post:', jobPost);
     this.jobListingsService.createJobPost(jobPost).subscribe(
       (response) => {
-        console.log('Job post created successfully:', response);
         // Add the new job post to the local array
         if (response.entity) {
           this.jobPosts.push(response.entity);
@@ -72,11 +72,7 @@ export class JobListingsComponent implements OnInit {
     );
   }
 
-
-
-
-
-  updateJobPost(id: number, jobPost: JoblistingsRequest) {
+  updateJobPost(id: string, jobPost: JoblistingsRequest) {
     this.jobListingsService.updateJobPost(id, jobPost).subscribe(
       () => {
         this.loadJobPosts();
@@ -87,19 +83,43 @@ export class JobListingsComponent implements OnInit {
     );
   }
 
-  deleteJob(id: number) {
-    this.jobListingsService.deleteJobPost(id).subscribe(
-      () => {
-        this.loadJobPosts();
-      },
-      (error) => {
-        console.error('Error deleting job post', error);
-      }
-    );
+  deleteJob(id: string) {
+    this.dialogService.open(ConfirmDeleteDialogComponent)
+      .onClose.subscribe((confirmed: boolean) => {
+        if (confirmed) {
+          this.jobListingsService.deleteJobPost(id).subscribe(
+            () => {
+              this.loadJobPosts();
+            },
+            (error) => {
+              console.error('Error deleting job post:', error);
+            }
+          );
+        }
+      });
   }
 
   viewJob(job: JoblistingsRequest) {
-    // Implement view logic if necessary
-    console.log('Viewing job:', job);
+    if (job && job.id) {
+      this.jobListingsService.getJobPostById(job.id).subscribe(
+        (jobDetails) => {
+          if (jobDetails) {
+            this.dialogService.open(ViewJobDialogComponent, {
+              context: { job: jobDetails }
+            });
+          } else {
+            console.error(`No job details found for ID ${job.id}`);
+            // Handle error or notify user
+          }
+        },
+        (error) => {
+          console.error('Error fetching job details:', error);
+          // Handle error or notify user
+        }
+      );
+    } else {
+      console.error('Invalid job ID or job object');
+      // Handle error or notify user
+    }
   }
-}
+}  

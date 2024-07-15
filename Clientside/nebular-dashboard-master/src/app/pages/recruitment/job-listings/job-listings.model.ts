@@ -1,5 +1,5 @@
 export interface JoblistingsRequest {
-  id?: number;
+  id?: string;
   designation: string;
   description: string;
   facility: string;

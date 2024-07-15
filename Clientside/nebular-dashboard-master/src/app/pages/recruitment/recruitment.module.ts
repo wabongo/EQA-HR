@@ -9,6 +9,8 @@ import { UpdateJobDialogComponent } from './job-listings/update-job-dialog.compo
 
 import { NbAlertModule, NbCardModule, NbIconModule, NbMenuModule, NbButtonModule, NbDialogModule, NbInputModule } from '@nebular/theme';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ViewJobDialogComponent } from './job-listings/view-job-dialog.component';
+import { ConfirmDeleteDialogComponent } from './job-listings/confirm-delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MyActionsComponent,
     CreateJobDialogComponent, // Declare the create dialog component
     UpdateJobDialogComponent, // Declare the update dialog component
+    ViewJobDialogComponent, // Declare the view dialog component
+    ViewJobDialogComponent, // Declare the view dialog component
+    ConfirmDeleteDialogComponent,
   ],
   imports: [
     CommonModule,
