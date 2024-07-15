@@ -5,6 +5,7 @@ import { JoblistingsRequest } from './job-listings.model';
 import { CreateJobDialogComponent } from './create-job-dialog.component';
 import { UpdateJobDialogComponent } from './update-job-dialog.component';
 import { ViewJobDialogComponent } from './view-job-dialog.component';
+import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog.component';
 
 @Component({
   selector: 'app-job-listings',
@@ -83,14 +84,19 @@ export class JobListingsComponent implements OnInit {
   }
 
   deleteJob(id: string) {
-    this.jobListingsService.deleteJobPost(id).subscribe(
-      () => {
-        this.loadJobPosts();
-      },
-      (error) => {
-        console.error('Error deleting job post:', error);
-      }
-    );
+    this.dialogService.open(ConfirmDeleteDialogComponent)
+      .onClose.subscribe((confirmed: boolean) => {
+        if (confirmed) {
+          this.jobListingsService.deleteJobPost(id).subscribe(
+            () => {
+              this.loadJobPosts();
+            },
+            (error) => {
+              console.error('Error deleting job post:', error);
+            }
+          );
+        }
+      });
   }
 
   viewJob(job: JoblistingsRequest) {
