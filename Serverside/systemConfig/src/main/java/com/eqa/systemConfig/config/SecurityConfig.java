@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                        .requestMatchers("/api/v1/facilities/**").authenticated()
+                        .requestMatchers("/api/v1/facilities/**","/api/v1/llcs/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

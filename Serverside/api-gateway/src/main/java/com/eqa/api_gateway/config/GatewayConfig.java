@@ -22,7 +22,7 @@ public class GatewayConfig {
                         .uri("http://localhost:9004"))
 
                 .route("recruitment-service", r -> r
-                        .path("/api/v1/facilities/**")
+                        .path("/api/v1/facilities/**", "/api/v1/llcs/**", "/api/v1/facilities/**")
                         .filters(f -> f.filter(authFilter.apply(new AuthenticationFilter.Config())))
                         .uri("http://localhost:9005"))
                 .build();
