@@ -2,6 +2,8 @@ package com.eqa.api_gateway.filter;
 
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -16,8 +18,18 @@ public class RouteValidator {
             "/eureka"
     );
 
-    public Predicate<ServerHttpRequest> isSecured =
-            request -> openApiEndpoints
-                    .stream()
-                    .noneMatch(uri -> request.getURI().getPath().contains(uri));
+
+
+    public Predicate<ServerHttpRequest> isSecured = request -> {
+        boolean isSecured = openApiEndpoints
+                .stream()
+                .noneMatch(uri -> request.getURI().getPath().contains(uri));
+        Logger logger = LoggerFactory.getLogger(RouteValidator.class);
+        if (isSecured) {
+            logger.info("Request to {} is secured", request.getURI().getPath());
+        } else {
+            logger.info("Request to {} is not secured", request.getURI().getPath());
+        }
+        return isSecured;
+    };
 }

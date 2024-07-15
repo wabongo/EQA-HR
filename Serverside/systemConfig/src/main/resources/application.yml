@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: systemConfig
+
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=eqa_hr
+    username: sa
+    password: Ma4isto0302.@
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+
+eureka:
+  client:
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:9001/eureka/
+
+logging:
+  level:
+    root: INFO
+    com.eqa.recruitment_service: DEBUG
+
+server:
+  port: 9005
+
+
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days

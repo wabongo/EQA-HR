@@ -1,9 +1,7 @@
 package com.eqa.auth_service.auth;
 
-
 import com.eqa.auth_service.auth.DTO.AuthenticationRequest;
 import com.eqa.auth_service.auth.DTO.AuthenticationResponse;
-import com.eqa.auth_service.auth.DTO.FirstLoginResponse;
 import com.eqa.auth_service.auth.DTO.RegisterRequest;
 import com.eqa.auth_service.config.JwtService;
 import com.eqa.auth_service.token.Token;
@@ -17,12 +15,14 @@ import com.eqa.auth_service.utils.ApiResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,8 +32,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.security.SecureRandom;
+import java.util.Optional;
 import java.util.Random;
 
 @Slf4j
@@ -52,28 +52,11 @@ public class AuthenticationService {
     public AuthenticationResponse register(RegisterRequest request) {
         log.info("Starting user registration for email: {}", request.getEmail());
 
-        // Check if email is unique
-        if (repository.existsByEmail(request.getEmail())) {
-            log.error("Email already exists: {}", request.getEmail());
-            throw new RuntimeException("Email already exists");
-        }
-
-        // Check if phone number is unique
-        if (repository.existsByPhoneNumber(request.getPhoneNumber())) {
-            log.error("Phone number already exists: {}", request.getPhoneNumber());
-            throw new RuntimeException("Phone number already exists");
-        }
-
-        // Check if username is unique
-        if (repository.existsByUsername(request.getUsername())) {
-            log.error("Username already exists: {}", request.getUsername());
-            throw new RuntimeException("Username already exists");
-        }
-
-        // Check if ID number is unique
-        if (repository.existsByIdNumber(request.getIdNumber())) {
-            log.error("ID number already exists: {}", request.getIdNumber());
-            throw new RuntimeException("ID number already exists");
+        // Check if email, phone number, username, or ID number already exists
+        if (repository.existsByEmailOrPhoneNumberOrUsernameOrIdNumber(
+                request.getEmail(), request.getPhoneNumber(), request.getUsername(), request.getIdNumber())) {
+            log.error("Email, phone number, username, or ID number already exists");
+            throw new RuntimeException("Email, phone number, username, or ID number already exists");
         }
 
         // Validate role
@@ -86,6 +69,7 @@ public class AuthenticationService {
         }
 
         String generatedPassword = generateRandomPassword();
+        String encodedPassword = passwordEncoder.encode(generatedPassword);
         var user = User.builder()
                 .username(request.getUsername())
                 .designation(request.getDesignation())
@@ -93,8 +77,8 @@ public class AuthenticationService {
                 .idNumber(request.getIdNumber())
                 .phoneNumber(request.getPhoneNumber())
                 .email(request.getEmail())
-                .password(passwordEncoder.encode(generatedPassword))
-                .systemGeneratedPassword(passwordEncoder.encode(generatedPassword))
+                .password(encodedPassword)
+                .systemGeneratedPassword(encodedPassword)
                 .firstLogin(true)
                 .role(role)
                 .terms(request.getTerms())
@@ -120,11 +104,7 @@ public class AuthenticationService {
         log.info("Authenticating user with email: {}", request.getEmail());
         try {
             // Find the user by email
-            var user = repository.findByEmail(request.getEmail())
-                    .orElseThrow(() -> {
-                        log.error("User not found with email: {}", request.getEmail());
-                        return new RuntimeException("User not found");
-                    });
+            var user = repository.findByEmail(request.getEmail()).orElseThrow();
 
             log.info("User found with email: {}", user.getEmail());
 
@@ -150,8 +130,6 @@ public class AuthenticationService {
                                 request.getEmail(),
                                 request.getPassword()
                         )
-
-
                 );
                 log.info("Authentication successful for email: {}", request.getEmail());
 
@@ -184,6 +162,7 @@ public class AuthenticationService {
         }
     }
 
+    @Transactional
     public ApiResponse<String> changePassword(ChangePasswordRequest request) {
         if (request == null) {
             log.error("ChangePasswordRequest is null");
@@ -236,14 +215,13 @@ public class AuthenticationService {
         }
 
         log.error("Current password does not match the system-generated password for first login for user: {}", request.getEmail());
-        return new ApiResponse<>("Current password is incorrect", null, HttpStatus.UNAUTHORIZED.value());        
+        return new ApiResponse<>("Current password is incorrect", null, HttpStatus.UNAUTHORIZED.value());
     }
-
 
     private String generateRandomPassword() {
         int length = 8;
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%";
-        Random random = new Random();
+        SecureRandom random = new SecureRandom();
         StringBuilder password = new StringBuilder(length);
         for (int i = 0; i < length; i++) {
             password.append(characters.charAt(random.nextInt(characters.length())));
@@ -323,4 +301,3 @@ public class AuthenticationService {
         }
     }
 }
-

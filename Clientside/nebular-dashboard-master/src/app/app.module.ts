@@ -78,7 +78,6 @@ export function createTranslateLoader(http: HttpClient) {
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true},
-    // { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: filterInterceptorRequest },
     {provide: APP_BASE_HREF, useValue: "/" },
     { provide: NbTokenStorage, useClass: NbCustomTokenStorage },
     { provide: LOCALE_ID, useValue: 'it-IT'},

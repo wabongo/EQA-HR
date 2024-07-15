@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8421f6c7-68f8-44a8-8233-26ceaa72f356" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/business/companies/companies.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/business/companies/companies.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/eqa/api_gateway/config/GatewayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/eqa/api_gateway/config/GatewayConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/systemConfig/src/main/java/com/eqa/systemConfig/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/systemConfig/src/main/java/com/eqa/systemConfig/config/SecurityConfig.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/Auth-service">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/api-gateway">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/eureka">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/recruitment-service">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/systemConfig">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="2jHFNQsCuf5OSRPUyuM9lm7FRmL" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Auth-service [:AuthServiceApplication.main()].executor": "Run",
+    "Gradle.api-gateway [:ApiGatewayApplication.main()].executor": "Run",
+    "Gradle.eureka [:EurekaApplication.main()].executor": "Run",
+    "Gradle.recruitment-service [:RecruitmentServiceApplication.main()].executor": "Run",
+    "Gradle.systemConfig [:SystemConfigApplication.main()].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "david",
+    "kotlin-language-version-configured": "true",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+  }
+}]]></component>
+  <component name="RunManager" selected="Application.SystemConfigApplication">
+    <configuration name="ApiGatewayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.eqa.api_gateway.ApiGatewayApplication" />
+      <module name="api-gateway.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.eqa.api_gateway.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.eqa.auth_service.AuthServiceApplication" />
+      <module name="Auth-service.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.eqa.auth_service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EurekaApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.eqa.eureka.EurekaApplication" />
+      <module name="eureka.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.eqa.eureka.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RecruitmentServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.eqa.recruitment_service.RecruitmentServiceApplication" />
+      <module name="recruitment-service.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.eqa.recruitment_service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SystemConfigApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.eqa.systemConfig.SystemConfigApplication" />
+      <module name="systemConfig.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.eqa.systemConfig.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.EurekaApplication" />
+        <item itemvalue="Application.ApiGatewayApplication" />
+        <item itemvalue="Application.AuthServiceApplication" />
+        <item itemvalue="Application.RecruitmentServiceApplication" />
+        <item itemvalue="Application.SystemConfigApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8421f6c7-68f8-44a8-8233-26ceaa72f356" name="Changes" comment="" />
+      <created>1721036059531</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1721036059531</updated>
+    </task>
+    <servers />
+  </component>
+</project>

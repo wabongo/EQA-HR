@@ -9,6 +9,8 @@ spring:
       discovery:
         locator:
           enabled: true
+
+          
       routes:
         - id: auth-service
           uri: http://localhost:9003
