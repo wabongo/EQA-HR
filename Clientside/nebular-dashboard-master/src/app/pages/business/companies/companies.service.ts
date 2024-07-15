@@ -9,7 +9,7 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class CompanyService {
-  private userApi = `${environment.recruitmentApi}job-posts`;// Replace with your actual API URL
+  private userApi = `${environment.recruitmentApi}llcs`;// Replace with your actual API URL
 
   constructor(private http: HttpClient) {}
 
