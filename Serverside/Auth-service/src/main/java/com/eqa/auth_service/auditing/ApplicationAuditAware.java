@@ -1,6 +1,5 @@
 package com.eqa.auth_service.auditing;
 
-
 import com.eqa.auth_service.user.User;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;

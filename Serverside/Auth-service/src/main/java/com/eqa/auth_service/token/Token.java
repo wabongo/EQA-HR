@@ -1,6 +1,5 @@
 package com.eqa.auth_service.token;
 
-
 import com.eqa.auth_service.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

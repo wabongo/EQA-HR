@@ -1,6 +1,5 @@
 package com.eqa.auth_service.user;
 
-
 import com.eqa.auth_service.utils.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

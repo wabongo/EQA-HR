@@ -1,6 +1,5 @@
 package com.eqa.auth_service.config;
 
-
 import com.eqa.auth_service.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -18,4 +17,3 @@ public class SecurityContextHelper {
         return null;
     }
 }
-

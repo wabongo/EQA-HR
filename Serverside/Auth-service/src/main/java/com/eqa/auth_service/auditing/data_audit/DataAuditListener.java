@@ -1,6 +1,5 @@
 package com.eqa.auth_service.auditing.data_audit;
 
-
 import com.eqa.auth_service.config.SecurityContextHelper;
 import com.eqa.auth_service.user.User;
 import jakarta.persistence.PrePersist;
@@ -31,4 +30,3 @@ public class DataAuditListener {
         }
     }
 }
-
