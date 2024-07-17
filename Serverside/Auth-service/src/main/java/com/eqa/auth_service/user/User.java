@@ -1,6 +1,5 @@
 package com.eqa.auth_service.user;
 
-
 import com.eqa.auth_service.token.Token;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -95,6 +94,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-
 }

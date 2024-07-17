@@ -13,6 +13,7 @@ import com.eqa.auth_service.user.User;
 import com.eqa.auth_service.user.UserRepository;
 import com.eqa.auth_service.utils.ApiResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
@@ -22,7 +23,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,12 +34,16 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Optional;
-import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
+    private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@(.+)$";
+    private static final String PHONE_NUMBER_REGEX = "^[0-9]{12}$";
+
     private final UserRepository repository;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
@@ -49,55 +53,88 @@ public class AuthenticationService {
     private final ModelMapper modelMapper;
     private final AuditorAware auditorAware;
 
-    public AuthenticationResponse register(RegisterRequest request) {
-        log.info("Starting user registration for email: {}", request.getEmail());
-
-        // Check if email, phone number, username, or ID number already exists
-        if (repository.existsByEmailOrPhoneNumberOrUsernameOrIdNumber(
-                request.getEmail(), request.getPhoneNumber(), request.getUsername(), request.getIdNumber())) {
-            log.error("Email, phone number, username, or ID number already exists");
-            throw new RuntimeException("Email, phone number, username, or ID number already exists");
-        }
-
-        // Validate role
-        Role role;
+    public ApiResponse<AuthenticationResponse> register(RegisterRequest request) {
         try {
-            role = Role.valueOf(request.getRole());
-        } catch (IllegalArgumentException e) {
-            log.error("Invalid role: {}", request.getRole());
-            throw new RuntimeException("Invalid role: " + request.getRole());
+            log.info("Starting user registration for email: {}", request.getEmail());
+
+            // Validate email
+            if (request.getEmail() == null || request.getEmail().isEmpty() || !isValidEmail(request.getEmail())) {
+                return new ApiResponse<>("Invalid email format", null, HttpStatus.BAD_REQUEST.value());
+            }
+
+            // Check if email exists
+            Optional<User> checkIfUserEmailExists = repository.findByEmail(request.getEmail());
+            if (checkIfUserEmailExists.isPresent()) {
+                return new ApiResponse<>("A user with this email already exists.", null, HttpStatus.BAD_REQUEST.value());
+            }
+
+            // Validate phone number format
+            if (!isValidPhoneNumber(request.getPhoneNumber())) {
+                return new ApiResponse<>("Phone number must be exactly 12 digits.", null, HttpStatus.BAD_REQUEST.value());
+            }
+
+            // Validate idNumber format
+            if (!isValidIdNumber(request.getIdNumber())) {
+                return new ApiResponse<>("Invalid format for National ID.", null, HttpStatus.BAD_REQUEST.value());
+            }
+
+            // Check if national ID exists
+            Optional<User> checkIfNationalIdExists = repository.findByIdNumber(request.getIdNumber());
+            if (checkIfNationalIdExists.isPresent()) {
+                return new ApiResponse<>("A user with this National ID already exists.", null, HttpStatus.BAD_REQUEST.value());
+            }
+
+            // Validate role
+            try {
+                Role.valueOf(request.getRole());
+            } catch (IllegalArgumentException e) {
+                return new ApiResponse<>("Invalid role: " + request.getRole(), null, HttpStatus.BAD_REQUEST.value());
+            }
+
+            // Generate a random password
+            String generatedPassword = generateRandomPassword();
+
+            // Build the user entity
+            User user = User.builder()
+                    .username(request.getUsername())
+                    .designation(request.getDesignation())
+                    .facility(request.getFacility())
+                    .idNumber(request.getIdNumber())
+                    .phoneNumber(request.getPhoneNumber())
+                    .email(request.getEmail())
+                    .password(passwordEncoder.encode(generatedPassword))
+                    .systemGeneratedPassword(passwordEncoder.encode(generatedPassword))
+                    .firstLogin(true)
+                    .role(Role.valueOf(request.getRole()))
+                    .terms(request.getTerms())
+                    .build();
+
+            // Save the user to the repository
+            User savedUser = repository.save(user);
+            log.info("User registered successfully with email: {}", savedUser.getEmail());
+
+            // Send generated password to the user's email
+            sendPasswordEmail(savedUser.getEmail(), generatedPassword);
+
+            // Generate JWT and refresh tokens
+            String jwtToken = jwtService.generateToken(user);
+            String refreshToken = jwtService.generateRefreshToken(user);
+            saveUserToken(savedUser, jwtToken);
+
+            log.info("JWT and Refresh tokens generated for user: {}", savedUser.getEmail());
+
+            // Prepare authentication response
+            AuthenticationResponse authResponse = AuthenticationResponse.builder()
+                    .accessToken(jwtToken)
+                    .refreshToken(refreshToken)
+                    .firstLogin(true)
+                    .build();
+
+            return new ApiResponse<>("Sign up successful", authResponse, HttpStatus.CREATED.value());
+        } catch (Exception e) {
+            log.error("An error occurred during registration", e);
+            return new ApiResponse<>("An error occurred", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
-
-        String generatedPassword = generateRandomPassword();
-        String encodedPassword = passwordEncoder.encode(generatedPassword);
-        var user = User.builder()
-                .username(request.getUsername())
-                .designation(request.getDesignation())
-                .facility(request.getFacility())
-                .idNumber(request.getIdNumber())
-                .phoneNumber(request.getPhoneNumber())
-                .email(request.getEmail())
-                .password(encodedPassword)
-                .systemGeneratedPassword(encodedPassword)
-                .firstLogin(true)
-                .role(role)
-                .terms(request.getTerms())
-                .build();
-        var savedUser = repository.save(user);
-        log.info("User registered successfully with email: {}", savedUser.getEmail());
-
-        sendPasswordEmail(savedUser.getEmail(), generatedPassword);
-
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
-        saveUserToken(savedUser, jwtToken);
-
-        log.info("JWT and Refresh tokens generated for user: {}", savedUser.getEmail());
-        return AuthenticationResponse.builder()
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
-                .firstLogin(savedUser.isFirstLogin())
-                .build();
     }
 
     public ApiResponse<AuthenticationResponse> authenticate(AuthenticationRequest request) {
@@ -299,5 +336,27 @@ public class AuthenticationService {
         } else {
             log.warn("No user email found in refresh token");
         }
+    }
+
+    public static boolean isValidEmail(@Nullable String email) {
+        if (email == null || email.isEmpty()) {
+            return false;
+        }
+        Pattern pattern = Pattern.compile(EMAIL_REGEX);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    public static boolean isValidPhoneNumber(@Nullable String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.isEmpty()) {
+            return false;
+        }
+        Pattern pattern = Pattern.compile(PHONE_NUMBER_REGEX);
+        Matcher matcher = pattern.matcher(phoneNumber);
+        return matcher.matches();
+    }
+
+    private boolean isValidIdNumber(String idNumber) {
+        return idNumber != null && idNumber.matches("[0-9]+") && idNumber.length() > 1;
     }
 }

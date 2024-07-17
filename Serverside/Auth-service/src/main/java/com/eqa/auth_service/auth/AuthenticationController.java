@@ -1,8 +1,6 @@
 package com.eqa.auth_service.auth;
 
-
 import com.eqa.auth_service.auth.DTO.AuthenticationRequest;
-import com.eqa.auth_service.auth.DTO.AuthenticationResponse;
 import com.eqa.auth_service.auth.DTO.RegisterRequest;
 import com.eqa.auth_service.config.LogoutService;
 import com.eqa.auth_service.user.ChangePasswordRequest;
@@ -28,7 +26,7 @@ public class AuthenticationController {
     private final LogoutService logoutService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(service.register(request));
     }
 
@@ -58,6 +56,4 @@ public class AuthenticationController {
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         service.refreshToken(request, response);
     }
-
-
 }
