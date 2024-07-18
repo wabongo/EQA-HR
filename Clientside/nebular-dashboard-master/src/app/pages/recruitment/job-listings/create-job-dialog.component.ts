@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NbDialogRef } from '@nebular/theme';
+import { NbDialogRef, NbToastrService } from '@nebular/theme';
+import { FacilitiesService } from '../../business/facilities/facilities.service';
 
 @Component({
   selector: 'app-create-job-dialog',
@@ -18,7 +19,9 @@ import { NbDialogRef } from '@nebular/theme';
           </div>
           <div class="form-group">
             <label for="facility">Facility</label>
-            <input nbInput fullWidth id="facility" formControlName="facility" aria-describedby="facilityError">
+            <nb-select fullWidth id="facility" formControlName="facility" aria-describedby="facilityError">
+              <nb-option *ngFor="let facility of facilities" [value]="facility.id">{{ facility.name }}</nb-option>
+            </nb-select>
             <div *ngIf="jobForm.get('facility').invalid && jobForm.get('facility').touched" id="facilityError" class="error-message">
               Facility is required.
             </div>
@@ -75,9 +78,13 @@ import { NbDialogRef } from '@nebular/theme';
 export class CreateJobDialogComponent {
   jobForm: FormGroup;
 
+  facilities: any[] = [];
+
   constructor(
     private formBuilder: FormBuilder,
-    private dialogRef: NbDialogRef<CreateJobDialogComponent>
+    private dialogRef: NbDialogRef<CreateJobDialogComponent>,
+    private facilitiesService: FacilitiesService,
+    private toastrService: NbToastrService
   ) {
     this.jobForm = this.formBuilder.group({
       designation: ['', Validators.required],
