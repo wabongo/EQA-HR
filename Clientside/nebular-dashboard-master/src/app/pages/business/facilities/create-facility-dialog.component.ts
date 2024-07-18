@@ -171,6 +171,8 @@ export class CreateFacilityDialogComponent implements OnInit {
     });
   }
 
+  
+
   onProvinceChange(selectedProvince: string) {
     const selectedProvinceObj = this.provinces.find(province => province.name === selectedProvince);
     this.counties = selectedProvinceObj ? selectedProvinceObj.counties : [];

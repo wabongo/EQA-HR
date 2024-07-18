@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NbDialogRef, NbToastrService } from '@nebular/theme';
+import { NbDialogRef } from '@nebular/theme';
 import { FacilitiesService } from '../../business/facilities/facilities.service';
+import { FacilityRequest } from '../../business/facilities/facility.model';
 
 @Component({
   selector: 'app-create-job-dialog',
@@ -10,38 +11,39 @@ import { FacilitiesService } from '../../business/facilities/facilities.service'
       <nb-card-header>Create Job Post</nb-card-header>
       <nb-card-body>
         <form [formGroup]="jobForm" (ngSubmit)="submit()">
-          <div class="form-group">
-            <label for="designation">Designation</label>
+          <div class="form-control-group">
+            <label class="label" for="designation">Designation</label>
             <input nbInput fullWidth id="designation" formControlName="designation" aria-describedby="designationError">
             <div *ngIf="jobForm.get('designation').invalid && jobForm.get('designation').touched" id="designationError" class="error-message">
               Designation is required.
             </div>
           </div>
-          <div class="form-group">
-            <label for="facility">Facility</label>
-            <nb-select fullWidth id="facility" formControlName="facility" aria-describedby="facilityError">
-              <nb-option *ngFor="let facility of facilities" [value]="facility.id">{{ facility.name }}</nb-option>
-            </nb-select>
-            <div *ngIf="jobForm.get('facility').invalid && jobForm.get('facility').touched" id="facilityError" class="error-message">
-              Facility is required.
-            </div>
+
+
+
+          <div class="form-control-group">
+                <label class="label" for="llcName">Facility</label>
+                <nb-select fullWidth placeholder="Select Facility" formControlName="facility">
+                  <nb-option *ngFor="let facility of facilities" [value]="facility.clinicName">{{ facility.clinicName }}</nb-option>
+                </nb-select>
           </div>
-          <div class="form-group">
-            <label for="description">Description</label>
+
+          <div class="form-control-group">
+            <label class="label" for="description">Description</label>
             <textarea nbInput fullWidth id="description" formControlName="description" aria-describedby="descriptionError"></textarea>
             <div *ngIf="jobForm.get('description').invalid && jobForm.get('description').touched" id="descriptionError" class="error-message">
               Description is required.
             </div>
           </div>
-          <div class="form-group">
-            <label for="requirements">Requirements</label>
+          <div class="form-control-group">
+            <label class="label" for="requirements">Requirements</label>
             <textarea nbInput fullWidth id="requirements" formControlName="requirements" aria-describedby="requirementsError"></textarea>
             <div *ngIf="jobForm.get('requirements').invalid && jobForm.get('requirements').touched" id="requirementsError" class="error-message">
               Requirements are required.
             </div>
           </div>
-          <div class="form-group">
-            <label for="deadline">Deadline</label>
+          <div class="form-control-group">
+            <label class="label" for="deadline">Deadline</label>
             <input nbInput fullWidth type="date" id="deadline" formControlName="deadline" aria-describedby="deadlineError">
             <div *ngIf="jobForm.get('deadline').invalid && jobForm.get('deadline').touched" id="deadlineError" class="error-message">
               Deadline is required.
@@ -56,7 +58,7 @@ import { FacilitiesService } from '../../business/facilities/facilities.service'
     </nb-card>
   `,
   styles: [`
-    .form-group {
+    .form-control-group {
       margin-bottom: 1rem;
     }
     .error-message {
@@ -75,20 +77,16 @@ import { FacilitiesService } from '../../business/facilities/facilities.service'
     }
   `]
 })
-export class CreateJobDialogComponent {
-  jobForm: FormGroup;
 
-  facilities: any[] = [];
+export class CreateJobDialogComponent implements OnInit {
+  jobForm: FormGroup;
+  facilities: FacilityRequest[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private dialogRef: NbDialogRef<CreateJobDialogComponent>,
-    private facilitiesService: FacilitiesService,
-    private toastrService: NbToastrService
-  ) { }
-
-  ngOnInit(): void {
-    this.loadFacilities();
+    private facilityService: FacilitiesService
+  ) {
     this.jobForm = this.formBuilder.group({
       designation: ['', Validators.required],
       facility: ['', Validators.required],
@@ -98,13 +96,18 @@ export class CreateJobDialogComponent {
     });
   }
 
-  loadFacilities(): void {
-    this.facilitiesService.getFacilities().subscribe(
+  ngOnInit() {
+    this.loadFacilities();
+  }
+
+  loadFacilities() {
+    this.facilityService.getFacilities().subscribe(
       (facilities) => {
         this.facilities = facilities;
+        console.log('Loaded facilities:', this.facilities);
       },
       (error) => {
-        this.toastrService.danger('Failed to load facilities', 'Error');
+        console.error('Error loading facilities:', error);
       }
     );
   }
