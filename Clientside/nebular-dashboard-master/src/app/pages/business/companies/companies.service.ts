@@ -43,6 +43,9 @@ export class CompanyService {
     );
   }
 
+
+
+  
   createCompany(company: CompanyRequest): Observable<CompanyRequest> {
     console.log('Creating company with data:', company);
     return this.http.post<CompanyRequest>(`${this.userApi}/create`, company, { headers: this.getHeaders() }).pipe(
