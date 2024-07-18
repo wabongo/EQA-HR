@@ -18,6 +18,12 @@ public class UserController {
 //        return ResponseEntity.ok().build();
 //    }
 
+    @GetMapping
+    public ResponseEntity<?> getAllUsers() {
+        ApiResponse<?> response = userService.getAllUsers();
+        return ResponseEntity.status(response.getStatusCode()).body(response);
+    }
+
     @GetMapping("/get/by/idNumber/{idNumber}")
     public ResponseEntity<?> getUserByIdNumber(@PathVariable("idNumber") String idNumber) {
         ApiResponse<?> response = userService.getUserByIdNumber(idNumber);

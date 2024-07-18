@@ -1,13 +1,12 @@
 package com.eqa.auth_service.user;
 
+import com.eqa.auth_service.auditing.data_audit.DataAudit;
+import com.eqa.auth_service.auditing.data_audit.DataAuditListener;
 import com.eqa.auth_service.token.Token;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -17,14 +16,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"email", "idNumber","phoneNumber","username"}))
-@EntityListeners(AuditingEntityListener.class)
-public class User implements UserDetails {
+@EntityListeners(DataAuditListener.class)
+//public class User implements UserDetails {
+public class User extends DataAudit implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,11 +54,11 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Token> tokens;
 
-    @CreatedBy
-    private String createdBy;
-
-    @LastModifiedBy
-    private String modifiedBy;
+//    @CreatedBy
+//    private String createdBy;
+//
+//    @LastModifiedBy
+//    private String modifiedBy;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
