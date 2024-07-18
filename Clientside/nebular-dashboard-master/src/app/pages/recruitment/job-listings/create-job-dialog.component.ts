@@ -85,7 +85,10 @@ export class CreateJobDialogComponent {
     private dialogRef: NbDialogRef<CreateJobDialogComponent>,
     private facilitiesService: FacilitiesService,
     private toastrService: NbToastrService
-  ) {
+  ) { }
+
+  ngOnInit(): void {
+    this.loadFacilities();
     this.jobForm = this.formBuilder.group({
       designation: ['', Validators.required],
       facility: ['', Validators.required],
@@ -93,6 +96,17 @@ export class CreateJobDialogComponent {
       requirements: ['', Validators.required],
       deadline: ['', Validators.required]
     });
+  }
+
+  loadFacilities(): void {
+    this.facilitiesService.getFacilities().subscribe(
+      (facilities) => {
+        this.facilities = facilities;
+      },
+      (error) => {
+        this.toastrService.danger('Failed to load facilities', 'Error');
+      }
+    );
   }
 
   submit() {
