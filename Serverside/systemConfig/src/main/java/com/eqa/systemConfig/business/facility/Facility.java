@@ -1,20 +1,17 @@
 package com.eqa.systemConfig.business.facility;
 
-
 import com.eqa.systemConfig.business.llc.Company;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "facilities")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Facility {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,27 +20,56 @@ public class Facility {
     private String clinicName;
 
     @Column(nullable = false)
-    private String location;
+    private LocalDate dateOpened;
+
+    @Column(nullable = false)
+    private String province;
 
     @Column(nullable = false)
     private String county;
 
     @Column(nullable = false)
+    private String subcounty;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private FacilityType type;
+
+    @Column(nullable = false)
     private String physicalAddress;
 
     @Column(nullable = false)
-    private String admin;
+    private String doctorInCharge;
 
     @Column(nullable = false)
     private String clinicContact;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String email;
 
-    @Column(nullable = false)
-    private String clinicType;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "llc_id", nullable = false)
+    @JoinColumn(name = "company_id", nullable = false)
     private Company company;
+
+    public enum FacilityType {
+        HUB,
+        SATELLITE,
+        SPOKE
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String recruitmentEmail) {
+        this.email = recruitmentEmail;
+    }
 }

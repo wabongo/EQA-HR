@@ -1,44 +1,64 @@
 package com.eqa.systemConfig.business.facility.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import jakarta.validation.constraints.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class FacilityRequest {
+
     @NotBlank(message = "Clinic name is required")
     private String clinicName;
 
-    @NotBlank(message = "Location is required")
-    private String location;
+    @NotNull(message = "Date opened is required")
+    @PastOrPresent(message = "Date opened must be in the past or present")
+    private LocalDate dateOpened;
+
+    @NotBlank(message = "Province is required")
+    private String province;
 
     @NotBlank(message = "County is required")
     private String county;
 
+    @NotBlank(message = "Subcounty is required")
+    private String subcounty;
+
+    @NotNull(message = "Facility type is required")
+    private FacilityType type;
+
     @NotBlank(message = "Physical address is required")
     private String physicalAddress;
 
-    @NotBlank(message = "Admin name is required")
-    private String admin;
+    @NotBlank(message = "Doctor in charge is required")
+    private String doctorInCharge;
 
     @NotBlank(message = "Clinic contact is required")
+    @Pattern(regexp = "^\\+?\\d{10,14}$", message = "Invalid phone number format")
     private String clinicContact;
 
+    @NotBlank(message = "LLC name is required")
+    private String llcName;
+
+    @NotBlank(message = "Franchisee contact is required")
+    @Pattern(regexp = "^\\+?\\d{10,14}$", message = "Invalid phone number format")
+    private String franchiseeContact;
+
     @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email format")
     private String email;
 
-    @NotBlank(message = "Clinic type is required")
-    private String clinicType;
+    public enum FacilityType {
+        HUB,
+        SATELLITE,
+        SPOKE
+    }
 
-    @NotNull(message = "Company (LLC) ID is required")
-    private Long companyId;
+
+    public @NotBlank(message = "Email is required") @Email(message = "Invalid email format") String getEmail() {
+        return email;
+    }
+
+    public void setRecruitmentEmail(@NotBlank(message = "Email is required") @Email(message = "Invalid email format") String recruitmentEmail) {
+        this.email = recruitmentEmail;
+    }
 }
