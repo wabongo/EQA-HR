@@ -6,6 +6,7 @@ import { CreateCompanyDialogComponent } from './create-company-dialog.component'
 import { UpdateCompanyDialogComponent } from './update-company-dialog.component';
 
 
+
 @Component({
   selector: 'app-companies',
   templateUrl: './companies.component.html',
@@ -13,6 +14,7 @@ import { UpdateCompanyDialogComponent } from './update-company-dialog.component'
 })
 export class CompaniesComponent implements OnInit {
   companyRequests: CompanyRequest[] = [];
+  allColumns = ['region', 'province', 'county', 'name', 'franchisee', 'phoneNumber', 'email', 'kraPin', 'actions'];
 
   constructor(
     private companyService: CompanyService,

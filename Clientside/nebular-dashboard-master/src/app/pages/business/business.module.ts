@@ -5,9 +5,11 @@ import { BusinessRoutingModule } from './business-routing.module';
 import { FacilitiesComponent } from './facilities/facilities.component';
 import { CompaniesComponent } from './companies/companies.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NbCardModule, NbAlertModule, NbIconModule, NbButtonModule, NbDialogModule, NbInputModule } from '@nebular/theme';
+import { NbCardModule, NbAlertModule, NbIconModule, NbButtonModule, NbDialogModule, NbInputModule, NbSelectModule } from '@nebular/theme';
 import { CreateCompanyDialogComponent } from './companies/create-company-dialog.component';
 import { UpdateCompanyDialogComponent } from './companies/update-company-dialog.component';
+import { CreateFacilityDialogComponent } from './facilities/create-facility-dialog.component';
+import { UpdateFacilityDialogComponent } from './facilities/update-facility-dialog.component';
 
 
 @NgModule({
@@ -15,7 +17,10 @@ import { UpdateCompanyDialogComponent } from './companies/update-company-dialog.
     FacilitiesComponent,
     CompaniesComponent,
     CreateCompanyDialogComponent, // Declare the create dialog component
-    UpdateCompanyDialogComponent
+    UpdateCompanyDialogComponent,
+    CreateFacilityDialogComponent,
+    UpdateFacilityDialogComponent
+  
   ],
   imports: [
     CommonModule,
@@ -26,7 +31,9 @@ import { UpdateCompanyDialogComponent } from './companies/update-company-dialog.
     NbButtonModule,
     NbDialogModule.forChild(),
     NbInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NbSelectModule
+
   ]
 })
 export class BusinessModule { }

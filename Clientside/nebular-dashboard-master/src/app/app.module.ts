@@ -26,10 +26,7 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-// function filterInterceptorRequest(req: HttpRequest<any>): boolean {
-//   return ['/api/v1/auth/authenticate','/api/v1/auth/refresh-token']
-//     .some(url => req.url.includes(url));
-// }
+
 
 @NgModule({
   declarations: [
@@ -81,6 +78,7 @@ export function createTranslateLoader(http: HttpClient) {
     {provide: APP_BASE_HREF, useValue: "/" },
     { provide: NbTokenStorage, useClass: NbCustomTokenStorage },
     { provide: LOCALE_ID, useValue: 'it-IT'},
+
 
   ],
   bootstrap: [AppComponent]

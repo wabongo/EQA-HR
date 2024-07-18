@@ -33,12 +33,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'people-outline',
     children: [
       {
-        title: 'Facilities',
-        link: '/pages/business/facilities'
-      },
-      {
         title: 'Companies',
         link: '/pages/business/companies'
+      },
+
+      {
+        title: 'Facilities',
+        link: '/pages/business/facilities'
       }
     ]
   },
