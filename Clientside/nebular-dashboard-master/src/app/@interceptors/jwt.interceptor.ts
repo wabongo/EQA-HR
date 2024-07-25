@@ -11,13 +11,8 @@ export class JWTInterceptor implements HttpInterceptor {
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   constructor(private authService: AuthService, private router: Router) {}
-//added if statement. redo if error exeperienced.
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (request.headers.has('Authorization')) {
-      return next.handle(request);
-    }
-    console.log('Intercepting request:', request.url);
 
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.shouldAddToken(request)) {
       const token = this.authService.getAccessToken();
       if (token) {

@@ -36,7 +36,7 @@ spring:
   datasource:
     url: jdbc:sqlserver://localhost:1433;databaseName=eqa_hr
     username: sa
-    password: Ma4isto0302.@
+    password: MyPassword123.@
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
     hibernate:

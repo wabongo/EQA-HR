@@ -1,31 +1,27 @@
 package com.eqa.auth_service.user;
 
-
+import com.eqa.auth_service.auditing.data_audit.DataAudit;
+import com.eqa.auth_service.auditing.data_audit.DataAuditListener;
 import com.eqa.auth_service.token.Token;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 
-@Data
 @Builder
+@EqualsAndHashCode(callSuper = true)
+@Data
+@Entity
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"email", "idNumber", "phoneNumber", "username"}))
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"email", "idNumber","phoneNumber","username"}))
-@EntityListeners(AuditingEntityListener.class)
-public class User implements UserDetails {
+@EntityListeners(DataAuditListener.class)
+public class User extends DataAudit implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,14 +47,9 @@ public class User implements UserDetails {
     private boolean firstLogin = true;
     private boolean blacklisted = false;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Token> tokens;
-
-    @CreatedBy
-    private String createdBy;
-
-    @LastModifiedBy
-    private String modifiedBy;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -96,5 +87,16 @@ public class User implements UserDetails {
         return true;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", firstLogin=" + firstLogin +
+                ", blacklisted=" + blacklisted +
+                // Avoid including tokens directly to prevent recursion
+                '}';
+    }
 }

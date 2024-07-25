@@ -10,7 +10,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -92,6 +94,24 @@ public class UserService {
         } catch (Exception e) {
             log.error("An error occurred while fetching user.", e);
             return new ApiResponse<>("An error occurred while fetching user.", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+    }
+
+    public ApiResponse<?> getAllUsers() {
+        try {
+            List<User> users = userRepository.findAll();
+            if (!users.isEmpty()) {
+                List<UserResponse> userResponses = users.stream()
+                        .map(user -> modelMapper.map(user, UserResponse.class))
+                        .collect(Collectors.toList());
+
+                return new ApiResponse<>("Users fetched successfully.", userResponses, HttpStatus.OK.value());
+            } else {
+                return new ApiResponse<>("No users found.", null, HttpStatus.NOT_FOUND.value());
+            }
+        } catch (Exception e) {
+            log.error("An error occurred while fetching users.", e);
+            return new ApiResponse<>("An error occurred while fetching users.", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
     }
 }

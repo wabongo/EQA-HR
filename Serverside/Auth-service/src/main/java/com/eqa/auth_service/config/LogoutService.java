@@ -1,6 +1,5 @@
 package com.eqa.auth_service.config;
 
-
 import com.eqa.auth_service.token.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

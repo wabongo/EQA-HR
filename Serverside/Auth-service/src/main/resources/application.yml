@@ -35,7 +35,7 @@ spring:
   datasource:
     url: jdbc:sqlserver://localhost;databaseName=eqa_hr
     username: sa
-    password: Ma4isto0302.@
+    password: MyPassword123.@
     driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
     show-sql: true
