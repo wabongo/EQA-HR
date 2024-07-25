@@ -1,0 +1,22 @@
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+  .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  .form-control-group {
+    margin-bottom: 1rem;
+  }
+  .button-group {
+    margin-top: 1rem;
+    text-align: right;
+  }
+  .button-group button {
+    margin-left: 0.5rem;
+  }

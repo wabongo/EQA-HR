@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NbDialogService } from '@nebular/theme';
 import { CompanyRequest } from './company.model';
 import { CompanyService } from './companies.service';
-import { CreateCompanyDialogComponent } from './create-company-dialog.component';
 import { UpdateCompanyDialogComponent } from './update-company-dialog.component';
-
-
 
 @Component({
   selector: 'app-companies',
@@ -18,7 +16,8 @@ export class CompaniesComponent implements OnInit {
 
   constructor(
     private companyService: CompanyService,
-    private dialogService: NbDialogService
+    private dialogService: NbDialogService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -36,24 +35,12 @@ export class CompaniesComponent implements OnInit {
     });
   }
 
-  openCreateModal(): void {
-    this.dialogService.open(CreateCompanyDialogComponent, {
-      context: {
-        // title: 'Create Company'
-      },
-    }).onClose.subscribe((company: CompanyRequest) => {
-      if (company) {
-        this.companyService.createCompany(company).subscribe({
-          next: (newCompany) => {
-            this.companyRequests.push(newCompany);
-          },
-          error: (error) => {
-            console.error('Error creating company', error);
-          }
-        });
-      }
-    });
+  navigateToCreateCompany(): void {
+    this.router.navigate(['/pages/business/companies/maintenance/create']);
   }
+
+  
+
 
   viewCompany(company: CompanyRequest): void {
     // Implement the logic to view a company
@@ -63,7 +50,6 @@ export class CompaniesComponent implements OnInit {
   openUpdateModal(company: CompanyRequest): void {
     this.dialogService.open(UpdateCompanyDialogComponent, {
       context: {
-        // title: 'Update Company',
         company: company
       },
     }).onClose.subscribe((updatedCompany: CompanyRequest) => {

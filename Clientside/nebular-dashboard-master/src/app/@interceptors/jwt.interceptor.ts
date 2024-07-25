@@ -3,13 +3,14 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take } from 'rxjs/operators';
 import { AuthService } from '../@auth/auth.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class JWTInterceptor implements HttpInterceptor {
   private isRefreshing = false;
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 //added if statement. redo if error exeperienced.
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (request.headers.has('Authorization')) {
@@ -29,6 +30,9 @@ export class JWTInterceptor implements HttpInterceptor {
         }
       } else {
         console.log('No token found, proceeding without token');
+
+        this.router.navigate(['/login']);
+        return throwError(() => new Error('Authentication required'));
       }
     } else {
       console.log('Not adding token to request');

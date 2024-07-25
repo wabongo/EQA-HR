@@ -6,21 +6,20 @@ import { FacilitiesComponent } from './facilities/facilities.component';
 import { CompaniesComponent } from './companies/companies.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NbCardModule, NbAlertModule, NbIconModule, NbButtonModule, NbDialogModule, NbInputModule, NbSelectModule } from '@nebular/theme';
-import { CreateCompanyDialogComponent } from './companies/create-company-dialog.component';
+import { CreateCompanyComponent } from './companies/maintenance/create-company.component';
 import { UpdateCompanyDialogComponent } from './companies/update-company-dialog.component';
-import { CreateFacilityDialogComponent } from './facilities/create-facility-dialog.component';
-import { UpdateFacilityDialogComponent } from './facilities/update-facility-dialog.component';
+import { CreateFacilityComponent } from './facilities/maintenance/create-facility.component';
+import { UpdateFacilityComponent } from './facilities/maintenance/update-facility.component';
 
 
 @NgModule({
   declarations: [
     FacilitiesComponent,
     CompaniesComponent,
-    CreateCompanyDialogComponent, // Declare the create dialog component
+    CreateCompanyComponent,
     UpdateCompanyDialogComponent,
-    CreateFacilityDialogComponent,
-    UpdateFacilityDialogComponent
-  
+    CreateFacilityComponent,
+    UpdateFacilityComponent
   ],
   imports: [
     CommonModule,

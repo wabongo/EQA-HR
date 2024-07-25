@@ -1,13 +1,43 @@
 spring:
+  profiles:
+    active: dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
   application:
     name: systemConfig
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MSSQLServer
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
 
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  application:
+    name: systemConfig
   datasource:
     url: jdbc:sqlserver://localhost:1433;databaseName=eqa_hr
     username: sa
     password: Ma4isto0302.@
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -17,6 +47,8 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.SQLServer2012Dialect
 
+---
+# Common configurations for both profiles
 eureka:
   client:
     enabled: true
@@ -32,7 +64,6 @@ logging:
 
 server:
   port: 9005
-
 
 application:
   security:

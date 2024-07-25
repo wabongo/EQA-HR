@@ -20,7 +20,7 @@ export class AuthService {
 
 
   login(credentials: any): Observable<any> {
-    console.log('Credentials:', credentials);
+    // console.log('Credentials:', credentials);
     return this.http.post<any>(`${this.userApi}/api/v1/auth/authenticate`, credentials).pipe(
       tap(response => {
         console.log('Full response:', response);

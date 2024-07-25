@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { FacilityRequest } from './facility.model';
 import { FacilitiesService } from './facilities.service';
-import { CreateFacilityDialogComponent } from './create-facility-dialog.component';
-import { UpdateFacilityDialogComponent } from './update-facility-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-facilities',
@@ -16,6 +15,7 @@ export class FacilitiesComponent implements OnInit {
 
   constructor(
     private facilityService: FacilitiesService,
+    private router: Router,
     private dialogService: NbDialogService
   ) {}
 
@@ -34,52 +34,39 @@ export class FacilitiesComponent implements OnInit {
     });
   }
 
-  openCreateModal(): void {
-    this.dialogService.open(CreateFacilityDialogComponent, {
-      context: {
-        // title: 'Create Facility'
-      },
-    }).onClose.subscribe((facility: FacilityRequest) => {
-      if (facility) {
-        this.facilityService.createFacility(facility).subscribe({
-          next: (newFacility) => {
-            this.facilityRequests.push(newFacility);
-          },
-          error: (error) => {
-            console.error('Error creating facility', error);
-          }
-        });
-      }
-    });
+  navigateToCreateFacility(): void {
+    this.router.navigate(['/pages/business/facilities/maintenance/create']);
   }
+
+  navigateToUpdateFacility(facility: FacilityRequest): void {
+    if (facility && facility.id) {
+      this.router.navigate(['/pages/business/facilities/maintenance/update', facility.id]);
+    } else {
+      console.error('Invalid facility or facility ID');
+    }
+  }
+
+  
+
 
   viewFacility(facility: FacilityRequest): void {
     // Implement the logic to view a facility
     console.log('View facility:', facility);
   }
 
-  openUpdateModal(facility: FacilityRequest): void {
-    this.dialogService.open(UpdateFacilityDialogComponent, {
-      context: {
-        // title: 'Update Facility',
-        facility: facility
-      },
-    }).onClose.subscribe((updatedFacility: FacilityRequest) => {
-      if (updatedFacility) {
-        this.facilityService.updateFacility(updatedFacility.id, updatedFacility).subscribe({
-          next: (updatedFacility) => {
-            const index = this.facilityRequests.findIndex(f => f.id === updatedFacility.id);
-            if (index !== -1) {
-              this.facilityRequests[index] = updatedFacility;
-            }
-          },
-          error: (error) => {
-            console.error('Error updating facility', error);
-          }
-        });
-      }
-    });
-  }
+  // updateFacility(updatedFacility: FacilityRequest): void {
+  //   this.facilityService.updateFacility(updatedFacility.id, updatedFacility).subscribe({
+  //     next: (result) => {
+  //       const index = this.facilityRequests.findIndex(f => f.id === result.id);
+  //       if (index !== -1) {
+  //         this.facilityRequests[index] = result;
+  //       }
+  //     },
+  //     error: (error) => {
+  //       console.error('Error updating facility', error);
+  //     }
+  //   });
+  // }
 
   deleteFacility(id: number): void {
     this.facilityService.deleteFacility(id).subscribe({
