@@ -16,15 +16,18 @@
       <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/job-listings/create-job-dialog.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/job-listings/create-job-dialog.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Auth-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/AuthServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/AuthServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/auditing/ApplicationAuditAware.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/auditing/data_audit/DataAudit.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/auditing/data_audit/DataAudit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/auditing/data_audit/DataAuditListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/auditing/data_audit/DataAuditListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/auth/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/auth/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recruitment-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/job_post/JobPostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/job_post/JobPostRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/systemConfig/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/systemConfig/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/systemConfig/src/main/java/com/eqa/systemConfig/business/facility/DTO/FacilityResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/systemConfig/src/main/java/com/eqa/systemConfig/business/facility/DTO/FacilityResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/systemConfig/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/systemConfig/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/config/ApplicationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/config/ApplicationConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/config/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/config/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/config/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/config/SecurityContextHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/config/SecurityContextHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/user/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/user/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,20 +75,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Auth-service [:AuthServiceApplication.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.api-gateway [:ApiGatewayApplication.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.eureka [:EurekaApplication.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.recruitment-service [:RecruitmentServiceApplication.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.systemConfig [:SystemConfigApplication.main()].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;david&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Auth-service [:AuthServiceApplication.main()].executor": "Run",
+    "Gradle.api-gateway [:ApiGatewayApplication.main()].executor": "Run",
+    "Gradle.eureka [:EurekaApplication.main()].executor": "Run",
+    "Gradle.recruitment-service [:RecruitmentServiceApplication.main()].executor": "Run",
+    "Gradle.systemConfig [:SystemConfigApplication.main()].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "david",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/sophia.njoroge/EGF/EQA-HR/Serverside",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
   }
-}</component>
-  <component name="RunManager" selected="Application.SystemConfigApplication">
+}]]></component>
+  <component name="RunManager" selected="Application.RecruitmentServiceApplication">
     <configuration name="ApiGatewayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.eqa.api_gateway.ApiGatewayApplication" />
       <module name="api-gateway.main" />

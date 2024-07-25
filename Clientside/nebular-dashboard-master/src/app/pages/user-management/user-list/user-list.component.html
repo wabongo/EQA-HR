@@ -1,0 +1,46 @@
+<nb-card>
+  <nb-card-header>
+    <button nbButton status="primary" class="float-right" (click)="navigateToCreateUser()">
+      <nb-icon icon="plus-outline"></nb-icon> Create User
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <div *ngIf="users && users.length > 0; else noUsers">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.username }}</td>
+            <td>{{ user.designation }}</td>
+            <td>{{ user.facility }}</td>
+            <td>{{ user.idNumber }}</td>
+            <td>{{ user.phoneNumber }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>{{ user.terms }}</td>
+            <td class="actions">
+              <!-- <button nbButton status="info" (click)="viewUser(user)">
+                <nb-icon icon="eye-outline"></nb-icon> 
+              </button>
+              <button nbButton status="success" (click)="openUpdateModal(user)">
+                <nb-icon icon="edit-outline"></nb-icon> 
+              </button>
+              <button nbButton status="danger" (click)="deleteUser(user.id)">
+                <nb-icon icon="trash-2-outline"></nb-icon> 
+              </button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noUsers>
+      <p class="text-center">No users available.</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

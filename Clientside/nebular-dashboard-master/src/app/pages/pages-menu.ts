@@ -30,7 +30,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   {
     title: 'Organisation',
-    icon: 'people-outline',
+    icon: 'globe-outline',
     children: [
       {
         title: 'Companies',
@@ -56,6 +56,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
       }
     ]
   },
+
+  {
+    title: 'User Management',
+    icon: 'people-outline',
+    link: '/pages/user-management',
+    children: [
+      {
+        title: 'Users',
+        link: '/pages/user-management/users'
+      }
+    ]
+  },
+  
   {
     title: 'Not found',
     icon: 'close-circle-outline',

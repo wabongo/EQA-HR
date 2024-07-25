@@ -1,0 +1,77 @@
+<nb-card>
+    <nb-card-header>
+      <h2>Create User</h2>
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input nbInput fullWidth placeholder="Username" id="username" formControlName="username" />
+          <div *ngIf="userForm.get('username').invalid && userForm.get('username').touched">
+            <nb-alert status="danger">Username is required.</nb-alert>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="designation">Designation</label>
+          <input nbInput fullWidth placeholder="Designation" id="designation" formControlName="designation" />
+          <div *ngIf="userForm.get('designation').invalid && userForm.get('designation').touched">
+            <nb-alert status="danger">Designation is required.</nb-alert>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="facility">Facility</label>
+          <input nbInput fullWidth placeholder="Facility" id="facility" formControlName="facility" />
+          <div *ngIf="userForm.get('facility').invalid && userForm.get('facility').touched">
+            <nb-alert status="danger">Facility is required.</nb-alert>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="idNumber">ID Number</label>
+          <input nbInput fullWidth placeholder="ID Number" id="idNumber" formControlName="idNumber" />
+          <div *ngIf="userForm.get('idNumber').invalid && userForm.get('idNumber').touched">
+            <nb-alert status="danger">ID Number is required.</nb-alert>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="phoneNumber">Phone Number</label>
+          <input nbInput fullWidth placeholder="Phone Number" id="phoneNumber" formControlName="phoneNumber" />
+          <div *ngIf="userForm.get('phoneNumber').invalid && userForm.get('phoneNumber').touched">
+            <nb-alert status="danger">Phone Number is required.</nb-alert>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input nbInput fullWidth placeholder="Email" id="email" formControlName="email" />
+          <div *ngIf="userForm.get('email').invalid && userForm.get('email').touched">
+            <nb-alert status="danger">Email is required.</nb-alert>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="role">Role</label>
+          <input nbInput fullWidth placeholder="Role" id="role" formControlName="role" />
+          <div *ngIf="userForm.get('role').invalid && userForm.get('role').touched">
+            <nb-alert status="danger">Role is required.</nb-alert>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="terms">Terms</label>
+          <input nbInput fullWidth placeholder="Terms" id="terms" formControlName="terms" />
+          <div *ngIf="userForm.get('terms').invalid && userForm.get('terms').touched">
+            <nb-alert status="danger">Terms is required.</nb-alert>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <button nbButton status="primary" fullWidth type="submit" [disabled]="userForm.invalid">Create User</button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+  
