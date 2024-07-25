@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,10 +54,6 @@ public class JwtService {
         return buildToken(new HashMap<>(), userDetails, refreshExpiration);
     }
 
-//    public String generateToken(UserDetails userDetails) {
-//        return buildToken(new HashMap<>(), userDetails, jwtExpiration);
-//    }
-
     private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
         return Jwts.builder()
                 .setClaims(extraClaims)
@@ -79,7 +76,7 @@ public class JwtService {
         return isValid;
     }
 
-    private boolean isTokenExpired(String token) {
+    boolean isTokenExpired(String token) {
         log.debug("Checking if token is expired");
         return extractExpiration(token).before(new Date());
     }
@@ -102,5 +99,14 @@ public class JwtService {
         log.debug("Getting signing key from secret key");
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public String refreshAccessToken(String refreshToken) {
+        if (isTokenExpired(refreshToken)) {
+            throw new RuntimeException("Refresh token is expired");
+        }
+        Claims claims = extractAllClaims(refreshToken);
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(claims.getSubject(), "", new ArrayList<>());
+        return generateToken(userDetails);
     }
 }
