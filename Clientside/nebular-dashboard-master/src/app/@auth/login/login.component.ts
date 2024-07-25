@@ -19,32 +19,6 @@ export class NgxLoginComponent extends NbLoginComponent {
   }
 
 
-  // login(): void {
-  //   this.errors = [];
-  //   this.messages = [];
-  //   this.submitted = true;
-
-  //   console.log('Login function called');
-
-  //   this.authService.login(this.user).subscribe({
-  //     next: (response) => {
-  //       console.log('Login response received:', response);
-  //       this.submitted = false;
-
-  //       if (response.message === "Change password then login") {
-  //         console.log('First login detected. Redirecting to change password page.');
-  //         // Store the email or any other necessary data for the password change page
-  //         localStorage.setItem('tempEmail', this.user.email);
-  //         this.router.navigate(['/auth/reset-password']);
-  //       } else if (response.message === "Authentication successful") {
-  //         console.log('Login successful. Access token stored in AuthService.');
-  //         this.router.navigate(['/pages/home']);
-  //       } else {
-  //         console.log('Unexpected response message:', response.message);
-  //         this.errors = ['Unexpected response from server. Please try again.'];
-  //         this.showMessages.error = true;
-  //       }
-  //     },
 
   login(): void {
     this.errors = [];

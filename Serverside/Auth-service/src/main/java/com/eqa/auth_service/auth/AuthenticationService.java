@@ -271,7 +271,16 @@ public class AuthenticationService {
         message.setTo(email);
         message.setSubject("Your New Account Password");
         message.setText("Dear user \n\nYour new account has been created. Here is your system-generated password: " + password + "\n\nPlease use this password to log in and change it immediately.\n\nRegards,\nEquity Afia");
-        javaMailSender.send(message);
+
+        try {
+            javaMailSender.send(message);
+            log.info("Password email sent successfully to: {}", email);
+        } catch (MailException e) {
+            log.error("Failed to send password email to: {}. Error: {}", email, e.getMessage());
+        }
+
+        // Log the message content (be cautious with sensitive information)
+        log.debug("Email content: {}", message.getText());
     }
 
     private void saveUserToken(User user, String jwtToken) {
