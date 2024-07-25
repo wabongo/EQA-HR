@@ -1,0 +1,90 @@
+<nb-card>
+    <nb-card-header>Create Facility</nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="facilityForm" (ngSubmit)="submit()">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-control-group">
+              <label class="label" for="clinicName">Clinic Name</label>
+              <input nbInput fullWidth id="clinicName" formControlName="clinicName">
+            </div>
+  
+            <div class="form-control-group">
+              <label class="label" for="dateOpened">Date Opened</label>
+              <input nbInput fullWidth id="dateOpened" formControlName="dateOpened" type="date">
+            </div>
+  
+            <div class="form-control-group">
+              <label class="label" for="province">Province</label>
+              <nb-select fullWidth placeholder="Select Province" formControlName="province" (selectedChange)="onProvinceChange($event)">
+                <nb-option *ngFor="let province of provinces" [value]="province.name">{{ province.name }}</nb-option>
+              </nb-select>
+            </div>
+  
+            <div class="form-control-group">
+              <label class="label" for="county">County</label>
+              <nb-select fullWidth placeholder="Select County" formControlName="county" (selectedChange)="onCountyChange($event)">
+                <nb-option *ngFor="let county of counties" [value]="county.name">{{ county.name }}</nb-option>
+              </nb-select>
+            </div>
+  
+            <div class="form-control-group">
+                <label class="label" for="subcounty">Subcounty</label>
+                <nb-select fullWidth placeholder="Select Subcounty" formControlName="subcounty">
+                  <nb-option *ngFor="let subcounty of subcounties" [value]="subcounty">{{ subcounty }}</nb-option>
+                </nb-select>
+              </div>
+  
+            <div class="form-control-group">
+              <label class="label" for="type">Facility Type</label>
+              <nb-select fullWidth placeholder="Select Facility Type" formControlName="type">
+                <nb-option [value]="FacilityType.HUB">HUB</nb-option>
+                <nb-option [value]="FacilityType.SATELLITE">SATELLITE</nb-option>
+                <nb-option [value]="FacilityType.SPOKE">SPOKE</nb-option>
+              </nb-select>
+            </div>
+          </div>
+  
+          <div class="col-md-6">
+            <div class="form-control-group">
+              <label class="label" for="physicalAddress">Physical Address</label>
+              <input nbInput fullWidth id="physicalAddress" formControlName="physicalAddress">
+            </div>
+  
+            <div class="form-control-group">
+              <label class="label" for="doctorInCharge">Doctor in Charge</label>
+              <input nbInput fullWidth id="doctorInCharge" formControlName="doctorInCharge">
+            </div>
+  
+            <div class="form-control-group">
+              <label class="label" for="clinicContact">Clinic Contact</label>
+              <input nbInput fullWidth id="clinicContact" formControlName="clinicContact">
+            </div>
+  
+            <div class="form-control-group">
+                <label class="label" for="llcName">LLC Name</label>
+                <nb-select fullWidth placeholder="Select LLC" formControlName="llcName">
+                  <nb-option *ngFor="let llc of llcs" [value]="llc.name">{{ llc.name }}</nb-option>
+                </nb-select>
+              </div>
+  
+            <div class="form-control-group">
+              <label class="label" for="franchiseeContact">Franchisee Contact</label>
+              <input nbInput fullWidth id="franchiseeContact" formControlName="franchiseeContact">
+            </div>
+  
+            <div class="form-control-group">
+              <label class="label" for="recruitmentEmail">Recruitment Email</label>
+              <input nbInput fullWidth id="recruitmentEmail" formControlName="recruitmentEmail" type="email">
+            </div>
+          </div>
+        </div>
+  
+        <div class="button-group">
+          <button nbButton status="primary" type="submit" [disabled]="!facilityForm.valid">Create</button>
+          <button nbButton status="basic" type="button" (click)="cancel()">Cancel</button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+  

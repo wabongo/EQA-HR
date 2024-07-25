@@ -1,7 +1,7 @@
 <nb-card>
     <nb-card-header>
-      <button nbButton status="primary" (click)="openCreateModal()">
-        <nb-icon icon="plus-outline"></nb-icon> CREATE FACILITY
+      <button nbButton status="primary" (click)="navigateToCreateFacility()">
+        <nb-icon icon="plus-outline"></nb-icon> CREATE Facility
       </button>
     </nb-card-header>
     <nb-card-body>
@@ -35,14 +35,14 @@
               <td>{{ facility.physicalAddress }}</td>
               <td>{{ facility.doctorInCharge }}</td>
               <td>{{ facility.clinicContact }}</td>
-              <td>{{ facility.llcName }}</td>
+              <td>{{ facility.companyName }}</td>
               <td>{{ facility.franchiseeContact }}</td>
               <td>{{ facility.recruitmentEmail }}</td>
               <td class="actions">
                 <button nbButton status="info" (click)="viewFacility(facility)">
                   <nb-icon icon="eye-outline"></nb-icon> 
                 </button>
-                <button nbButton status="success" (click)="openUpdateModal(facility)">
+                <button nbButton status="success" (click)="navigateToUpdateFacility(facility)">
                   <nb-icon icon="edit-outline"></nb-icon> 
                 </button>
                 <button nbButton status="danger" (click)="deleteFacility(facility.id)">
@@ -59,44 +59,3 @@
     </nb-card-body>
   </nb-card>
   
-  <style>
-  nb-card {
-    margin-bottom: 1rem;
-  }
-  
-  nb-card-header {
-    display: flex;
-    justify-content: flex-end;
-    padding: 1rem;
-  }
-  
-  .facility-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .facility-table th,
-  .facility-table td {
-    padding: 0.75rem;
-    text-align: left;
-    border-bottom: 1px solid #e0e0e0;
-  }
-  
-  .facility-table th {
-    font-weight: bold;
-    background-color: #f5f5f5;
-  }
-  
-  .facility-table .actions {
-    white-space: nowrap;
-  }
-  
-  .facility-table .actions button {
-    margin-right: 0.5rem;
-  }
-  
-  button[nbButton] {
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-  </style>

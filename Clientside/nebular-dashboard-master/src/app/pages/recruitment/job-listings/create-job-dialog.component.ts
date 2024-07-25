@@ -28,6 +28,8 @@ import { FacilityRequest } from '../../business/facilities/facility.model';
                 </nb-select>
           </div>
 
+
+
           <div class="form-control-group">
             <label class="label" for="description">Description</label>
             <textarea nbInput fullWidth id="description" formControlName="description" aria-describedby="descriptionError"></textarea>
@@ -49,6 +51,13 @@ import { FacilityRequest } from '../../business/facilities/facility.model';
               Deadline is required.
             </div>
           </div>
+
+          
+          <div class="form-control-group">
+            <label class="label" for="recruitmentEmail">Recruitment Email</label>
+            <input nbInput fullWidth id="recruitmentEmail" formControlName="recruitmentEmail" readonly>
+          </div>
+          
           <div class="button-group">
             <button nbButton status="primary" type="submit" [disabled]="!jobForm.valid">Create</button>
             <button nbButton status="basic" type="button" (click)="cancel()">Cancel</button>
@@ -99,6 +108,17 @@ export class CreateJobDialogComponent implements OnInit {
   ngOnInit() {
     this.loadFacilities();
   }
+
+
+  onFacilityChange(facilityId: number) {
+    const selectedFacility = this.facilities.find(f => f.id === facilityId);
+    if (selectedFacility) {
+      this.jobForm.patchValue({
+        recruitmentEmail: selectedFacility.recruitmentEmail
+      });
+    }
+  }
+
 
   loadFacilities() {
     this.facilityService.getFacilities().subscribe(

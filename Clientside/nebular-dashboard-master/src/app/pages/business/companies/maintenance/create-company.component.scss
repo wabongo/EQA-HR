@@ -1,0 +1,18 @@
+
+.form-control-group {
+  margin-bottom: 1rem;
+}
+.error-message {
+  color: red;
+  font-size: 0.875em;
+}
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+nb-card {
+  width: 1000px; /* Adjust the width as needed */
+  max-width: 100%;
+}

@@ -1,16 +1,42 @@
-server:
-  port: 9003
-
 spring:
+  profiles:
+    active: dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
   application:
     name: auth-service
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MSSQLServer
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
 
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  application:
+    name: auth-service
   datasource:
     url: jdbc:sqlserver://localhost;databaseName=eqa_hr
     username: sa
     password: Ma4isto0302.@
     driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
-
   jpa:
     show-sql: true
     hibernate:
@@ -19,7 +45,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.SQLServer2012Dialect
 
-
+---
+# Common configurations for both profiles
+spring:
   mail:
     host: smtp.gmail.com
     port: 587
@@ -32,6 +60,9 @@ spring:
           starttls:
             enable: true
     from: dwabbz@gmail.com
+
+server:
+  port: 9003
 
 eureka:
   client:

@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface JobPostRepository extends JpaRepository<JobPost, Long> {
+    
 }
