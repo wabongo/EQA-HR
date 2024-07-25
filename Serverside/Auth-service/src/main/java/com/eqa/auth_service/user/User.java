@@ -7,24 +7,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 
+@Builder
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Builder
+@Entity
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"email", "idNumber", "phoneNumber", "username"}))
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"email", "idNumber","phoneNumber","username"}))
 @EntityListeners(DataAuditListener.class)
-//public class User implements UserDetails {
 public class User extends DataAudit implements UserDetails {
 
     @Id
@@ -51,14 +47,9 @@ public class User extends DataAudit implements UserDetails {
     private boolean firstLogin = true;
     private boolean blacklisted = false;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Token> tokens;
-
-//    @CreatedBy
-//    private String createdBy;
-//
-//    @LastModifiedBy
-//    private String modifiedBy;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -94,5 +85,18 @@ public class User extends DataAudit implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", firstLogin=" + firstLogin +
+                ", blacklisted=" + blacklisted +
+                // Avoid including tokens directly to prevent recursion
+                '}';
     }
 }
