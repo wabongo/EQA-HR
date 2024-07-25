@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { RegisterRequest, ChangePasswordRequest } from './auth.models';
 
@@ -12,12 +13,15 @@ export class AuthService {
   private accessToken: string | null = null;
   private refreshToken: string | null = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    // Initialize tokens from localStorage on service creation
+    this.accessToken = localStorage.getItem('access_token');
+    this.refreshToken = localStorage.getItem('refresh_token');
+  }
 
   private log(message: string) {
     console.log(`AuthService: ${message}`);
   }
-
 
   login(credentials: any): Observable<any> {
     console.log('Credentials:', credentials);
@@ -36,37 +40,33 @@ export class AuthService {
   }
 
   getAccessToken(): string | null {
-    return localStorage.getItem('access_token');
+    return this.accessToken || localStorage.getItem('access_token');
   }
 
   getRefreshToken(): string | null {
-    return localStorage.getItem('refresh_token');
+    return this.refreshToken || localStorage.getItem('refresh_token');
   }
 
   setTokens(accessToken: string, refreshToken: string): void {
-    // Store tokens in the service and localStorage
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
     localStorage.setItem('access_token', accessToken);
     localStorage.setItem('refresh_token', refreshToken);
   }
 
-
-
-
   refreshTokenRequest(token: string): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.post<any>(`${this.userApi}/api/v1/auth/refresh-token`, {}, { headers }).pipe(
+    return this.http.post<{ access_token: string, refresh_token?: string }>(`${this.userApi}/api/v1/auth/refresh-token`, {}, { headers }).pipe(
       tap(response => {
-        localStorage.setItem('access_token', response.accessToken);
-        // Note: The backend sends back the same refresh token, so we don't need to update it
+        if (response && response.access_token) {
+          this.setTokens(response.access_token, response.refresh_token || this.getRefreshToken() || '');
+        }
       })
     );
   }
-
 
   register(data: RegisterRequest): Observable<any> {
     this.log('Attempting registration');
@@ -82,35 +82,40 @@ export class AuthService {
 
   logout(): Observable<any> {
     this.log('Attempting logout');
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken')
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    this.accessToken = null;
+    this.refreshToken = null;
     return this.http.post<any>(`${this.userApi}/api/v1/auth/logout`, {}, {
       headers: this.getAuthHeaders()
     }).pipe(
       tap(() => {
-        this.accessToken = null;
-        this.refreshToken = null;
         this.log('Tokens cleared from memory');
       })
     );
   }
 
-// In your auth.service.ts
-refreshAccessToken(): Observable<any> {
-  const refreshToken = localStorage.getItem('refreshToken');
-  return this.http.post<any>(`${this.userApi}/auth/refresh-token`, { refreshToken }).pipe(
-    tap(response => {
-      if (response && response.accessToken) {
-        localStorage.setItem('accessToken', response.accessToken);
-      }
-    })
-  );
-}
+  refreshAccessToken(): Observable<any> {
+    const refreshToken = this.getRefreshToken();
+    if (!refreshToken) {
+      return throwError(() => new Error('No refresh token available'));
+    }
+    return this.http.post<{ access_token: string }>(`${this.userApi}/api/v1/auth/refresh-token`, {}, {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${refreshToken}`
+      })
+    }).pipe(
+      tap(response => {
+        if (response && response.access_token) {
+          this.setTokens(response.access_token, this.getRefreshToken() || '');
+        }
+      })
+    );
+  }
 
   private getAuthHeaders(): HttpHeaders {
     return new HttpHeaders({
-      'Authorization': `Bearer ${this.accessToken}`
+      'Authorization': `Bearer ${this.getAccessToken()}`
     });
   }
-
 }
