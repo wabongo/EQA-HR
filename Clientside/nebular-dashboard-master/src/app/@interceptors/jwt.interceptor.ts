@@ -15,31 +15,24 @@ export class JWTInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.shouldAddToken(request)) {
       const token = this.authService.getAccessToken();
-      if (token) {
-        if (this.isTokenExpired(token)) {
-          console.log('Token is expired, refreshing');
-          return this.handleExpiredToken(request, next);
-        } else {
-          console.log('Adding valid token to request');
-          request = this.addToken(request, token);
-        }
-      } else {
-        console.log('No token found, proceeding without token');
-
+      if (!token) {
+        console.log('No token found, redirecting to login page');
         this.router.navigate(['/login']);
-        return throwError(() => new Error('Authentication required'));
+        return throwError(() => new Error('Redirecting to login page due to missing token'));
       }
-    } else {
-      console.log('Not adding token to request');
+
+      if (this.isTokenExpired(token)) {
+        return this.handleExpiredToken(request, next);
+      } else {
+        request = this.addToken(request, token);
+      }
     }
 
     return next.handle(request).pipe(
       catchError(error => {
         if (error instanceof HttpErrorResponse && error.status === 401) {
-          console.log('Caught 401 error, handling');
           return this.handle401Error(request, next);
         } else {
-          console.error('Error in interceptor:', error);
           return throwError(() => error);
         }
       })
@@ -86,7 +79,6 @@ export class JWTInterceptor implements HttpInterceptor {
     try {
       const tokenParts = token.split('.');
       if (tokenParts.length !== 3) {
-        console.log('Invalid token format');
         return true;
       }
 
@@ -94,12 +86,8 @@ export class JWTInterceptor implements HttpInterceptor {
       const expiryTime = payload.exp * 1000; // Convert to milliseconds
       const currentTime = Date.now();
 
-      console.log('Token expiry time:', new Date(expiryTime));
-      console.log('Current time:', new Date(currentTime));
-
       return currentTime > expiryTime;
     } catch (error) {
-      console.error('Error parsing token:', error);
       return true;
     }
   }
