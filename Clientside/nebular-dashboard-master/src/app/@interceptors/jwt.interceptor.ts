@@ -93,7 +93,7 @@ export class JWTInterceptor implements HttpInterceptor {
   }
 
   private shouldAddToken(request: HttpRequest<any>): boolean {
-    const excludedRoutes = ['/api/v1/auth/authenticate', '/api/v1/auth/register', '/api/v1/auth/refresh-token'];
+    const excludedRoutes = ['/api/v1/auth/authenticate', '/api/v1/auth/register', '/api/v1/auth/refresh-token', '/api/v1/auth/change-password'];
     return !excludedRoutes.some(url => request.url.includes(url));
   }
 
