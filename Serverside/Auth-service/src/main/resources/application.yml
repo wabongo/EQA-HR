@@ -3,33 +3,33 @@ spring:
     active: dev
 
 ---
-spring:
-  config:
-    activate:
-      on-profile: dev
-  application:
-    name: auth-service
-  datasource:
-    url: jdbc:h2:mem:testdb;MODE=MSSQLServer
-    username: sa
-    password: password
-    driver-class-name: org.h2.Driver
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
-  h2:
-    console:
-      enabled: true
+#spring:
+#  config:
+#    activate:
+#      on-profile: dev
+#  application:
+#    name: auth-service
+#  datasource:
+#    url: jdbc:h2:mem:testdb;MODE=MSSQLServer
+#    username: sa
+#    password: password
+#    driver-class-name: org.h2.Driver
+#  jpa:
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.H2Dialect
+#  h2:
+#    console:
+#      enabled: true
 
 ---
 spring:
   config:
     activate:
-      on-profile: prod
+      on-profile: dev
   application:
     name: auth-service
   datasource:

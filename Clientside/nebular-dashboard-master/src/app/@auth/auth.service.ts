@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { RegisterRequest, ChangePasswordRequest } from './auth.models';
 
@@ -14,7 +14,6 @@ export class AuthService {
   private refreshToken: string | null = null;
 
   constructor(private http: HttpClient) {
-    // Initialize tokens from localStorage on service creation
     this.accessToken = localStorage.getItem('access_token');
     this.refreshToken = localStorage.getItem('refresh_token');
   }
@@ -24,10 +23,8 @@ export class AuthService {
   }
 
   login(credentials: any): Observable<any> {
-    // console.log('Credentials:', credentials);
     return this.http.post<any>(`${this.userApi}/api/v1/auth/authenticate`, credentials).pipe(
       tap(response => {
-        console.log('Full response:', response);
         if (response.message === "Authentication successful" && response.data) {
           if (response.data.access_token && response.data.refresh_token) {
             this.setTokens(response.data.access_token, response.data.refresh_token);

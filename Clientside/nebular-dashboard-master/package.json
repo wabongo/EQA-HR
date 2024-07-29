@@ -39,6 +39,7 @@
     "undici": "^6.18.2",
     "vite": "^5.2.13",
     "webpack-dev-middleware": "^7.2.1",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.14.2"
   },
   "devDependencies": {

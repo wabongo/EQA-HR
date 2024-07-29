@@ -5,22 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8421f6c7-68f8-44a8-8233-26ceaa72f356" name="Changes" comment="">
+
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/@interceptors/jwt.interceptor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/@interceptors/jwt.interceptor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/user-management/user-list/user-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/user-management/user-list/user-list.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/user-management/user-list/user-list.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/user-management/user-list/user-list.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/user-management/user-list/user-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/user-management/user-list/user-list.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/user-management/user-management.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/user-management/user-management.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/user-management/user-management.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/user-management/user-management.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<<< HEAD
-=======
-      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/AuthServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/AuthServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/auditing/ApplicationAuditAware.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/auditing/data_audit/DataAudit.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/auditing/data_audit/DataAudit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/auditing/data_audit/DataAuditListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/auditing/data_audit/DataAuditListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/auth/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/auth/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/config/ApplicationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/config/ApplicationConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/config/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/config/JwtAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/config/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/config/SecurityContextHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/config/SecurityContextHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/user/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/user/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/java/com/eqa/auth_service/user/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" afterDir="false" />
->>>>>>> 5604bb1f7eeba8504bfb9d70353feab2224c5b78
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,21 +63,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Auth-service [:AuthServiceApplication.main()].executor": "Run",
-    "Gradle.api-gateway [:ApiGatewayApplication.main()].executor": "Run",
-    "Gradle.eureka [:EurekaApplication.main()].executor": "Run",
-    "Gradle.recruitment-service [:RecruitmentServiceApplication.main()].executor": "Run",
-    "Gradle.systemConfig [:SystemConfigApplication.main()].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "david",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/sophia.njoroge/EGF/EQA-HR/Serverside",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Auth-service [:AuthServiceApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-gateway [:ApiGatewayApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.eureka [:EurekaApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.recruitment-service [:RecruitmentServiceApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.systemConfig [:SystemConfigApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;david&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sophia.njoroge/EGF/EQA-HR/Serverside&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Application.RecruitmentServiceApplication">
+}</component>
+  <component name="RunManager" selected="Application.SystemConfigApplication">
     <configuration name="ApiGatewayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.eqa.api_gateway.ApiGatewayApplication" />
       <module name="api-gateway.main" />
@@ -168,5 +163,8 @@
       <updated>1721036059531</updated>
     </task>
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>
