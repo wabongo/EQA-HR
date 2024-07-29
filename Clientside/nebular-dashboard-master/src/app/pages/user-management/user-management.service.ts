@@ -62,12 +62,14 @@ export class UserManagementService {
             } else if (error.status === 403) {
                 // Handle forbidden access - possibly invalid permissions or token issues
                 console.error('Forbidden access - check permissions or token validity');
+                this.router.navigate(['/auth/login']); // Redirect to login page
                 return of([]); // Return an empty observable to handle the case gracefully
             } else if (error.status === 404) {
                 console.error('Users not found - please check the endpoint or data');
                 return of([]); // Return an empty observable to handle the case gracefully
             } else {
                 console.error('An unexpected error occurred:', error.message);
+                this.router.navigate(['/auth/login']); // Redirect to login page
                 return of([]); // Return an empty observable to handle the case gracefully
             }
         })

@@ -1,21 +1,60 @@
 <nb-card>
   <nb-card-header>
-    <button nbButton status="primary" class="float-right" (click)="navigateToCreateUser()">
-      <nb-icon icon="plus-outline"></nb-icon> Create User
-    </button>
+    <div class="header-title">
+      <h3>User Management</h3>
+    </div>
+    <div class="search-export-create">
+      <input type="text" nbInput fullWidth placeholder="Search users..." [(ngModel)]="searchQuery" (ngModelChange)="searchUsers()">
+      <button nbButton status="primary" (click)="navigateToCreateUser()">
+        <nb-icon icon="plus-outline"></nb-icon> Create User
+      </button>
+      <button nbButton status="info" (click)="exportData()">
+        <nb-icon icon="download-outline"></nb-icon> Export
+      </button>
+    </div>
   </nb-card-header>
   <nb-card-body>
     <div *ngIf="users && users.length > 0; else noUsers">
       <table class="user-table">
         <thead>
           <tr>
-            <th>Username</th>
-            <th>Email</th>
+            <th (click)="sort('username')">
+              Username
+              <nb-icon *ngIf="sortField === 'username'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+            </th>
+            <th (click)="sort('designation')">
+              Designation
+              <nb-icon *ngIf="sortField === 'designation'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+            </th>
+            <th (click)="sort('facility')">
+              Facility
+              <nb-icon *ngIf="sortField === 'facility'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+            </th>
+            <th (click)="sort('idNumber')">
+              ID Number
+              <nb-icon *ngIf="sortField === 'idNumber'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+            </th>
+            <th (click)="sort('phoneNumber')">
+              Phone Number
+              <nb-icon *ngIf="sortField === 'phoneNumber'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+            </th>
+            <th (click)="sort('email')">
+              Email
+              <nb-icon *ngIf="sortField === 'email'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+            </th>
+            <th (click)="sort('role')">
+              Role
+              <nb-icon *ngIf="sortField === 'role'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+            </th>
+            <th (click)="sort('terms')">
+              Terms
+              <nb-icon *ngIf="sortField === 'terms'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+            </th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of users">
+          <tr *ngFor="let user of paginatedUsers">
             <td>{{ user.username }}</td>
             <td>{{ user.designation }}</td>
             <td>{{ user.facility }}</td>
@@ -25,22 +64,33 @@
             <td>{{ user.role }}</td>
             <td>{{ user.terms }}</td>
             <td class="actions">
-              <!-- <button nbButton status="info" (click)="viewUser(user)">
-                <nb-icon icon="eye-outline"></nb-icon> 
+              <button nbButton status="info" size="small" (click)="viewUser(user)">
+                <nb-icon icon="eye-outline"></nb-icon>
               </button>
-              <button nbButton status="success" (click)="openUpdateModal(user)">
-                <nb-icon icon="edit-outline"></nb-icon> 
+              <button nbButton status="success" size="small">
+                <nb-icon icon="edit-outline"></nb-icon>
               </button>
-              <button nbButton status="danger" (click)="deleteUser(user.id)">
-                <nb-icon icon="trash-2-outline"></nb-icon> 
+              <button nbButton status="danger" size="small">
+                <nb-icon icon="trash-2-outline"></nb-icon>
+              </button>
+              <!-- <button nbButton status="warning" size="small" (click)="bulkDelete()">
+                <nb-icon icon="trash-2-outline"></nb-icon> Bulk Delete
               </button> -->
             </td>
           </tr>
         </tbody>
       </table>
+      <div class="app-pagination">
+        <app-pagination 
+          [totalItems]="totalItems" 
+          [pageSize]="pageSize" 
+          [currentPage]="currentPage" 
+          (pageChange)="onPageChange($event)">
+        </app-pagination>
+      </div>      
     </div>
     <ng-template #noUsers>
-      <p class="text-center">No users available.</p>
+      <p class="text-center text-muted">No users available.</p>
     </ng-template>
   </nb-card-body>
 </nb-card>
