@@ -5,49 +5,13 @@
     </button>
   </nb-card-header>
   <nb-card-body>
-    <div *ngIf="companyRequests && companyRequests.length > 0; else noCompanies">
-      <table class="company-table">
-        <thead>
-          <tr>
-            <th>Region</th>
-            <th>Province</th>
-            <th>County</th>
-            <th>LLC Name</th>
-            <th>Franchisee</th>
-            <th>Phone Number</th>
-            <th>Email</th>
-            <th>KRA Pin</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let company of companyRequests">
-            <td>{{ company.region }}</td>
-            <td>{{ company.province }}</td>
-            <td>{{ company.county }}</td>
-            <td>{{ company.name }}</td>
-            <td>{{ company.franchisee }}</td>
-            <td>{{ company.phoneNumber }}</td>
-            <td>{{ company.email }}</td>
-            <td>{{ company.kraPin }}</td>
-            <td class="actions">
-              <button nbButton status="info" (click)="viewCompany(company)">
-                <nb-icon icon="eye-outline"></nb-icon> 
-              </button>
-              <button nbButton status="success" (click)="openUpdateModal(company)">
-                <nb-icon icon="edit-outline"></nb-icon> 
-              </button>
-              <button nbButton status="danger" (click)="deleteCompany(company.id)">
-                <nb-icon icon="trash-2-outline"></nb-icon> 
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <ng-template #noCompanies>
-      <p class="text-center">No companies available.</p>
-    </ng-template>
+    <app-smart-table
+      [data]="companyRequests"
+      [columns]="columns"
+      [itemsPerPage]="10"
+      (updateRow)="openUpdateModal($event)"
+      (deleteRow)="deleteCompany($event.id)"
+      (createRow)="navigateToCreateCompany()">
+    </app-smart-table>
   </nb-card-body>
 </nb-card>
-
