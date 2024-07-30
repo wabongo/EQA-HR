@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
@@ -36,6 +38,12 @@ public class UserController {
     @GetMapping("/get/by/idNumber/{idNumber}")
     public ResponseEntity<?> getUserByIdNumber(@PathVariable("idNumber") String idNumber) {
         ApiResponse<?> response = userService.getUserByIdNumber(idNumber);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<?> getUserProfile(Principal principal) {
+        ApiResponse<?> response = userService.getUserProfile(principal);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 }

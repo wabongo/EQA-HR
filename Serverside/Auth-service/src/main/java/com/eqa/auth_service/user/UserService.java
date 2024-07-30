@@ -114,4 +114,26 @@ public class UserService {
             return new ApiResponse<>("An error occurred while fetching users.", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
     }
+
+    public ApiResponse<?> getUserProfile(Principal principal) {
+        try {
+            // Get the email (or username) of the currently authenticated user
+            String email = principal.getName();
+
+            // Use the email to fetch the user's profile from the database
+            Optional<User> userOptional = userRepository.findByEmail(email);
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                UserResponse userResponse = modelMapper.map(user, UserResponse.class);
+
+                return new ApiResponse<>("User profile fetched successfully.", userResponse, HttpStatus.OK.value());
+            } else {
+                return new ApiResponse<>("User not found.", null, HttpStatus.NOT_FOUND.value());
+            }
+        } catch (Exception e) {
+            log.error("An error occurred while fetching user profile.", e);
+            return new ApiResponse<>("An error occurred while fetching user profile.", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+    }
+
 }
