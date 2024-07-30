@@ -5,4 +5,5 @@ export interface JoblistingsRequest {
   facility: string;
   requirements: string;
   deadline: Date;
+  jobType: string;
 }
