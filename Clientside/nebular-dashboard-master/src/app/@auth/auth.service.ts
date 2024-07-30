@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { RegisterRequest, ChangePasswordRequest } from './auth.models';
 
@@ -12,6 +12,11 @@ export class AuthService {
   private userApi = environment.userApi;
   private accessToken: string | null = null;
   private refreshToken: string | null = null;
+
+  private currentUserSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public user$ = this.currentUserSubject.asObservable();
+
+  private profileFetched = false; // Flag to prevent multiple fetches
 
   constructor(private http: HttpClient) {
     this.accessToken = localStorage.getItem('access_token');
@@ -25,7 +30,7 @@ export class AuthService {
   login(credentials: any): Observable<any> {
     return this.http.post<any>(`${this.userApi}/api/v1/auth/authenticate`, credentials).pipe(
       tap(response => {
-        if (response.message === "Authentication successful" && response.data) {
+        if (response.message === 'Authentication successful' && response.data) {
           if (response.data.access_token && response.data.refresh_token) {
             this.setTokens(response.data.access_token, response.data.refresh_token);
           } else {
@@ -34,6 +39,32 @@ export class AuthService {
         }
       })
     );
+  }
+
+  getCurrentUser(): Observable<any> {
+    return this.user$;
+  }
+
+  private fetchUserProfile(): Observable<any> {
+    return this.http.get<any>(`${this.userApi}/api/v1/users/profile`, {
+      headers: this.getAuthHeaders()
+    }).pipe(
+      tap(user => {
+        this.log('User profile fetched');
+        this.currentUserSubject.next(user.data); // Update the BehaviorSubject with user data
+      }),
+      catchError(error => {
+        console.error('Error fetching user profile:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  updateUserProfile(): void {
+    if (!this.profileFetched) { // Check if profile has already been fetched
+      this.profileFetched = true;
+      this.fetchUserProfile().subscribe();
+    }
   }
 
   getAccessToken(): string | null {
@@ -49,6 +80,7 @@ export class AuthService {
     this.refreshToken = refreshToken;
     localStorage.setItem('access_token', accessToken);
     localStorage.setItem('refresh_token', refreshToken);
+    this.updateUserProfile(); // Update user profile when tokens are set
   }
 
   refreshTokenRequest(token: string): Observable<any> {
@@ -88,6 +120,7 @@ export class AuthService {
     }).pipe(
       tap(() => {
         this.log('Tokens cleared from memory');
+        this.currentUserSubject.next(null); // Clear user on logout
       })
     );
   }
