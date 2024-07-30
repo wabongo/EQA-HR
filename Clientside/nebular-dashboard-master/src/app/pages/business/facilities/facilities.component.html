@@ -1,61 +1,16 @@
 <nb-card>
-    <nb-card-header>
-      <button nbButton status="primary" (click)="navigateToCreateFacility()">
-        <nb-icon icon="plus-outline"></nb-icon> CREATE Facility
-      </button>
-    </nb-card-header>
-    <nb-card-body>
-      <div *ngIf="facilityRequests && facilityRequests.length > 0; else noFacilities">
-        <table class="facility-table">
-          <thead>
-            <tr>
-              <th>Clinic Name</th>
-              <th>Date Opened</th>
-              <th>Province</th>
-              <th>County</th>
-              <th>Subcounty</th>
-              <th>Type</th>
-              <th>Physical Address</th>
-              <th>Doctor in Charge</th>
-              <th>Clinic Contact</th>
-              <th>LLC Name</th>
-              <th>Franchisee Contact</th>
-              <th>Recruitment Email</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let facility of facilityRequests">
-              <td>{{ facility.clinicName }}</td>
-              <td>{{ facility.dateOpened | date:'shortDate' }}</td>
-              <td>{{ facility.province }}</td>
-              <td>{{ facility.county }}</td>
-              <td>{{ facility.subcounty }}</td>
-              <td>{{ facility.type }}</td>
-              <td>{{ facility.physicalAddress }}</td>
-              <td>{{ facility.doctorInCharge }}</td>
-              <td>{{ facility.clinicContact }}</td>
-              <td>{{ facility.companyName }}</td>
-              <td>{{ facility.franchiseeContact }}</td>
-              <td>{{ facility.recruitmentEmail }}</td>
-              <td class="actions">
-                <button nbButton status="info" (click)="viewFacility(facility)">
-                  <nb-icon icon="eye-outline"></nb-icon> 
-                </button>
-                <button nbButton status="success" (click)="navigateToUpdateFacility(facility)">
-                  <nb-icon icon="edit-outline"></nb-icon> 
-                </button>
-                <button nbButton status="danger" (click)="deleteFacility(facility.id)">
-                  <nb-icon icon="trash-2-outline"></nb-icon> 
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <ng-template #noFacilities>
-        <p class="text-center">No facilities available.</p>
-      </ng-template>
-    </nb-card-body>
-  </nb-card>
-  
+  <nb-card-header>
+    <button nbButton status="primary" (click)="navigateToCreateFacility()">
+      <nb-icon icon="plus-outline"></nb-icon> CREATE Facility
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <app-smart-table
+      [data]="facilityRequests"
+      [columns]="columns"
+      [itemsPerPage]="10"
+      (updateRow)="navigateToUpdateFacility($event)"
+      (deleteRow)="deleteFacility($event)">
+    </app-smart-table>
+  </nb-card-body>
+</nb-card>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
@@ -23,6 +23,34 @@ export class JobListingsService {
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
+  }
+
+
+  getDepartments(): Observable<string[]> {
+    return this.http.get<ApiResponse<string[]>>(`${this.userApi}/departments`, { headers: this.getHeaders() })
+      .pipe(map(response => response.entity));
+  }
+
+  getJobTypes(): Observable<string[]> {
+    return this.http.get<ApiResponse<string[]>>(`${this.userApi}/job-types`, { headers: this.getHeaders() })
+      .pipe(map(response => response.entity));
+  }
+
+  getDesignations(): Observable<string[]> {
+    return this.http.get<ApiResponse<string[]>>(`${this.userApi}/designations`, { headers: this.getHeaders() })
+      .pipe(map(response => response.entity));
+  }
+
+  searchJobs(filters: any): Observable<JoblistingsRequest[]> {
+    let params = new HttpParams();
+    if (filters.department) params = params.set('department', filters.department);
+    if (filters.jobType) params = params.set('jobType', filters.jobType);
+    if (filters.designation) params = params.set('designation', filters.designation);
+
+    return this.http.get<ApiResponse<JoblistingsRequest[]>>(`${this.userApi}/search`, { 
+      headers: this.getHeaders(),
+      params: params
+    }).pipe(map(response => response.entity));
   }
 
   getAllJobPosts(): Observable<JoblistingsRequest[]> {
@@ -88,4 +116,11 @@ export class JobListingsService {
       })
     );
   }
+
+}
+
+interface ApiResponse<T> {
+  message: string;
+  entity: T;
+  statusCode: number;
 }

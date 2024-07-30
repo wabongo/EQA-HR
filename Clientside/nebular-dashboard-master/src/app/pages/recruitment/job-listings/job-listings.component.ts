@@ -7,6 +7,12 @@ import { UpdateJobDialogComponent } from './update-job-dialog.component';
 import { ViewJobDialogComponent } from './view-job-dialog.component';
 import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog.component';
 
+interface JobFilters {
+  department?: string;
+  jobType?: string;
+  designation?: string;
+}
+
 @Component({
   selector: 'app-job-listings',
   templateUrl: './job-listings.component.html',
@@ -14,6 +20,20 @@ import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog.component'
 })
 export class JobListingsComponent implements OnInit {
   jobPosts: JoblistingsRequest[] = [];
+  filteredJobPosts: JoblistingsRequest[] = [];
+  currentPage = 1;
+  pageSize = 6;
+  rangeSize = 5;
+  totalJobs = 0;
+  totalPages = 0;
+
+  // New properties
+  departments: string[] = [];
+  jobTypes: string[] = [];
+  designations: string[] = [];
+  selectedDepartment: string = '';
+  selectedJobType: string = '';
+  selectedDesignation: string = '';
 
   constructor(
     private jobListingsService: JobListingsService,
@@ -22,17 +42,60 @@ export class JobListingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadJobPosts();
+    this.loadFilterOptions();
   }
 
   loadJobPosts(): void {
     this.jobListingsService.getAllJobPosts().subscribe({
       next: (data) => {
         this.jobPosts = data;
+        this.totalJobs = this.jobPosts.length;
+        this.totalPages = Math.ceil(this.totalJobs / this.pageSize);
+        this.applyFiltersAndPagination();
       },
       error: (error) => {
         console.error('Error fetching job posts:', error);
       }
     });
+  }
+
+  loadFilterOptions(): void {
+    this.jobListingsService.getDepartments().subscribe(depts => this.departments = depts);
+    this.jobListingsService.getJobTypes().subscribe(types => this.jobTypes = types);
+    this.jobListingsService.getDesignations().subscribe(desigs => this.designations = desigs);
+  }
+
+  searchJobs(): void {
+    const filters: JobFilters = {
+      department: this.selectedDepartment || undefined,
+      jobType: this.selectedJobType || undefined,
+      designation: this.selectedDesignation || undefined
+    };
+    
+    this.jobListingsService.searchJobs(filters).subscribe({
+      next: (data) => {
+        this.jobPosts = data;
+        this.totalJobs = this.jobPosts.length;
+        this.totalPages = Math.ceil(this.totalJobs / this.pageSize);
+        this.currentPage = 1;
+        this.applyFiltersAndPagination();
+      },
+      error: (error) => {
+        console.error('Error searching job posts:', error);
+      }
+    });
+  }
+
+  applyFiltersAndPagination(): void {
+    // Apply pagination
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.filteredJobPosts = this.jobPosts.slice(startIndex, endIndex);
+  }
+
+  onPageChange(pageNumber: number): void {
+    this.currentPage = pageNumber;
+    this.applyFiltersAndPagination();
   }
 
   openCreateModal() {

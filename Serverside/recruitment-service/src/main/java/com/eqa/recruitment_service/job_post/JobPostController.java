@@ -19,6 +19,44 @@ public class JobPostController {
     private final JobPostService jobPostService;
     private static final Logger logger = LoggerFactory.getLogger(JobPostController.class);
 
+
+
+    @GetMapping("/departments")
+    public ResponseEntity<?> getDepartments() {
+        logger.info("Received request for all departments");
+        ApiResponse<?> response = jobPostService.getDepartments();
+        logger.info("Returning response with status: {}", response.getStatusCode());
+        return ResponseEntity.status(response.getStatusCode()).body(response);
+    }
+
+    @GetMapping("/job-types")
+    public ResponseEntity<?> getJobTypes() {
+        logger.info("Received request for all job types");
+        ApiResponse<?> response = jobPostService.getJobTypes();
+        logger.info("Returning response with status: {}", response.getStatusCode());
+        return ResponseEntity.status(response.getStatusCode()).body(response);
+    }
+
+    @GetMapping("/designations")
+    public ResponseEntity<?> getDesignations() {
+        logger.info("Received request for all designations");
+        ApiResponse<?> response = jobPostService.getDesignations();
+        logger.info("Returning response with status: {}", response.getStatusCode());
+        return ResponseEntity.status(response.getStatusCode()).body(response);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchJobs(
+            @RequestParam(required = false) String department,
+            @RequestParam(required = false) String jobType,
+            @RequestParam(required = false) String designation) {
+        logger.info("Received search request with params - department: {}, jobType: {}, designation: {}",
+                department, jobType, designation);
+        ApiResponse<?> response = jobPostService.searchJobs(department, jobType, designation);
+        logger.info("Returning response with status: {}", response.getStatusCode());
+        return ResponseEntity.status(response.getStatusCode()).body(response);
+    }
+
     @GetMapping
     public ResponseEntity<?> getAllJobPosts(Authentication authentication) {
         logger.info("Received request for all job posts. User: {}", authentication.getName());
@@ -59,4 +97,6 @@ public class JobPostController {
         logger.info("Returning response with status: {}", response.getStatusCode());
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
+
+
 }

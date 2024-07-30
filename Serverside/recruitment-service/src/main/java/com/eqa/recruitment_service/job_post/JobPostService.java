@@ -22,6 +22,59 @@ public class JobPostService {
     private final JobPostRepository jobPostRepository;
     private final ModelMapper modelMapper;
 
+
+
+    public ApiResponse<?> getDepartments() {
+        try {
+            log.info("Fetching all departments");
+            List<String> departments = jobPostRepository.findDistinctFacilities();
+            log.info("Found {} distinct departments", departments.size());
+            return new ApiResponse<>("Departments fetched successfully", departments, HttpStatus.OK.value());
+        } catch (Exception e) {
+            log.error("Error fetching departments: ", e);
+            return new ApiResponse<>("An error occurred while fetching departments.", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+    }
+
+    public ApiResponse<?> getJobTypes() {
+        try {
+            log.info("Fetching all job types");
+            List<String> jobTypes = jobPostRepository.findDistinctJobTypes();
+            log.info("Found {} distinct job types", jobTypes.size());
+            return new ApiResponse<>("Job types fetched successfully", jobTypes, HttpStatus.OK.value());
+        } catch (Exception e) {
+            log.error("Error fetching job types: ", e);
+            return new ApiResponse<>("An error occurred while fetching job types.", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+    }
+
+    public ApiResponse<?> getDesignations() {
+        try {
+            log.info("Fetching all designations");
+            List<String> designations = jobPostRepository.findDistinctDesignations();
+            log.info("Found {} distinct designations", designations.size());
+            return new ApiResponse<>("Designations fetched successfully", designations, HttpStatus.OK.value());
+        } catch (Exception e) {
+            log.error("Error fetching designations: ", e);
+            return new ApiResponse<>("An error occurred while fetching designations.", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+    }
+
+    public ApiResponse<?> searchJobs(String department, String jobType, String designation) {
+        try {
+            log.info("Searching jobs with department: {}, jobType: {}, designation: {}", department, jobType, designation);
+            List<JobPost> jobPosts = jobPostRepository.searchJobs(department, jobType, designation);
+            List<JobPostResponse> jobPostResponses = jobPosts.stream()
+                    .map(jobPost -> modelMapper.map(jobPost, JobPostResponse.class))
+                    .collect(Collectors.toList());
+            log.info("Found {} matching job posts", jobPostResponses.size());
+            return new ApiResponse<>("Job posts fetched successfully", jobPostResponses, HttpStatus.OK.value());
+        } catch (Exception e) {
+            log.error("Error searching job posts: ", e);
+            return new ApiResponse<>("An error occurred while searching job posts.", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+    }
+
     public ApiResponse<?> getAllJobPosts() {
         try {
             log.info("Fetching all job posts");

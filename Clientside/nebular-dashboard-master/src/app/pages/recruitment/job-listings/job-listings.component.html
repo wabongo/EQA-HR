@@ -1,12 +1,27 @@
 <nb-card>
-  <nb-card-header>
-    <button nbButton status="primary" class="float-right" (click)="openCreateModal()">
+  <nb-card-header class="job-listings-header">
+    <div class="search-filters">
+      <nb-select [(selected)]="selectedDepartment" placeholder="Department">
+        <nb-option value="">All Departments</nb-option>
+        <nb-option *ngFor="let dept of departments" [value]="dept">{{ dept }}</nb-option>
+      </nb-select>
+      <nb-select [(selected)]="selectedJobType" placeholder="Job Type">
+        <nb-option value="">All Job Types</nb-option>
+        <nb-option *ngFor="let type of jobTypes" [value]="type">{{ type }}</nb-option>
+      </nb-select>
+      <nb-select [(selected)]="selectedDesignation" placeholder="Designation">
+        <nb-option value="">All Designations</nb-option>
+        <nb-option *ngFor="let desig of designations" [value]="desig">{{ desig }}</nb-option>
+      </nb-select>
+      <button nbButton status="primary" (click)="searchJobs()">Search</button>
+    </div>
+    <button nbButton status="success" (click)="openCreateModal()">
       <nb-icon icon="plus-outline"></nb-icon> Create Job Post
     </button>
   </nb-card-header>
   <nb-card-body>
-    <div *ngIf="jobPosts && jobPosts.length > 0; else noJobs" class="grid grid-cols-2 gap-4">
-      <nb-card *ngFor="let job of jobPosts" class="job-card shadow-lg">
+    <div *ngIf="filteredJobPosts && filteredJobPosts.length > 0; else noJobs" class="grid grid-cols-2 gap-4">
+      <nb-card *ngFor="let job of filteredJobPosts" class="job-card shadow-lg">
         <nb-card-header>
           <h4>{{ job.designation }}</h4>
         </nb-card-header>
@@ -14,17 +29,17 @@
           <p><strong>Facility:</strong> {{ job.facility }}</p>
           <p><strong>Description:</strong> {{ job.description }}</p>
           <p><strong>Requirements:</strong> {{ job.requirements }}</p>
-          <p><strong>Deadline:</strong> {{ job.deadline }}</p>
+          <p><strong>Deadline:</strong> {{ job.deadline | date:'mediumDate' }}</p>
         </nb-card-body>
         <nb-card-footer class="button-container">
           <button nbButton status="info" (click)="viewJob(job)">
-            <nb-icon icon="eye-outline"></nb-icon> View
+            <nb-icon icon="eye-outline"></nb-icon> 
           </button>
           <button nbButton status="success" (click)="openUpdateModal(job)">
-            <nb-icon icon="edit-outline"></nb-icon> Update
+            <nb-icon icon="edit-outline"></nb-icon> 
           </button>
           <button nbButton status="danger" (click)="deleteJob(job.id)">
-            <nb-icon icon="trash-2-outline"></nb-icon> Delete
+            <nb-icon icon="trash-2-outline"></nb-icon> 
           </button>
         </nb-card-footer>
       </nb-card>
@@ -33,27 +48,11 @@
       <p class="text-center">No job posts available.</p>
     </ng-template>
   </nb-card-body>
+  <nb-card-footer *ngIf="totalPages > 1">
+    <nb-paginator
+      [page]="currentPage"
+      [pageSize]="pageSize"
+      [rangeSize]="rangeSize"
+      [total]="totalJobs"></nb-paginator>
+  </nb-card-footer>
 </nb-card>
-
-<style>
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1rem;
-  }
-
-  .job-card {
-    border-radius: 0.5rem;
-  }
-
-  .button-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1rem;
-  }
-
-  .button-container button {
-    flex: 1;
-    margin-right: 0.5rem; /* Adjust as needed */
-  }
-</style>
