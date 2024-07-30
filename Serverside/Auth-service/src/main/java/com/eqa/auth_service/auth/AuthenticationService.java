@@ -112,8 +112,13 @@ public class AuthenticationService {
             User savedUser = repository.save(user);
             log.info("User registered successfully with email: {}", savedUser.getEmail());
 
-            // Send generated password to the user's email
-            sendPasswordEmail(savedUser.getEmail(), generatedPassword);
+            try {
+                sendPasswordEmail(savedUser.getEmail(), generatedPassword);
+            } catch (Exception e) {
+                log.error("Failed to send password email for user: {}. Error: {}", savedUser.getEmail(), e.getMessage(), e);
+                // Depending on your requirements, you might want to return an error response here
+                 return new ApiResponse<>("User registered but failed to send email", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            }
 
             // Generate JWT and refresh tokens
             String jwtToken = jwtService.generateToken(user);
@@ -238,7 +243,6 @@ public class AuthenticationService {
 
         log.error("Current password does not match for user: {}", request.getEmail());
         return new ApiResponse<>("Current password is incorrect", null, HttpStatus.UNAUTHORIZED.value());
-
     }
 
     private ApiResponse<String> handleFirstLoginPasswordChange(ChangePasswordRequest request, User user) {
@@ -277,11 +281,10 @@ public class AuthenticationService {
             javaMailSender.send(message);
             log.info("Password email sent successfully to: {}", email);
         } catch (MailException e) {
-            log.error("Failed to send password email to: {}. Error: {}", email, e.getMessage());
+            log.error("Failed to send password email to: {}. Error: {}", email, e.getMessage(), e);
+            // Depending on your requirements, you might want to throw this exception
+            // throw new RuntimeException("Failed to send password email", e);
         }
-
-        // Log the message content (be cautious with sensitive information)
-        log.debug("Email content: {}", message.getText());
     }
 
     private void saveUserToken(User user, String jwtToken) {
