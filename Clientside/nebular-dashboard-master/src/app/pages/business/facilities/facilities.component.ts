@@ -3,6 +3,8 @@ import { NbDialogService } from '@nebular/theme';
 import { FacilityRequest } from './facility.model';
 import { FacilitiesService } from './facilities.service';
 import { Router } from '@angular/router';
+import { Column } from '../../../shared/smart-table/smart-table.component';
+ // Update the path
 
 @Component({
   selector: 'app-facilities',
@@ -11,7 +13,20 @@ import { Router } from '@angular/router';
 })
 export class FacilitiesComponent implements OnInit {
   facilityRequests: FacilityRequest[] = [];
-  allColumns = ['clinicName', 'dateOpened', 'province', 'county', 'subcounty', 'type', 'physicalAddress', 'doctorInCharge', 'clinicContact', 'llcName', 'franchiseeContact', 'recruitmentEmail', 'actions'];
+  columns: Column[] = [
+    { key: 'clinicName', title: 'Clinic Name' },
+    { key: 'dateOpened', title: 'Date Opened' },
+    // { key: 'province', title: 'Province' },
+    { key: 'county', title: 'County' },
+    // { key: 'subcounty', title: 'Subcounty' },
+    { key: 'type', title: 'Type' },
+    // { key: 'physicalAddress', title: 'Physical Address' },
+    { key: 'doctorInCharge', title: 'Doctor in Charge' },
+    { key: 'clinicContact', title: 'Clinic Contact' },
+    // { key: 'companyName', title: 'LLC Name' },
+    // { key: 'franchiseeContact', title: 'Franchisee Contact' },
+    { key: 'recruitmentEmail', title: 'Recruitment Email' }
+  ];
 
   constructor(
     private facilityService: FacilitiesService,
@@ -46,36 +61,18 @@ export class FacilitiesComponent implements OnInit {
     }
   }
 
-  
-
-
-  viewFacility(facility: FacilityRequest): void {
-    // Implement the logic to view a facility
-    console.log('View facility:', facility);
-  }
-
-  // updateFacility(updatedFacility: FacilityRequest): void {
-  //   this.facilityService.updateFacility(updatedFacility.id, updatedFacility).subscribe({
-  //     next: (result) => {
-  //       const index = this.facilityRequests.findIndex(f => f.id === result.id);
-  //       if (index !== -1) {
-  //         this.facilityRequests[index] = result;
-  //       }
-  //     },
-  //     error: (error) => {
-  //       console.error('Error updating facility', error);
-  //     }
-  //   });
-  // }
-
-  deleteFacility(id: number): void {
-    this.facilityService.deleteFacility(id).subscribe({
-      next: () => {
-        this.facilityRequests = this.facilityRequests.filter(f => f.id !== id);
-      },
-      error: (error) => {
-        console.error('Error deleting facility', error);
-      }
-    });
+  deleteFacility(facility: FacilityRequest): void {
+    if (facility && facility.id) {
+      this.facilityService.deleteFacility(facility.id).subscribe({
+        next: () => {
+          this.facilityRequests = this.facilityRequests.filter(f => f.id !== facility.id);
+        },
+        error: (error) => {
+          console.error('Error deleting facility', error);
+        }
+      });
+    } else {
+      console.error('Invalid facility or facility ID');
+    }
   }
 }

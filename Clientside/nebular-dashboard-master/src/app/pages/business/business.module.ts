@@ -10,6 +10,7 @@ import { CreateCompanyComponent } from './companies/maintenance/create-company.c
 import { UpdateCompanyDialogComponent } from './companies/update-company-dialog.component';
 import { CreateFacilityComponent } from './facilities/maintenance/create-facility.component';
 import { UpdateFacilityComponent } from './facilities/maintenance/update-facility.component';
+import { SmartTableComponent } from '../../shared/smart-table/smart-table.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { UpdateFacilityComponent } from './facilities/maintenance/update-facilit
     CreateCompanyComponent,
     UpdateCompanyDialogComponent,
     CreateFacilityComponent,
-    UpdateFacilityComponent
+    UpdateFacilityComponent,
+    SmartTableComponent
   ],
   imports: [
     CommonModule,
