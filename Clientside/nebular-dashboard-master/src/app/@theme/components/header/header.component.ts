@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
-
 import { LayoutService } from '../../../@core/utils.ts';
-import { map, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { map, filter, takeUntil } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
+import { AuthService } from '../../../@auth/auth.service';
 
 @Component({
   selector: 'ngx-header',
@@ -14,37 +14,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
-  user: any;
+  user$: Observable<any>; // Declare user$ Observable
+  isUserLoaded = false;
 
   themes = [
-    {
-      value: 'default',
-      name: 'Light',
-    },
-    {
-      value: 'dark',
-      name: 'Dark',
-    },
-    {
-      value: 'cosmic',
-      name: 'Cosmic',
-    },
-    {
-      value: 'corporate',
-      name: 'Corporate',
-    },
+    { value: 'default', name: 'Light' },
+    { value: 'dark', name: 'Dark' },
+    { value: 'cosmic', name: 'Cosmic' },
+    { value: 'corporate', name: 'Corporate' },
   ];
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               private themeService: NbThemeService,
               private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService) {
-  }
+              private breakpointService: NbMediaBreakpointsService,
+              private authService: AuthService) {}
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
@@ -55,7 +44,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
         takeUntil(this.destroy$),
       )
-      .subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl);
+      .subscribe(isLessThanXl => this.userPictureOnly = isLessThanXl);
 
     this.themeService.onThemeChange()
       .pipe(
@@ -63,6 +52,28 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+
+    // Initialize the user$ Observable
+    this.user$ = this.authService.getCurrentUser();
+
+    // Subscribe to user$ to get the user profile data
+    this.user$.pipe(
+      filter(user => user !== null), // Only react to non-null values
+      takeUntil(this.destroy$)
+    ).subscribe(
+      user => {
+        console.log('Fetched user in HeaderComponent:', user);
+        this.isUserLoaded = true;
+      },
+      error => {
+        console.error('Error fetching user:', error);
+      }
+    );
+
+    // Ensure user profile is fetched if an access token exists
+    if (this.authService.getAccessToken()) {
+      this.authService.updateUserProfile();
+    }
   }
 
   ngOnDestroy() {
@@ -77,7 +88,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   toggleSidebar(): boolean {
     this.sidebarService.toggle(true, 'menu-sidebar');
     this.layoutService.changeLayoutSize();
-
     return false;
   }
 
