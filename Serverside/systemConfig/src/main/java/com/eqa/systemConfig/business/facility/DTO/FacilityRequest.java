@@ -45,20 +45,12 @@ public class FacilityRequest {
     private String franchiseeContact;
 
     @NotBlank(message = "Email is required")
-    private String email;
+    @Email(message = "Invalid email format")
+    private String recruitmentEmail;
 
     public enum FacilityType {
         HUB,
         SATELLITE,
         SPOKE
-    }
-
-
-    public @NotBlank(message = "Email is required") @Email(message = "Invalid email format") String getEmail() {
-        return email;
-    }
-
-    public void setRecruitmentEmail(@NotBlank(message = "Email is required") @Email(message = "Invalid email format") String recruitmentEmail) {
-        this.email = recruitmentEmail;
     }
 }

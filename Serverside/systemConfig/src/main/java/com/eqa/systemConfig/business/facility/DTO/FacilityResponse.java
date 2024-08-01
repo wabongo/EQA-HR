@@ -24,7 +24,7 @@ public class FacilityResponse {
     private String clinicContact;
     private String companyName;
     private String franchiseeContact;
-    private String email;
+    private String recruitmentEmail;
 
     // You might want to keep these fields if they're used elsewhere in your application
     private Long companyId;
