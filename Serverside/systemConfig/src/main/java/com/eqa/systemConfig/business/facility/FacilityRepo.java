@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FacilityRepo extends JpaRepository<Facility, Long> {
-    boolean existsByEmail(String Email);
+    boolean existsByRecruitmentEmail(String RecruitmentEmail);
 }

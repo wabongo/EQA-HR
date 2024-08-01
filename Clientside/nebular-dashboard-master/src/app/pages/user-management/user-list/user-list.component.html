@@ -19,36 +19,52 @@
         <thead>
           <tr>
             <th (click)="sort('username')">
-              Username
-              <nb-icon *ngIf="sortField === 'username'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+              <div class="header-cell">
+                Username
+                <nb-icon *ngIf="sortField === 'username'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+              </div>
             </th>
             <th (click)="sort('designation')">
-              Designation
-              <nb-icon *ngIf="sortField === 'designation'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+              <div class="header-cell">
+                Designation
+                <nb-icon *ngIf="sortField === 'designation'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+              </div>
             </th>
             <th (click)="sort('facility')">
-              Facility
-              <nb-icon *ngIf="sortField === 'facility'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+              <div class="header-cell">
+                Facility
+                <nb-icon *ngIf="sortField === 'facility'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+              </div>
             </th>
             <th (click)="sort('idNumber')">
-              ID Number
-              <nb-icon *ngIf="sortField === 'idNumber'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+              <div class="header-cell">
+                ID Number
+                <nb-icon *ngIf="sortField === 'idNumber'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+              </div>
             </th>
             <th (click)="sort('phoneNumber')">
-              Phone Number
-              <nb-icon *ngIf="sortField === 'phoneNumber'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+              <div class="header-cell">
+                Phone Number
+                <nb-icon *ngIf="sortField === 'phoneNumber'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+              </div>
             </th>
             <th (click)="sort('email')">
-              Email
-              <nb-icon *ngIf="sortField === 'email'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+              <div class="header-cell">
+                Email
+                <nb-icon *ngIf="sortField === 'email'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+              </div>
             </th>
             <th (click)="sort('role')">
-              Role
-              <nb-icon *ngIf="sortField === 'role'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+              <div class="header-cell">
+                Role
+                <nb-icon *ngIf="sortField === 'role'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+              </div>
             </th>
             <th (click)="sort('terms')">
-              Terms
-              <nb-icon *ngIf="sortField === 'terms'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+              <div class="header-cell">
+                Terms
+                <nb-icon *ngIf="sortField === 'terms'" [icon]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"></nb-icon>
+              </div>
             </th>
             <th>Actions</th>
           </tr>
@@ -73,9 +89,6 @@
               <button nbButton status="danger" size="small">
                 <nb-icon icon="trash-2-outline"></nb-icon>
               </button>
-              <!-- <button nbButton status="warning" size="small" (click)="bulkDelete()">
-                <nb-icon icon="trash-2-outline"></nb-icon> Bulk Delete
-              </button> -->
             </td>
           </tr>
         </tbody>

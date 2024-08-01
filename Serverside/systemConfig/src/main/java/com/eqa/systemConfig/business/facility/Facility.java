@@ -2,7 +2,6 @@ package com.eqa.systemConfig.business.facility;
 
 import com.eqa.systemConfig.business.llc.Company;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -44,8 +43,11 @@ public class Facility {
     @Column(nullable = false)
     private String clinicContact;
 
+    @Column(nullable = false)
+    private String franchiseeContact;
+
     @Column(unique = true)
-    private String email;
+    private String recruitmentEmail;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", nullable = false)
@@ -55,21 +57,5 @@ public class Facility {
         HUB,
         SATELLITE,
         SPOKE
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String recruitmentEmail) {
-        this.email = recruitmentEmail;
     }
 }

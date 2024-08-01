@@ -58,8 +58,8 @@ public class FacilityService {
     public ApiResponse<?> createFacility(FacilityRequest facilityRequest) {
         try {
             log.info("Creating new facility: {}", facilityRequest.getClinicName());
-            if (facilityRepository.existsByEmail(facilityRequest.getEmail())) {
-                log.error("Email already exists: {}", facilityRequest.getEmail());
+            if (facilityRepository.existsByRecruitmentEmail(facilityRequest.getRecruitmentEmail())) {
+                log.error("Email already exists: {}", facilityRequest.getRecruitmentEmail());
                 return new ApiResponse<>("Email already exists", null, HttpStatus.BAD_REQUEST.value());
             }
 
@@ -114,8 +114,8 @@ public class FacilityService {
             Facility existingFacility = facilityRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Facility not found"));
 
-            if (!existingFacility.getEmail().equals(facilityRequest.getEmail()) && facilityRepository.existsByEmail(facilityRequest.getEmail())) {
-                log.error("Email already exists: {}", facilityRequest.getEmail());
+            if (!existingFacility.getRecruitmentEmail().equals(facilityRequest.getRecruitmentEmail()) && facilityRepository.existsByRecruitmentEmail(facilityRequest.getRecruitmentEmail())) {
+                log.error("Email already exists: {}", facilityRequest.getRecruitmentEmail());
                 return new ApiResponse<>("Email already exists", null, HttpStatus.BAD_REQUEST.value());
             }
 

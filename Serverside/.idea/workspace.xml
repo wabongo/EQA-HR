@@ -39,6 +39,7 @@
       <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/job_post/JobPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/job_post/JobPost.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/systemConfig/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/systemConfig/src/main/resources/application.yml" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +112,9 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;
   }
 }</component>
+
   <component name="RunManager" selected="Application.EurekaApplication">
+
     <configuration name="ApiGatewayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.eqa.api_gateway.ApiGatewayApplication" />
       <module name="api-gateway.main" />

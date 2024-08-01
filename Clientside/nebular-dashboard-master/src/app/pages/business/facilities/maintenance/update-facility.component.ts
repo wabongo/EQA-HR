@@ -47,7 +47,7 @@ export class UpdateFacilityComponent implements OnInit {
       physicalAddress: ['', Validators.required],
       doctorInCharge: ['', Validators.required],
       clinicContact: ['', [Validators.required, Validators.pattern('^\\+?\\d{10,14}$')]],
-      companyName: ['', Validators.required],
+      llcName: ['', Validators.required],
       franchiseeContact: ['', [Validators.required, Validators.pattern('^\\+?\\d{10,14}$')]],
       recruitmentEmail: ['', [Validators.required, Validators.email]]
     });
@@ -88,9 +88,9 @@ export class UpdateFacilityComponent implements OnInit {
       physicalAddress: facility.physicalAddress || '',
       doctorInCharge: facility.doctorInCharge || '',
       clinicContact: facility.clinicContact || '',
-      companyName: facility.companyName || '',
+      llcName: facility.companyName || '',
       franchiseeContact: facility.franchiseeContact || '',
-      recruitmentEmail: facility.email || ''  // Note the change here
+      recruitmentEmail: facility.recruitmentEmail || ''  // Note the change here
     });
   
     console.log('Form values after population:', this.facilityForm.value);
@@ -134,6 +134,10 @@ export class UpdateFacilityComponent implements OnInit {
     this.companyService.getCompanies().subscribe(
       (companies) => {
         this.llcs = companies;
+
+        if (this.facility && this.facility.companyName) {
+          this.facilityForm.patchValue({ llcName: this.facility.companyName });
+        }
       },
       (error) => {
         console.error('Error loading companies:', error);
