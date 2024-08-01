@@ -1,16 +1,11 @@
-<nb-card>
-  <nb-card-header>
-    <button nbButton status="primary" (click)="navigateToCreateFacility()">
-      <nb-icon icon="plus-outline"></nb-icon> CREATE Facility
-    </button>
-  </nb-card-header>
-  <nb-card-body>
-    <app-smart-table
+<app-smart-table
       [data]="facilityRequests"
       [columns]="columns"
       [itemsPerPage]="10"
+      [title]="'Facility Management'"
+      [createButtonText]="'CREATE FACILITY'"
+      (create)="navigateToCreateFacility()"
       (updateRow)="navigateToUpdateFacility($event)"
       (deleteRow)="deleteFacility($event)">
     </app-smart-table>
-  </nb-card-body>
-</nb-card>
+  

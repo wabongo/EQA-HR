@@ -1,38 +1,37 @@
-@import '../../@theme/styles/themes';
+.smart-table {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
 
-@include nb-install-component() {
-  .smart-table {
-    width: 100%;
-    background-color: nb-theme(background-basic-color-1);
-    border-radius: nb-theme(border-radius);
-    overflow: hidden;
-  }
-
-  .table-controls {
+  .table-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    background-color: nb-theme(background-basic-color-2);
-  }
+    margin-bottom: 20px;
 
-  .search-container {
-    flex: 1;
-    margin-right: 1rem;
-    border-radius: nb-theme(border-radius);
+    h2 {
+      font-size: 18px;
+      margin: 0;
+    }
 
-    input {
-      width: 100%;
-      border-radius: nb-theme(border-radius);
+    .table-controls {
+      display: flex;
+      gap: 10px;
+
+      input {
+        width: 250px;
+      }
     }
   }
 
   .entries-per-page {
     display: flex;
     align-items: center;
+    margin-bottom: 20px;
 
     label {
-      margin-right: 0.5rem;
+      margin-right: 10px;
     }
 
     nb-select {
@@ -43,55 +42,31 @@
   table {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0;
-  }
+    border-spacing: 0 8px;
 
-  th, td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid nb-theme(border-basic-color-3);
-  }
-
-  th {
-    font-weight: bold;
-    background-color: nb-theme(background-basic-color-2);
-    color: nb-theme(text-basic-color);
-    cursor: pointer;
-    user-select: none;
-
-    &:hover {
-      background-color: nb-theme(background-basic-color-3);
-    }
-  }
-
-  tbody tr {
-    &:hover {
-      background-color: nb-theme(background-basic-color-2);
+    th, td {
+      padding: 12px;
+      text-align: left;
     }
 
-    &:nth-child(even) {
-      background-color: nb-theme(background-basic-color-1);
+    th {
+      background-color: #f8f9fa;
+      font-weight: bold;
+      cursor: pointer;
     }
 
-    &:nth-child(odd) {
-      background-color: nb-theme(background-basic-color-2);
-    }
-  }
-
-  .actions {
-    white-space: nowrap;
-
-    button {
-      padding: 0.5rem;
-      margin-right: 0.5rem;
-      border: none;
-      background-color: transparent;
-      color: nb-theme(text-hint-color);
-      border-radius: nb-theme(border-radius);
+    tbody tr {
+      background-color: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
       &:hover {
-        color: nb-theme(text-basic-color);
+        background-color: #f8f9fa;
       }
+    }
+
+    .actions {
+      display: flex;
+      gap: 5px;
     }
   }
 
@@ -99,27 +74,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 1rem;
-    background-color: nb-theme(background-basic-color-2);
+    margin-top: 20px;
+    gap: 10px;
 
     button {
-      padding: 0.5rem 1rem;
-      border: none;
-      background-color: transparent;
-      color: nb-theme(text-basic-color);
-      border-radius: nb-theme(border-radius);
-
-      &:disabled {
-        color: nb-theme(text-disabled-color);
-      }
-
-      &:hover:not(:disabled) {
-        background-color: nb-theme(background-basic-color-3);
-      }
+      min-width: 40px;
     }
 
     span {
-      color: nb-theme(text-hint-color);
+      margin: 0 10px;
     }
   }
 }

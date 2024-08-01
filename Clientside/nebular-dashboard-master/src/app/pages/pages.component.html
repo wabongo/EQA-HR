@@ -1,4 +1,14 @@
 <ngx-one-column-layout>
     <nb-menu [items]="menu"></nb-menu>
-    <router-outlet></router-outlet>
+    <router-outlet>
+        <app-breadcrumbs></app-breadcrumbs>
+    </router-outlet>
 </ngx-one-column-layout>
+
+<!-- <ngx-one-column-layout>
+    <nb-menu [items]="menu"></nb-menu>
+    <router-outlet>
+      <app-breadcrumbs></app-breadcrumbs>
+      <router-outlet></router-outlet>
+    </router-outlet>
+  </ngx-one-column-layout> -->

@@ -1,20 +1,19 @@
 package com.eqa.recruitment_service.candidate.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import com.eqa.recruitment_service.candidate.Candidate;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class CandidateResponse {
     private Long id;
     private String name;
+    private String designation;
+    private List<String> documents;
+    private String facility;
+    private String idNumber;
     private String email;
     private String phoneNumber;
-    private String nationalId;
-    private String region;
-//    private boolean blacklisted;
+    private Candidate.ApplicationStatus status;
 }

@@ -1,0 +1,11 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item" *ngFor="let breadcrumb of breadcrumbs$ | async; let first = first; let last = last">
+      <a *ngIf="!last" [routerLink]="breadcrumb.url">
+        <nb-icon *ngIf="first" class="home-icon" icon="home-outline"></nb-icon> <!-- Optional: add home icon for Home breadcrumb -->
+        {{ breadcrumb.label }}
+      </a>
+      <span *ngIf="last">{{ breadcrumb.label }}</span>
+    </li>
+  </ol>
+</nav>
