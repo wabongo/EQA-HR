@@ -27,7 +27,7 @@ import { CompanyRequest } from './company.model';
           <div class="form-control-group">
             <label class="label" for="county">County</label>
             <nb-select fullWidth placeholder="Select County" formControlName="county">
-              <nb-option *ngFor="let county of counties" [value]="county.name">{{ county.name }}</nb-option>
+              <nb-option *ngFor="let county of counties" [value]="county">{{ county }}</nb-option>
             </nb-select>
           </div>
 
@@ -88,7 +88,7 @@ import { CompanyRequest } from './company.model';
 export class UpdateCompanyDialogComponent implements OnInit {
   companyForm: FormGroup;
   provinces: Province[];
-  counties: { name: string, subcounties: string[] }[] = [];
+  counties: string[] = [];
   company: CompanyRequest;
 
   constructor(
@@ -119,14 +119,16 @@ export class UpdateCompanyDialogComponent implements OnInit {
   populateForm() {
     if (this.company) {
       this.companyForm.patchValue(this.company);
-      this.onProvinceChange(this.company.province);
+      this.onProvinceChange(this.company.province, true);
     }
   }
 
-  onProvinceChange(selectedProvince: string) {
+  onProvinceChange(selectedProvince: string, initial = false) {
     const selectedProvinceObj = this.provinces.find(province => province.name === selectedProvince);
-    this.counties = selectedProvinceObj ? selectedProvinceObj.counties : [];
-    this.companyForm.patchValue({ county: '' });
+    this.counties = selectedProvinceObj ? selectedProvinceObj.counties.map(county => county.name) : [];
+    if (!initial) {
+      this.companyForm.patchValue({ county: '' });
+    }
   }
 
   submit() {
