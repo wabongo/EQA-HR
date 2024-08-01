@@ -65,6 +65,14 @@ public class JobPostController {
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
+    @GetMapping("/status/{status}")
+    public ResponseEntity<?> getJobsByStatus(@PathVariable JobPost.JobStatus status) {
+        logger.info("Received request for jobs with status: {}", status);
+        ApiResponse<?> response = jobPostService.getJobsByStatus(status);
+        logger.info("Returning response with status: {}", response.getStatusCode());
+        return ResponseEntity.status(response.getStatusCode()).body(response);
+    }
+
     @GetMapping("/view/{id}")
     public ResponseEntity<?> getJobPostById(@PathVariable Long id) {
         logger.info("Received request for job post with ID: {}", id);

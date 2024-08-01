@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface JobPostRepository extends JpaRepository<JobPost, Long> {
 
+    List<JobPost> findByStatus(JobPost.JobStatus jobStatus);
+
     @Query("SELECT DISTINCT j.facility FROM JobPost j")
     List<String> findDistinctFacilities();
 
