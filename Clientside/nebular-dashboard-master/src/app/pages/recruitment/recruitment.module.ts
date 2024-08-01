@@ -12,8 +12,8 @@ import { ViewJobDialogComponent } from './job-listings/view-job-dialog.component
 import { ConfirmDeleteDialogComponent } from './job-listings/confirm-delete-dialog.component';
 import { CandidatesComponent } from './candidate/candidates.component';
 import { UpdateCandidateDialogComponent } from './candidate/update-candidate-dialog.component';
-import { SmartTableComponent } from '../../shared/smart-table/smart-table.component';
 import { SharedModule } from '../../shared/shared.module';
+import { JobDetailsComponent } from './job-listings/job-details.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +26,7 @@ import { SharedModule } from '../../shared/shared.module';
     ViewJobDialogComponent, // Declare the view dialog component
     ConfirmDeleteDialogComponent,
     UpdateCandidateDialogComponent,
+    JobDetailsComponent
     // SmartTableComponent
   ],
   imports: [

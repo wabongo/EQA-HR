@@ -108,6 +108,26 @@ export class JobListingsService {
     );
   }    
 
+  getJobsByStatus(status: string): Observable<JoblistingsRequest[]> {
+    return this.http.get<ApiResponse<JoblistingsRequest[]>>(`${this.userApi}/status/${status}`, 
+      { headers: this.getHeaders() })
+      .pipe(
+        map(response => {
+          if (response && response.entity && Array.isArray(response.entity)) {
+            return response.entity;
+          } else {
+            console.error('Unexpected response structure:', response);
+            return [];
+          }
+        }),
+        catchError(error => {
+          console.error(`Error fetching jobs with status ${status}:`, error);
+          return throwError(() => error);
+        })
+      );
+  }
+
+
   deleteJobPost(id: string): Observable<any> {
     return this.http.delete(`${this.userApi}/${id}`, { headers: this.getHeaders() }).pipe(
       catchError(error => {
