@@ -1,0 +1,11 @@
+
+    <app-smart-table
+      [data]="candidates"
+      [columns]="columns"
+      [itemsPerPage]="10"
+      [title]="'Candidate Management'"
+      [createButtonText]="'CREATE CANDIDATE'"
+      (create)="navigateToCreateCandidate()"
+      (updateRow)="openUpdateModal($event)"
+      (deleteRow)="deleteCandidate($event)">
+    </app-smart-table>

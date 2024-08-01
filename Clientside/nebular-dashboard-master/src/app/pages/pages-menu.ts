@@ -18,8 +18,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/recruitment/job-listings',
       },
       {
-        title: 'Applicants',
-        link: '/pages/recruitment/applicants',
+        title: 'Candidates',
+        link: '/pages/recruitment/candidates',
       },
       {
         title: 'My Actions',
@@ -31,6 +31,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Organisation',
     icon: 'globe-outline',
+    link: '/pages/business',
     children: [
       {
         title: 'Companies',
@@ -45,17 +46,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
 
 
-  {
-    title: 'Auth',
-    icon: 'lock-outline',
-    link: '/auth',
-    children: [
-      {
-        title: 'Register',
-        link: '/auth/register',
-      }
-    ]
-  },
+  // {
+  //   title: 'Auth',
+  //   icon: 'lock-outline',
+  //   link: '/auth',
+  //   children: [
+  //     {
+  //       title: 'Register',
+  //       link: '/auth/register',
+  //     }
+  //   ]
+  // },
 
   {
     title: 'User Management',
@@ -69,9 +70,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ]
   },
   
-  {
-    title: 'Not found',
-    icon: 'close-circle-outline',
-    link: '/pages/whatever',
-  }
+  // {
+  //   title: 'Not found',
+  //   icon: 'close-circle-outline',
+  //   link: '/pages/whatever',
+  // }
 ];

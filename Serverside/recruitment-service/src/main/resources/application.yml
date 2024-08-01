@@ -3,28 +3,28 @@ spring:
     active: dev
 
 ---
-#spring:
-#  config:
-#    activate:
-#      on-profile: dev
-#  application:
-#    name: systemConfig
-#  datasource:
-#    url: jdbc:h2:mem:testdb;MODE=MSSQLServer
-#    username: sa
-#    password: password
-#    driver-class-name: org.h2.Driver
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    show-sql: true
-#    properties:
-#      hibernate:
-#        format_sql: true
-#        dialect: org.hibernate.dialect.H2Dialect
-#  h2:
-#    console:
-#      enabled: true
+spring:
+  config:
+    activate:
+      on-profile: dev
+  application:
+    name: systemConfig
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MSSQLServer
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
 
 ---
 spring:

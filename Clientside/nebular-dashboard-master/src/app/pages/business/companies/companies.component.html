@@ -1,17 +1,11 @@
-<nb-card>
-  <nb-card-header>
-    <button nbButton status="primary" (click)="navigateToCreateCompany()">
-      <nb-icon icon="plus-outline"></nb-icon> CREATE COMPANY
-    </button>
-  </nb-card-header>
-  <nb-card-body>
+
     <app-smart-table
       [data]="companyRequests"
       [columns]="columns"
       [itemsPerPage]="10"
+      [title]="'Company Management'"
+      [createButtonText]="'CREATE COMPANY'"
+      (create)="navigateToCreateCompany()"
       (updateRow)="openUpdateModal($event)"
-      (deleteRow)="deleteCompany($event.id)"
-      (createRow)="navigateToCreateCompany()">
+      (deleteRow)="deleteCompany($event)">
     </app-smart-table>
-  </nb-card-body>
-</nb-card>

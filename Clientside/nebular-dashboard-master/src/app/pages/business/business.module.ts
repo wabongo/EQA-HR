@@ -11,6 +11,7 @@ import { UpdateCompanyDialogComponent } from './companies/update-company-dialog.
 import { CreateFacilityComponent } from './facilities/maintenance/create-facility.component';
 import { UpdateFacilityComponent } from './facilities/maintenance/update-facility.component';
 import { SmartTableComponent } from '../../shared/smart-table/smart-table.component';
+import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import { SmartTableComponent } from '../../shared/smart-table/smart-table.compon
     UpdateCompanyDialogComponent,
     CreateFacilityComponent,
     UpdateFacilityComponent,
-    SmartTableComponent
+    // SmartTableComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +34,8 @@ import { SmartTableComponent } from '../../shared/smart-table/smart-table.compon
     NbDialogModule.forChild(),
     NbInputModule,
     ReactiveFormsModule,
-    NbSelectModule
+    NbSelectModule,
+    SharedModule
 
   ]
 })

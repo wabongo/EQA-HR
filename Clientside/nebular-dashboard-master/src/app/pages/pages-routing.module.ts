@@ -17,39 +17,38 @@ const routes: Routes = [{
     },
     {
       path: 'home',
-      component: HomeComponent
+      component: HomeComponent,
+      data: { breadcrumb: 'Home' }
     },
+
 
     {
       path: 'recruitment',
       loadChildren: () => import('./recruitment/recruitment.module').then(m => m.RecruitmentModule),
+      data: { breadcrumb: 'job' }
     },
 
-    
 
     {
       path: 'business',
       loadChildren: () => import('./business/business.module').then(m => m.BusinessModule),
+      data: { breadcrumb: 'Business' }
     },
-
-
-
     {
       path: 'user-management',
       loadChildren: () => import('./user-management/user-management.module').then(m => m.UserManagementModule),
+      data: { breadcrumb: 'User Management' }
     },
-
-
     {
       path: 'reset-password',
-      component: NgxResetPasswordComponent
+      component: NgxResetPasswordComponent,
+      data: { breadcrumb: 'Reset Password' }
     },
-
     {
       path: '**',
       component: NotFoundComponent,
+      data: { breadcrumb: 'Not Found' }
     },
-
   ],
 }];
 
@@ -57,5 +56,4 @@ const routes: Routes = [{
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PagesRoutingModule {
-}
+export class PagesRoutingModule { }

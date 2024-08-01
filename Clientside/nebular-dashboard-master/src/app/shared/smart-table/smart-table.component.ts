@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import * as XLSX from 'xlsx';
 
 export interface Column {
   key: string;
@@ -14,6 +15,9 @@ export class SmartTableComponent implements OnChanges {
   @Input() data: any[] = [];
   @Input() columns: Column[] = [];
   @Input() itemsPerPage = 10;
+  @Input() title = 'Data Management';
+  @Input() createButtonText = 'CREATE';
+  @Output() create = new EventEmitter<void>();
   @Output() updateRow = new EventEmitter<any>();
   @Output() deleteRow = new EventEmitter<any>();
 
@@ -92,11 +96,30 @@ export class SmartTableComponent implements OnChanges {
     this.updatePagination();
   }
 
+  onCreate(): void {
+    this.create.emit();
+  }
+
   onUpdate(row: any): void {
     this.updateRow.emit(row);
   }
 
   onDelete(row: any): void {
     this.deleteRow.emit(row);
+  }
+
+  onExport(): void {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.data);
+    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveExcelFile(excelBuffer, this.title);
+  }
+
+  private saveExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
+    const link: HTMLAnchorElement = document.createElement('a');
+    link.href = window.URL.createObjectURL(data);
+    link.download = `${fileName.replace(/\s+/g, '_')}_${new Date().toISOString()}.xlsx`;
+    link.click();
   }
 }
