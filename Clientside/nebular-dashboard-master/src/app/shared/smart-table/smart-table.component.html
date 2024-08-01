@@ -1,50 +1,66 @@
 <div class="smart-table">
-    <div class="table-controls">
+  <div class="smart-table-header">
+    <h1 class="smart-table-title">{{title}}</h1>
+    <div class="smart-table-actions">
       <div class="search-container">
-        <input nbInput type="text" placeholder="Search..." (input)="onSearch($event)">
+        <input type="search" class="search-input" placeholder="Search..." aria-label="Search companies">
+        <button class="search-button" aria-label="Perform search">
+          <nb-icon icon="search-outline"></nb-icon>
+        </button>
       </div>
-      <div class="entries-per-page">
-        <label>Show entries: </label>
-        <nb-select [selected]="itemsPerPage" (selectedChange)="onItemsPerPageChange($event)">
-          <nb-option [value]="10">10</nb-option>
-          <nb-option [value]="25">25</nb-option>
-          <nb-option [value]="50">50</nb-option>
-          <nb-option [value]="100">100</nb-option>
-        </nb-select>
-      </div>
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th *ngFor="let column of columns" (click)="onSort(column.key)">
-            {{ column.title }}
-            <nb-icon *ngIf="sortColumn === column.key" [icon]="sortDirection === 'asc' ? 'arrow-up' : 'arrow-down'"></nb-icon>
-          </th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let row of paginatedData">
-          <td *ngFor="let column of columns">{{ row[column.key] }}</td>
-          <td class="actions">
-            <button nbButton ghost (click)="onUpdate(row)">
-              <nb-icon icon="edit-outline"></nb-icon>
-            </button>
-            <button nbButton ghost status="danger" (click)="onDelete(row)">
-              <nb-icon icon="trash-2-outline"></nb-icon>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <div class="pagination">
-      <button nbButton ghost [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)">
-        <nb-icon icon="arrow-left"></nb-icon>
+      <button nbButton status="primary" class="create-button" (click)="onCreate()">
+        <nb-icon icon="plus-outline"></nb-icon>
+       
       </button>
-      <span>Page {{ currentPage }} of {{ totalPages }}</span>
-      <button nbButton ghost [disabled]="currentPage === totalPages" (click)="onPageChange(currentPage + 1)">
-        <nb-icon icon="arrow-right"></nb-icon>
+      <button nbButton status="info" class="export-button" (click)="onExport()">
+        <nb-icon icon="download-outline"></nb-icon>
+        EXPORT
       </button>
     </div>
   </div>
+
+  <div class="smart-table-controls">
+    <label for="entries-select">Show entries:</label>
+    <nb-select id="entries-select" [selected]="itemsPerPage" (selectedChange)="onItemsPerPageChange($event)">
+      <nb-option [value]="10">10</nb-option>
+      <nb-option [value]="25">25</nb-option>
+      <nb-option [value]="50">50</nb-option>
+      <nb-option [value]="100">100</nb-option>
+    </nb-select>
+  </div>
+
+  <table class="smart-table-content">
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns" (click)="onSort(column.key)">
+          {{ column.title }}
+          <nb-icon *ngIf="sortColumn === column.key" [icon]="sortDirection === 'asc' ? 'arrow-up' : 'arrow-down'"></nb-icon>
+        </th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of paginatedData">
+        <td *ngFor="let column of columns">{{ row[column.key] }}</td>
+        <td class="action-cell">
+          <button nbButton ghost (click)="onUpdate(row)" aria-label="Edit">
+            <nb-icon icon="edit-outline"></nb-icon>
+          </button>
+          <button nbButton ghost status="danger" (click)="onDelete(row)" aria-label="Delete">
+            <nb-icon icon="trash-2-outline"></nb-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="smart-table-pagination">
+    <button nbButton ghost [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)" aria-label="Previous page">
+      <nb-icon icon="arrow-left"></nb-icon>
+    </button>
+    <span class="page-info">Page {{ currentPage }} of {{ totalPages }}</span>
+    <button nbButton ghost [disabled]="currentPage === totalPages" (click)="onPageChange(currentPage + 1)" aria-label="Next page">
+      <nb-icon icon="arrow-right"></nb-icon>
+    </button>
+  </div>
+</div>

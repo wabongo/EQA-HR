@@ -1,6 +1,6 @@
 package com.eqa.recruitment_service.application;
 
-import com.eqa.recruitment_service.candidate.Candidate;
+import com.eqa.recruitment_service.candidateold.Candidate;
 import com.eqa.recruitment_service.document.Document;
 import com.eqa.recruitment_service.job_post.JobPost;
 import jakarta.persistence.*;

@@ -1,0 +1,17 @@
+nb-card {
+    margin-bottom: 1rem;
+    box-shadow: nb-theme(card-shadow);
+    border-radius: 6px; 
+  }
+  
+  nb-card-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+  }
+  
+  button[nbButton] {
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 4px; 
+  }

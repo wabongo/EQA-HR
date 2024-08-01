@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ThemeModule } from './@theme/theme.module';
-import { NbDialogModule, NbIconModule, NbMenuModule, NbSidebarModule, NbToastrModule, NbWindowModule, } from '@nebular/theme';
+import { NbCardModule, NbDialogModule, NbIconModule, NbMenuModule, NbSidebarModule, NbToastrModule, NbWindowModule, } from '@nebular/theme';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpRequest } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -20,7 +20,8 @@ import { ResponseInterceptor } from './@interceptors/response.interceptor';
 import { NbCustomTokenStorage } from './@core/utils.ts/customtokenstorage';
 import { CoreModule } from './@core/core.module';
 import { I18nModule } from './@i18n/i18n.module';
-import { SmartTableComponent } from './shared/smart-table/smart-table.component';
+// import { SmartTableComponent } from './shared/smart-table/smart-table.component';
+// import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
 
 
 
@@ -33,6 +34,7 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
+    // BreadcrumbsComponent,
     // SmartTableComponent,
   ],
   imports: [
@@ -49,6 +51,7 @@ export function createTranslateLoader(http: HttpClient) {
     NbWindowModule.forRoot(),
     NbToastrModule.forRoot(),
     NbIconModule,
+    NbCardModule,
     TranslateModule.forRoot(
       {
         defaultLanguage: 'en-US',

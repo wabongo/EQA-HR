@@ -1,15 +1,17 @@
 package com.eqa.recruitment_service.candidate.DTO;
 
-
-import lombok.AllArgsConstructor;
+import com.eqa.recruitment_service.candidate.Candidate.ApplicationStatus;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-@AllArgsConstructor
 public class CandidateRequest {
     private String name;
+    private String designation;
+    private List<String> documents;
+    private String facility;
+    private String idNumber;
     private String email;
     private String phoneNumber;
-    private String nationalId;
-    private String region;
 }

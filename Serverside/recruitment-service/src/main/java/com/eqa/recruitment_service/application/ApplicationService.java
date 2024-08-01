@@ -2,8 +2,8 @@ package com.eqa.recruitment_service.application;
 
 import com.eqa.recruitment_service.application.DTO.ApplicationRequest;
 import com.eqa.recruitment_service.application.DTO.ApplicationResponse;
-import com.eqa.recruitment_service.candidate.Candidate;
-import com.eqa.recruitment_service.candidate.CandidateRepository;
+import com.eqa.recruitment_service.candidateold.Candidate;
+import com.eqa.recruitment_service.candidateold.CandidateRepository;
 import com.eqa.recruitment_service.document.Document;
 import com.eqa.recruitment_service.document.DocumentService;
 import com.eqa.recruitment_service.exception.ResourceNotFoundException;

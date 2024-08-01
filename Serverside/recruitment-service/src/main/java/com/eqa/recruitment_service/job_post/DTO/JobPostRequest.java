@@ -17,4 +17,5 @@ public class JobPostRequest {
     private String facility;
     private String requirements;
     private LocalDate deadline;
+//    private String type;
 }
