@@ -13,46 +13,77 @@
         <nb-option value="">All Designations</nb-option>
         <nb-option *ngFor="let desig of designations" [value]="desig">{{ desig }}</nb-option>
       </nb-select>
-      <button nbButton status="primary" (click)="searchJobs()">Search</button>
+      <button nbButton status="primary" (click)="searchJobs()">SEARCH</button>
     </div>
     <button nbButton status="success" (click)="openCreateModal()">
-      <nb-icon icon="plus-outline"></nb-icon> Create Job Post
+      <nb-icon icon="plus-outline"></nb-icon> CREATE JOB POST
     </button>
   </nb-card-header>
   <nb-card-body>
-    <div *ngIf="filteredJobPosts && filteredJobPosts.length > 0; else noJobs" class="grid grid-cols-2 gap-4">
-      <nb-card *ngFor="let job of filteredJobPosts" class="job-card shadow-lg">
-        <nb-card-header>
-          <h4>{{ job.designation }}</h4>
-        </nb-card-header>
-        <nb-card-body>
-          <p><strong>Facility:</strong> {{ job.facility }}</p>
-          <p><strong>Description:</strong> {{ job.description }}</p>
-          <p><strong>Requirements:</strong> {{ job.requirements }}</p>
-          <p><strong>Deadline:</strong> {{ job.deadline | date:'mediumDate' }}</p>
-        </nb-card-body>
-        <nb-card-footer class="button-container">
-          <button nbButton status="info" (click)="viewJob(job)">
-            <nb-icon icon="eye-outline"></nb-icon> 
-          </button>
-          <button nbButton status="success" (click)="openUpdateModal(job)">
-            <nb-icon icon="edit-outline"></nb-icon> 
-          </button>
-          <button nbButton status="danger" (click)="deleteJob(job.id)">
-            <nb-icon icon="trash-2-outline"></nb-icon> 
-          </button>
-        </nb-card-footer>
-      </nb-card>
-    </div>
-    <ng-template #noJobs>
-      <p class="text-center">No job posts available.</p>
-    </ng-template>
+    <nb-tabset (changeTab)="onTabChange($event)">
+      <nb-tab tabTitle="All Jobs" tabId="all">
+        <div *ngIf="filteredJobPosts && filteredJobPosts.length > 0; else noJobs" class="grid grid-cols-3 gap-4">
+          <nb-card *ngFor="let job of filteredJobPosts" class="job-card shadow-lg">
+            <nb-card-header class="job-title">
+              <h4>{{ job.designation }} - {{ job.jobType }}</h4>
+            </nb-card-header>
+            <nb-card-body>
+              <p class="location"><strong>Location:</strong> {{ job.facility }}</p>
+              <button nbButton status="primary" (click)="showJobDetails(job)" class="mt-4 w-full">
+                More
+              </button>
+            </nb-card-body>
+          </nb-card>
+        </div>
+        <ng-template #noJobs>
+          <p class="text-center">No job posts available.</p>
+        </ng-template>
+      </nb-tab>
+      <nb-tab tabTitle="Applied" tabId="applied">
+        <div *ngIf="appliedJobs && appliedJobs.length > 0; else noAppliedJobs" class="grid grid-cols-3 gap-4">
+          <nb-card *ngFor="let job of appliedJobs" class="job-card shadow-lg">
+            <nb-card-header class="job-title">
+              <h4>{{ job.designation }} - {{ job.jobType }}</h4>
+            </nb-card-header>
+            <nb-card-body>
+              <p class="location"><strong>Location:</strong> {{ job.facility }}</p>
+              <button nbButton status="primary" (click)="showJobDetails(job)" class="mt-4 w-full">
+                More
+              </button>
+            </nb-card-body>
+          </nb-card>
+        </div>
+        <ng-template #noAppliedJobs>
+          <p class="text-center">No jobs have been applied to yet.</p>
+        </ng-template>
+      </nb-tab>
+      <nb-tab tabTitle="Offered" tabId="offered">
+        <div *ngIf="offeredJobs && offeredJobs.length > 0; else noOfferedJobs" class="grid grid-cols-3 gap-4">
+          <nb-card *ngFor="let job of offeredJobs" class="job-card shadow-lg">
+            <nb-card-header class="job-title">
+              <h4>{{ job.designation }} - {{ job.jobType }}</h4>
+            </nb-card-header>
+            <nb-card-body>
+              <p class="location"><strong>Location:</strong> {{ job.facility }}</p>
+              <button nbButton status="primary" (click)="showJobDetails(job)" class="mt-4 w-full">
+                More
+              </button>
+            </nb-card-body>
+          </nb-card>
+        </div>
+        <ng-template #noOfferedJobs>
+          <p class="text-center">No job offers have been made yet.</p>
+        </ng-template>
+      </nb-tab>
+    </nb-tabset>
   </nb-card-body>
   <nb-card-footer *ngIf="totalPages > 1">
     <nb-paginator
       [page]="currentPage"
       [pageSize]="pageSize"
       [rangeSize]="rangeSize"
-      [total]="totalJobs"></nb-paginator>
+      [total]="totalJobs"
+      (pageChange)="onPageChange($event)">
+    </nb-paginator>
   </nb-card-footer>
 </nb-card>

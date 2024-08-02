@@ -1,5 +1,6 @@
 package com.eqa.recruitment_service.job_post.DTO;
 
+import com.eqa.recruitment_service.job_post.JobPost;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,4 +19,6 @@ public class JobPostResponse {
     private String facility;
     private String requirements;
     private LocalDate deadline;
+    private JobPost.JobType jobType;
+    private JobPost.JobStatus status;
 }

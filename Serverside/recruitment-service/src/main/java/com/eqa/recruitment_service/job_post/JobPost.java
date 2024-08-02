@@ -1,9 +1,6 @@
 package com.eqa.recruitment_service.job_post;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -19,5 +16,27 @@ public class JobPost {
     private String facility;
     private String requirements;
     private LocalDate deadline;
-    private String jobType;
+
+    @Enumerated(EnumType.STRING)
+    private JobType jobType;
+
+    @Enumerated(EnumType.STRING)
+    private JobStatus status; // "Open" or "Applied" "Offered"
+
+
+    public enum JobType {
+        FULL_TIME,
+        PART_TIME,
+        CONTRACT,
+        INTERNSHIP
+    }
+
+    public enum JobStatus {
+        OPEN,
+        APPLIED,
+        INTERVIEWING,
+        OFFERED,
+        CLOSED
+    }
 }
+

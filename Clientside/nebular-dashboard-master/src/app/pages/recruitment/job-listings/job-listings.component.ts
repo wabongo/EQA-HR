@@ -6,6 +6,7 @@ import { CreateJobDialogComponent } from './create-job-dialog.component';
 import { UpdateJobDialogComponent } from './update-job-dialog.component';
 import { ViewJobDialogComponent } from './view-job-dialog.component';
 import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog.component';
+import { JobDetailsComponent } from './job-details.component';
 
 interface JobFilters {
   department?: string;
@@ -18,16 +19,18 @@ interface JobFilters {
   templateUrl: './job-listings.component.html',
   styleUrls: ['./job-listings.component.scss']
 })
+
 export class JobListingsComponent implements OnInit {
   jobPosts: JoblistingsRequest[] = [];
   filteredJobPosts: JoblistingsRequest[] = [];
+  appliedJobs: JoblistingsRequest[] = [];
+  offeredJobs: JoblistingsRequest[] = [];
   currentPage = 1;
   pageSize = 6;
   rangeSize = 5;
   totalJobs = 0;
   totalPages = 0;
 
-  // New properties
   departments: string[] = [];
   jobTypes: string[] = [];
   designations: string[] = [];
@@ -65,6 +68,58 @@ export class JobListingsComponent implements OnInit {
     this.jobListingsService.getDesignations().subscribe(desigs => this.designations = desigs);
   }
 
+  onTabChange(event: any): void {
+    const tabId = event.tabId;
+    if (tabId === 'applied') {
+      this.loadAppliedJobs();
+    } else if (tabId === 'offered') {
+      this.loadOfferedJobs();
+    } else {
+      // 'all' tab or default case
+      this.loadAllJobs();
+    }
+  }
+  
+  showJobDetails(job: JoblistingsRequest): void {
+    this.dialogService.open(JobDetailsComponent, {
+      context: {
+        job: job
+      }
+    });
+  }
+
+  loadAllJobs(): void {
+    // Your existing logic to load all jobs
+    this.loadJobPosts();
+  }
+
+  loadAppliedJobs(): void {
+    this.jobListingsService.getJobsByStatus('APPLIED').subscribe({
+      next: (data) => {
+        this.appliedJobs = data;
+      },
+      error: (error) => {
+        console.error('Error fetching applied jobs:', error);
+      }
+    });
+  }
+
+  loadOfferedJobs(): void {
+    this.jobListingsService.getJobsByStatus('OFFERED').subscribe({
+      next: (data) => {
+        this.offeredJobs = data;
+      },
+      error: (error) => {
+        console.error('Error fetching offered jobs:', error);
+      }
+    });
+  }
+
+
+
+
+  
+
   searchJobs(): void {
     const filters: JobFilters = {
       department: this.selectedDepartment || undefined,
@@ -93,8 +148,8 @@ export class JobListingsComponent implements OnInit {
     this.filteredJobPosts = this.jobPosts.slice(startIndex, endIndex);
   }
 
-  onPageChange(pageNumber: number): void {
-    this.currentPage = pageNumber;
+  onPageChange(event: any) {
+    this.currentPage = event.page;
     this.applyFiltersAndPagination();
   }
 
@@ -118,6 +173,37 @@ export class JobListingsComponent implements OnInit {
       }
     });
   }
+
+  acceptOffer(job: JoblistingsRequest) {
+    // Implement the logic to accept the job offer
+    console.log('Accepting offer for job:', job);
+    // You might want to call a service method here
+  }
+
+  declineOffer(job: JoblistingsRequest) {
+    // Implement the logic to decline the job offer
+    console.log('Declining offer for job:', job);
+    // You might want to call a service method here
+  }
+
+  viewOfferDetails(job: JoblistingsRequest){
+    // Implement the logic to view the application
+    console.log('Viewing offer for job:', job);
+
+  }
+
+  viewApplicants(job: JoblistingsRequest){
+    // Implement the logic to view the application
+    console.log('Viewing application for job:', job);
+
+  }
+  scheduleInterview(job: JoblistingsRequest){
+    // Implement the logic to view the application
+    console.log('Scheduling interview for job:', job);
+
+  }
+  
+
 
   createJobPost(jobPost: JoblistingsRequest) {
     this.jobListingsService.createJobPost(jobPost).subscribe(
@@ -185,4 +271,4 @@ export class JobListingsComponent implements OnInit {
       // Handle error or notify user
     }
   }
-}  
+}
