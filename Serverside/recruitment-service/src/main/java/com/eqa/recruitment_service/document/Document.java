@@ -18,9 +18,9 @@ public class Document {
     @Lob
     private byte[] data;
 
-    @ManyToOne
-    @JoinColumn(name = "application_id")
-    private Application application;
+//    @ManyToOne
+//    @JoinColumn(name = "application_id")
+//    private Application application;
 
     private String documentType;
 }

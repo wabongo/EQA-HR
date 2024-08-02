@@ -5,7 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8421f6c7-68f8-44a8-8233-26ceaa72f356" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/recruitment-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/recruitment-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/recruitment.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/recruitment.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Auth-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Auth-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/application/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/application/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/application/ApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/application/ApplicationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/application/DTO/ApplicationResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/application/DTO/ApplicationResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/Candidate.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/Candidate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/CandidateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/CandidateController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/CandidateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/CandidateService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/DTO/CandidateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/DTO/CandidateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/DTO/CandidateResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/DTO/CandidateResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidateold/Candidate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidateold/CandidateController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidateold/CandidateRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidateold/CandidateService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidateold/DTO/CandidateRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidateold/DTO/CandidateResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/document/Document.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/document/Document.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/job_post/JobPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/job_post/JobPost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/systemConfig/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/systemConfig/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,9 +99,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;
   }
 }</component>
-
-  <component name="RunManager" selected="Application.EurekaApplication">
-
+  <component name="RunManager" selected="Application.RecruitmentServiceApplication">
     <configuration name="ApiGatewayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.eqa.api_gateway.ApiGatewayApplication" />
       <module name="api-gateway.main" />
@@ -166,6 +185,17 @@
       <updated>1721036059531</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="LAST_COMMIT_MESSAGE" value="" />

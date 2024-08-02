@@ -35,8 +35,8 @@ public class CandidateController {
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
-    @PostMapping
-    public ResponseEntity<?> createCandidate(@RequestBody CandidateRequest candidateRequest) {
+    @PostMapping(consumes = "multipart/form-data")
+    public ResponseEntity<?> createCandidate(@ModelAttribute CandidateRequest candidateRequest) {
         logger.info("Received request to create candidate: {}", candidateRequest);
         ApiResponse<?> response = candidateService.createCandidate(candidateRequest);
         logger.info("Returning response with status: {}", response.getStatusCode());
