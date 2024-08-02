@@ -1,17 +1,20 @@
 package com.eqa.recruitment_service.candidate.DTO;
 
-import com.eqa.recruitment_service.candidate.Candidate.ApplicationStatus;
 import lombok.Data;
-
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class CandidateRequest {
     private String name;
     private String designation;
-    private List<String> documents;
+//    private List<String> documents;
     private String facility;
     private String idNumber;
     private String email;
     private String phoneNumber;
+
+    private MultipartFile cv;
+    private MultipartFile coverLetter;
+    private MultipartFile license;
+    private MultipartFile certificate;
 }

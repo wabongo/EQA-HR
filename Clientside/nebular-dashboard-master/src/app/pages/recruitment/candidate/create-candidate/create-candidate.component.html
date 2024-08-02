@@ -1,0 +1,97 @@
+<nb-card>
+    <nb-card-header>
+      <h2>Create Candidate</h2>
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="candidateForm" (ngSubmit)="onSubmit()">
+        
+        <!-- Name Field -->
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input nbInput fullWidth placeholder="Name" id="name" formControlName="name" />
+          <div *ngIf="candidateForm.get('name').invalid && candidateForm.get('name').touched">
+            <nb-alert status="danger">Name is required.</nb-alert>
+          </div>
+        </div>
+  
+        <!-- Designation Field -->
+        <div class="form-group">
+          <label for="designation">Designation</label>
+          <input nbInput fullWidth placeholder="Designation" id="designation" formControlName="designation" />
+          <div *ngIf="candidateForm.get('designation').invalid && candidateForm.get('designation').touched">
+            <nb-alert status="danger">Designation is required.</nb-alert>
+          </div>
+        </div>
+  
+        <!-- Facility Field -->
+        <div class="form-group">
+          <label for="facility">Facility</label>
+          <input nbInput fullWidth placeholder="Facility" id="facility" formControlName="facility" />
+          <div *ngIf="candidateForm.get('facility').invalid && candidateForm.get('facility').touched">
+            <nb-alert status="danger">Facility is required.</nb-alert>
+          </div>
+        </div>
+  
+        <!-- ID Number Field -->
+        <div class="form-group">
+          <label for="idNumber">ID Number</label>
+          <input nbInput fullWidth placeholder="ID Number" id="idNumber" formControlName="idNumber" />
+          <div *ngIf="candidateForm.get('idNumber').invalid && candidateForm.get('idNumber').touched">
+            <nb-alert status="danger">ID Number is required.</nb-alert>
+          </div>
+        </div>
+  
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input nbInput fullWidth placeholder="Email" id="email" formControlName="email" />
+          <div *ngIf="candidateForm.get('email').invalid && candidateForm.get('email').touched">
+            <nb-alert status="danger">Email is required.</nb-alert>
+          </div>
+        </div>
+  
+        <!-- Phone Number Field -->
+        <div class="form-group">
+          <label for="phoneNumber">Phone Number</label>
+          <input nbInput fullWidth placeholder="Phone Number" id="phoneNumber" formControlName="phoneNumber" />
+          <div *ngIf="candidateForm.get('phoneNumber').invalid && candidateForm.get('phoneNumber').touched">
+            <nb-alert status="danger">Phone Number is required.</nb-alert>
+          </div>
+        </div>
+  
+        <!-- CV Upload -->
+        <div class="form-group">
+          <label for="cv">CV</label>
+          <input type="file" id="cv" (change)="onFileChange($event, 'cv')" />
+          <div *ngIf="cvError" class="error">{{cvError}}</div>
+        </div>
+  
+        <!-- Cover Letter Upload -->
+        <div class="form-group">
+          <label for="coverLetter">Cover Letter</label>
+          <input type="file" id="coverLetter" (change)="onFileChange($event, 'coverLetter')" />
+          <div *ngIf="coverLetterError" class="error">{{coverLetterError}}</div>
+        </div>
+  
+        <!-- License Upload -->
+        <div class="form-group">
+          <label for="license">License</label>
+          <input type="file" id="license" (change)="onFileChange($event, 'license')" />
+          <div *ngIf="licenseError" class="error">{{licenseError}}</div>
+        </div>
+  
+        <!-- Certificate Upload -->
+        <div class="form-group">
+          <label for="certificate">Certificate</label>
+          <input type="file" id="certificate" (change)="onFileChange($event, 'certificate')" />
+          <div *ngIf="certificateError" class="error">{{certificateError}}</div>
+        </div>
+  
+        <!-- Submit Button -->
+        <div class="form-group">
+          <button nbButton status="primary" fullWidth type="submit" [disabled]="candidateForm.invalid">Create Candidate</button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+  

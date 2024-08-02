@@ -3,6 +3,8 @@ package com.eqa.recruitment_service.candidate;
 
 import com.eqa.recruitment_service.candidate.DTO.CandidateRequest;
 import com.eqa.recruitment_service.candidate.DTO.CandidateResponse;
+import com.eqa.recruitment_service.document.Document;
+import com.eqa.recruitment_service.document.DocumentService;
 import com.eqa.recruitment_service.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,6 +24,7 @@ public class CandidateService {
 
     private final CandidateRepo candidateRepository;
     private final ModelMapper modelMapper;
+    private final DocumentService documentService;
 
     public ApiResponse<?> getAllCandidates() {
         try {
@@ -58,15 +62,28 @@ public class CandidateService {
 
     public ApiResponse<?> createCandidate(CandidateRequest candidateRequest) {
         try {
-            log.info("Creating a new candidate");
-            Candidate candidate = modelMapper.map(candidateRequest, Candidate.class);
-            candidate.setStatus(Candidate.ApplicationStatus.RECEIVED); // Set initial status
+            List<Document> documents = new ArrayList<>();
+            documents.add(documentService.createDocument(candidateRequest.getCv(), "CV"));
+            documents.add(documentService.createDocument(candidateRequest.getCoverLetter(), "Cover Letter"));
+            documents.add(documentService.createDocument(candidateRequest.getLicense(), "License"));
+            documents.add(documentService.createDocument(candidateRequest.getCertificate(), "Certificate"));
+
+            Candidate candidate = Candidate.builder()
+                    .name(candidateRequest.getName())
+                    .designation(candidateRequest.getDesignation())
+                    .facility(candidateRequest.getFacility())
+                    .idNumber(candidateRequest.getIdNumber())
+                    .email(candidateRequest.getEmail())
+                    .phoneNumber(candidateRequest.getPhoneNumber())
+                    .documents(documents)
+                    .status(Candidate.ApplicationStatus.RECEIVED)
+                    .build();
+
             Candidate savedCandidate = candidateRepository.save(candidate);
             CandidateResponse candidateResponse = modelMapper.map(savedCandidate, CandidateResponse.class);
-            log.info("Candidate created successfully with ID {}", savedCandidate.getId());
+
             return new ApiResponse<>("Candidate created successfully", candidateResponse, HttpStatus.CREATED.value());
         } catch (Exception e) {
-            log.error("An error occurred while creating candidate: ", e);
             return new ApiResponse<>("An error occurred while creating candidate.", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
     }

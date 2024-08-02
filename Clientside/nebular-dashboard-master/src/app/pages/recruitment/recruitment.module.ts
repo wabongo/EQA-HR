@@ -13,6 +13,8 @@ import { ConfirmDeleteDialogComponent } from './job-listings/confirm-delete-dial
 import { CandidatesComponent } from './candidate/candidates.component';
 import { UpdateCandidateDialogComponent } from './candidate/update-candidate-dialog.component';
 import { SharedModule } from '../../shared/shared.module';
+
+import { CreateCandidateComponent } from './candidate/create-candidate/create-candidate.component';
 import { JobDetailsComponent } from './job-listings/job-details.component';
 
 @NgModule({
@@ -26,6 +28,7 @@ import { JobDetailsComponent } from './job-listings/job-details.component';
     ViewJobDialogComponent, // Declare the view dialog component
     ConfirmDeleteDialogComponent,
     UpdateCandidateDialogComponent,
+    CreateCandidateComponent,
     JobDetailsComponent
     // SmartTableComponent
   ],
@@ -42,7 +45,7 @@ import { JobDetailsComponent } from './job-listings/job-details.component';
     NbSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this schema
 })

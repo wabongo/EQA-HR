@@ -15,7 +15,7 @@ const routes: Routes = [
     component: UserManagementComponent,
     children: [
       { path: 'users', component: UserListComponent },
-      { path: 'create-user', component: UserCreateComponent},
+      { path: 'users/create-user', component: UserCreateComponent},
       { path: '', redirectTo: 'users', pathMatch: 'full' }
     ],
   },

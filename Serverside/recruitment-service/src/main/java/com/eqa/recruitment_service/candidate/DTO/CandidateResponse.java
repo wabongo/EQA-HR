@@ -1,6 +1,7 @@
 package com.eqa.recruitment_service.candidate.DTO;
 
 import com.eqa.recruitment_service.candidate.Candidate;
+import com.eqa.recruitment_service.document.Document;
 import lombok.Data;
 
 import java.util.List;
@@ -10,10 +11,11 @@ public class CandidateResponse {
     private Long id;
     private String name;
     private String designation;
-    private List<String> documents;
+//    private List<String> documents;
     private String facility;
     private String idNumber;
     private String email;
     private String phoneNumber;
     private Candidate.ApplicationStatus status;
+    private List<Document> documents;
 }

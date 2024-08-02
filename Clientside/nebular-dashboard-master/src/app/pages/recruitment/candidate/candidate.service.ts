@@ -43,9 +43,9 @@ export class CandidateService {
     );
   }
 
-  createCandidate(candidate: Candidate): Observable<Candidate> {
-    console.log('Creating candidate with data:', candidate);
-    return this.http.post<Candidate>(`${this.apiUrl}`, candidate, { headers: this.getHeaders() }).pipe(
+  createCandidate(formData: FormData): Observable<any> {
+    console.log('Creating candidate with data:', formData);
+    return this.http.post<Candidate>(`${this.apiUrl}`, formData, { headers: this.getHeaders() }).pipe(
       tap(response => console.log('Response from create candidate:', response)),
       catchError(error => {
         console.error('Error in create candidate:', error);

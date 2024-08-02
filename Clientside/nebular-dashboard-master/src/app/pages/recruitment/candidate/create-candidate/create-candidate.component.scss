@@ -1,0 +1,35 @@
+form {
+  display: flex;
+  flex-wrap: wrap; // Allow the form to wrap on smaller screens
+  gap: 1rem; // Space between form fields
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px; // Optional: set a max-width for the form group container
+}
+
+label {
+  width: 30%; // Adjust the width of the labels
+  margin-right: 1rem; // Space between label and input
+  text-align: right; // Align the label text to the right
+}
+
+.file-upload {
+  width: 70%; // Adjust the width of the input container
+}
+
+input[type="file"] {
+  margin-top: 0.5rem; // Space above the file input
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+}
+
+button {
+  margin-top: 1rem; // Space above the submit button
+}
