@@ -110,7 +110,7 @@ export class UserListComponent implements OnInit {
   viewUser(user: RegisterRequest): void { }
   
   navigateToCreateUser(): void {
-    this.router.navigate(['/pages/user-management/create-user']);
+    this.router.navigate(['/pages/user-management/users/create-user']);
   }
 
   exportData(): void {
