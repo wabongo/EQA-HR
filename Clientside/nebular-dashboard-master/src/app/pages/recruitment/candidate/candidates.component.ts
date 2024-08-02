@@ -47,7 +47,7 @@ export class CandidatesComponent implements OnInit {
   }
 
   navigateToCreateCandidate(): void {
-    this.router.navigate(['/pages/recruitment/candidates/maintenance/create']);
+    this.router.navigate(['/pages/recruitment/candidates/create']);
   }
 
   openUpdateModal(event: { data: Candidate }): void {

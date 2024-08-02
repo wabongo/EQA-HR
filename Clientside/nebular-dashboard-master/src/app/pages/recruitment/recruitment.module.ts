@@ -14,6 +14,7 @@ import { CandidatesComponent } from './candidate/candidates.component';
 import { UpdateCandidateDialogComponent } from './candidate/update-candidate-dialog.component';
 import { SmartTableComponent } from '../../shared/smart-table/smart-table.component';
 import { SharedModule } from '../../shared/shared.module';
+import { CreateCandidateComponent } from './candidate/create-candidate/create-candidate.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { SharedModule } from '../../shared/shared.module';
     ViewJobDialogComponent, // Declare the view dialog component
     ConfirmDeleteDialogComponent,
     UpdateCandidateDialogComponent,
+    CreateCandidateComponent,
     // SmartTableComponent
   ],
   imports: [
@@ -41,7 +43,7 @@ import { SharedModule } from '../../shared/shared.module';
     NbSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this schema
 })
