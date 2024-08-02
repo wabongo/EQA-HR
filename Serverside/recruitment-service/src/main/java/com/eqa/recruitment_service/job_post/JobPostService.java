@@ -118,6 +118,21 @@ public class JobPostService {
         }
     }
 
+    public ApiResponse<?> getJobsByStatus(JobPost.JobStatus status) {
+        try {
+            log.info("Fetching jobs with status: {}", status);
+            List<JobPost> jobPosts = jobPostRepository.findByStatus(status);
+            List<JobPostResponse> jobPostResponses = jobPosts.stream()
+                    .map(jobPost -> modelMapper.map(jobPost, JobPostResponse.class))
+                    .collect(Collectors.toList());
+            log.info("Found {} jobs with status {}", jobPostResponses.size(), status);
+            return new ApiResponse<>("Jobs fetched successfully", jobPostResponses, HttpStatus.OK.value());
+        } catch (Exception e) {
+            log.error("Error fetching jobs with status {}: ", status, e);
+            return new ApiResponse<>("An error occurred while fetching jobs.", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+    }
+
     public ApiResponse<?> createJobPost(JobPostRequest jobPostRequest) {
         try {
             log.info("Creating a new job post");
