@@ -1,8 +1,8 @@
 package com.eqa.recruitment_service.job_post;
 
+
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.time.LocalDate;
 
 @Data
@@ -17,11 +17,12 @@ public class JobPost {
     private String requirements;
     private LocalDate deadline;
 
+
     @Enumerated(EnumType.STRING)
     private JobType jobType;
 
     @Enumerated(EnumType.STRING)
-    private JobStatus status; // "Open" or "Applied" "Offered"
+    private JobStatus status = JobStatus.REQUISITION; // "Open" or "Applied" "Offered"
 
 
     public enum JobType {
@@ -32,6 +33,7 @@ public class JobPost {
     }
 
     public enum JobStatus {
+        REQUISITION,
         OPEN,
         APPLIED,
         INTERVIEWING,

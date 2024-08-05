@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { JobListingsService } from './job-listings.service';
 import { JoblistingsRequest } from './job-listings.model';
 import { CreateJobDialogComponent } from './create-job-dialog.component';
-import { UpdateJobDialogComponent } from './update-job-dialog.component';
-import { ViewJobDialogComponent } from './view-job-dialog.component';
-import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog.component';
 import { JobDetailsComponent } from './job-details.component';
+import { NgIfContext } from '@angular/common';
 
 interface JobFilters {
   department?: string;
@@ -19,10 +17,10 @@ interface JobFilters {
   templateUrl: './job-listings.component.html',
   styleUrls: ['./job-listings.component.scss']
 })
-
 export class JobListingsComponent implements OnInit {
   jobPosts: JoblistingsRequest[] = [];
   filteredJobPosts: JoblistingsRequest[] = [];
+  requisitionJobs: JoblistingsRequest[] = [];
   appliedJobs: JoblistingsRequest[] = [];
   offeredJobs: JoblistingsRequest[] = [];
   currentPage = 1;
@@ -37,6 +35,9 @@ export class JobListingsComponent implements OnInit {
   selectedDepartment: string = '';
   selectedJobType: string = '';
   selectedDesignation: string = '';
+noJobs: TemplateRef<NgIfContext<boolean>>;
+noRequisitionJobs: TemplateRef<NgIfContext<boolean>>;
+  toastrService: any;
 
   constructor(
     private jobListingsService: JobListingsService,
@@ -70,16 +71,22 @@ export class JobListingsComponent implements OnInit {
 
   onTabChange(event: any): void {
     const tabId = event.tabId;
-    if (tabId === 'applied') {
-      this.loadAppliedJobs();
-    } else if (tabId === 'offered') {
-      this.loadOfferedJobs();
-    } else {
-      // 'all' tab or default case
-      this.loadAllJobs();
+    switch (tabId) {
+      case 'all':
+        this.loadAllJobs();
+        break;
+      case 'requisition':
+        this.loadRequisitionJobs();
+        break;
+      case 'applied':
+        this.loadAppliedJobs();
+        break;
+      case 'offered':
+        this.loadOfferedJobs();
+        break;
     }
   }
-  
+
   showJobDetails(job: JoblistingsRequest): void {
     this.dialogService.open(JobDetailsComponent, {
       context: {
@@ -89,8 +96,26 @@ export class JobListingsComponent implements OnInit {
   }
 
   loadAllJobs(): void {
-    // Your existing logic to load all jobs
     this.loadJobPosts();
+  }
+
+  loadRequisitionJobs(): void {
+    this.jobListingsService.getJobsByStatus('REQUISITION').subscribe({
+      next: (data) => {
+        console.log('Received requisition jobs:', data);
+        if (Array.isArray(data)) {
+          this.requisitionJobs = data;
+          console.log('Requisition jobs set:', this.requisitionJobs);
+        } else {
+          console.error('Received data is not an array:', data);
+          this.requisitionJobs = [];
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching Requisitions:', error);
+        this.requisitionJobs = [];
+      }
+    });
   }
 
   loadAppliedJobs(): void {
@@ -115,11 +140,6 @@ export class JobListingsComponent implements OnInit {
     });
   }
 
-
-
-
-  
-
   searchJobs(): void {
     const filters: JobFilters = {
       department: this.selectedDepartment || undefined,
@@ -142,7 +162,6 @@ export class JobListingsComponent implements OnInit {
   }
 
   applyFiltersAndPagination(): void {
-    // Apply pagination
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.filteredJobPosts = this.jobPosts.slice(startIndex, endIndex);
@@ -162,57 +181,12 @@ export class JobListingsComponent implements OnInit {
       });
   }
 
-  openUpdateModal(job: JoblistingsRequest): void {
-    const dialogRef = this.dialogService.open(UpdateJobDialogComponent, {
-      context: { job }
-    });
-
-    dialogRef.onClose.subscribe((updatedJob: JoblistingsRequest | null) => {
-      if (updatedJob && updatedJob.id) {
-        this.updateJobPost(updatedJob.id, updatedJob);
-      }
-    });
-  }
-
-  acceptOffer(job: JoblistingsRequest) {
-    // Implement the logic to accept the job offer
-    console.log('Accepting offer for job:', job);
-    // You might want to call a service method here
-  }
-
-  declineOffer(job: JoblistingsRequest) {
-    // Implement the logic to decline the job offer
-    console.log('Declining offer for job:', job);
-    // You might want to call a service method here
-  }
-
-  viewOfferDetails(job: JoblistingsRequest){
-    // Implement the logic to view the application
-    console.log('Viewing offer for job:', job);
-
-  }
-
-  viewApplicants(job: JoblistingsRequest){
-    // Implement the logic to view the application
-    console.log('Viewing application for job:', job);
-
-  }
-  scheduleInterview(job: JoblistingsRequest){
-    // Implement the logic to view the application
-    console.log('Scheduling interview for job:', job);
-
-  }
-  
-
-
   createJobPost(jobPost: JoblistingsRequest) {
     this.jobListingsService.createJobPost(jobPost).subscribe(
       (response) => {
-        // Add the new job post to the local array
         if (response.entity) {
           this.jobPosts.push(response.entity);
         }
-        // Alternatively, you can refresh the entire list
         this.loadJobPosts();
       },
       (error) => {
@@ -221,54 +195,22 @@ export class JobListingsComponent implements OnInit {
     );
   }
 
-  updateJobPost(id: string, jobPost: JoblistingsRequest) {
-    this.jobListingsService.updateJobPost(id, jobPost).subscribe(
-      () => {
-        this.loadJobPosts();
+  approveRequisition(job: JoblistingsRequest): void {
+    this.jobListingsService.approveJobRequest(job.id.toString()).subscribe({
+      next: (response) => {
+        console.log('Job approved successfully:', response);
+        // Remove the job from requisitionJobs and add it to jobPosts
+        this.requisitionJobs = this.requisitionJobs.filter(j => j.id !== job.id);
+        job.status = 'OPEN';
+        this.jobPosts.push(job);
+        this.loadRequisitionJobs();
+        this.loadAllJobs();
+        // Optionally, you can show a success message to the user
       },
-      (error) => {
-        console.error('Error updating job post', error);
+      error: (error) => {
+        console.error('Error approving job:', error);
+        // Optionally, you can show an error message to the user
       }
-    );
-  }
-
-  deleteJob(id: string) {
-    this.dialogService.open(ConfirmDeleteDialogComponent)
-      .onClose.subscribe((confirmed: boolean) => {
-        if (confirmed) {
-          this.jobListingsService.deleteJobPost(id).subscribe(
-            () => {
-              this.loadJobPosts();
-            },
-            (error) => {
-              console.error('Error deleting job post:', error);
-            }
-          );
-        }
-      });
-  }
-
-  viewJob(job: JoblistingsRequest) {
-    if (job && job.id) {
-      this.jobListingsService.getJobPostById(job.id).subscribe(
-        (jobDetails) => {
-          if (jobDetails) {
-            this.dialogService.open(ViewJobDialogComponent, {
-              context: { job: jobDetails }
-            });
-          } else {
-            console.error(`No job details found for ID ${job.id}`);
-            // Handle error or notify user
-          }
-        },
-        (error) => {
-          console.error('Error fetching job details:', error);
-          // Handle error or notify user
-        }
-      );
-    } else {
-      console.error('Invalid job ID or job object');
-      // Handle error or notify user
-    }
+    });
   }
 }

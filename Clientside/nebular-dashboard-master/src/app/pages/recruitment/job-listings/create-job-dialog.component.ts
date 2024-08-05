@@ -135,6 +135,7 @@ export class CreateJobDialogComponent implements OnInit {
   submit() {
     if (this.jobForm.valid) {
       this.dialogRef.close(this.jobForm.value);
+      this.jobForm
     }
   }
 
