@@ -20,7 +20,7 @@ import { SharedModule } from '../shared/shared.module';
     NbIconModule,
     NbSelectModule,
     SharedModule,
-    NbTabsetModule
+    // NbTabsetModule
 
     ],
   declarations: [

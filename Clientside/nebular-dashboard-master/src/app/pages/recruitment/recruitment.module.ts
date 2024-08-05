@@ -6,7 +6,7 @@ import { MyActionsComponent } from './my-actions/my-actions.component';
 import { CreateJobDialogComponent } from './job-listings/create-job-dialog.component'; // Import the create dialog component
 import { UpdateJobDialogComponent } from './job-listings/update-job-dialog.component'; // Import the update dialog component
 
-import { NbAlertModule, NbCardModule, NbIconModule, NbMenuModule, NbButtonModule, NbDialogModule, NbInputModule, NbDatepickerModule, NbSelectModule } from '@nebular/theme';
+import { NbAlertModule, NbCardModule, NbIconModule, NbMenuModule, NbButtonModule, NbDialogModule, NbInputModule, NbDatepickerModule, NbSelectModule, NbTabsetModule } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ViewJobDialogComponent } from './job-listings/view-job-dialog.component';
 import { ConfirmDeleteDialogComponent } from './job-listings/confirm-delete-dialog.component';
@@ -45,6 +45,7 @@ import { JobDetailsComponent } from './job-listings/job-details.component';
     NbSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    NbTabsetModule,
     SharedModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this schema

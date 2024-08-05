@@ -2,7 +2,7 @@
   <nb-card-header class="job-listings-header">
     <div class="search-filters">
       <nb-select [(selected)]="selectedDepartment" placeholder="Department">
-        <nb-option value="">All Departments</nb-option>
+        <nb-option value="">All Facilities</nb-option>
         <nb-option *ngFor="let dept of departments" [value]="dept">{{ dept }}</nb-option>
       </nb-select>
       <nb-select [(selected)]="selectedJobType" placeholder="Job Type">
@@ -19,38 +19,56 @@
       <nb-icon icon="plus-outline"></nb-icon> CREATE JOB POST
     </button>
   </nb-card-header>
+
   <nb-card-body>
     <nb-tabset (changeTab)="onTabChange($event)">
-      <nb-tab tabTitle="All Jobs" tabId="all">
-        <div *ngIf="filteredJobPosts && filteredJobPosts.length > 0; else noJobs" class="grid grid-cols-3 gap-4">
-          <nb-card *ngFor="let job of filteredJobPosts" class="job-card shadow-lg">
+      <nb-tab tabTitle="all">
+        <div *ngIf="jobPosts && jobPosts.length > 0; else noJobs" class="grid">
+          <nb-card *ngFor="let job of jobPosts" class="job-card">
             <nb-card-header class="job-title">
-              <h4>{{ job.designation }} - {{ job.jobType }}</h4>
+              <h4>{{ job.designation }} - {{ job.jobType || 'N/A' }}</h4>
             </nb-card-header>
             <nb-card-body>
               <p class="location"><strong>Location:</strong> {{ job.facility }}</p>
+              <p class="status"><strong>Status:</strong> {{ job.status }}</p>
               <button nbButton status="primary" (click)="showJobDetails(job)" class="mt-4 w-full">
                 More
               </button>
             </nb-card-body>
           </nb-card>
         </div>
-        <ng-template #noJobs>
-          <p class="text-center">No job posts available.</p>
-        </ng-template>
       </nb-tab>
-      <nb-tab tabTitle="Applied" tabId="applied">
-        <div *ngIf="appliedJobs && appliedJobs.length > 0; else noAppliedJobs" class="grid grid-cols-3 gap-4">
-          <nb-card *ngFor="let job of appliedJobs" class="job-card shadow-lg">
+      <nb-tab tabTitle="requisitions" tabId="requisition">
+        <div *ngIf="requisitionJobs && requisitionJobs.length > 0; else noRequisitionJobs" class="grid">
+          <nb-card *ngFor="let job of requisitionJobs" class="job-card">
             <nb-card-header class="job-title">
-              <h4>{{ job.designation }} - {{ job.jobType }}</h4>
+              <h4>{{ job.designation }} - {{ job.jobType || 'N/A' }}</h4>
             </nb-card-header>
             <nb-card-body>
               <p class="location"><strong>Location:</strong> {{ job.facility }}</p>
-              <button nbButton status="primary" (click)="showJobDetails(job)" class="mt-4 w-full">
-                More
-              </button>
+              <p class="status"><strong>Status:</strong> {{ job.status }}</p>
+              <div class="button-container">
+                <button nbButton status="primary" (click)="showJobDetails(job)" class="mt-4">
+                  More
+                </button>
+                <button nbButton status="success" (click)="approveRequisition(job)" class="mt-4">
+                  Approve
+                </button>
+              </div>
             </nb-card-body>
+          </nb-card>
+        </div>
+        <ng-template #noRequisitionJobs>
+          <p class="text-center">No requisition jobs available.</p>
+        </ng-template>
+        <p>Debug: Number of requisition jobs: {{ requisitionJobs.length }}</p>
+      </nb-tab>
+    
+      
+      <nb-tab tabTitle="Applied" tabId="applied">
+        <div *ngIf="appliedJobs && appliedJobs.length > 0; else noAppliedJobs" class="grid">
+          <nb-card *ngFor="let job of appliedJobs" class="job-card">
+            <!-- Similar structure as All Jobs tab -->
           </nb-card>
         </div>
         <ng-template #noAppliedJobs>
@@ -58,17 +76,9 @@
         </ng-template>
       </nb-tab>
       <nb-tab tabTitle="Offered" tabId="offered">
-        <div *ngIf="offeredJobs && offeredJobs.length > 0; else noOfferedJobs" class="grid grid-cols-3 gap-4">
-          <nb-card *ngFor="let job of offeredJobs" class="job-card shadow-lg">
-            <nb-card-header class="job-title">
-              <h4>{{ job.designation }} - {{ job.jobType }}</h4>
-            </nb-card-header>
-            <nb-card-body>
-              <p class="location"><strong>Location:</strong> {{ job.facility }}</p>
-              <button nbButton status="primary" (click)="showJobDetails(job)" class="mt-4 w-full">
-                More
-              </button>
-            </nb-card-body>
+        <div *ngIf="offeredJobs && offeredJobs.length > 0; else noOfferedJobs" class="grid">
+          <nb-card *ngFor="let job of offeredJobs" class="job-card">
+            <!-- Similar structure as All Jobs tab -->
           </nb-card>
         </div>
         <ng-template #noOfferedJobs>
