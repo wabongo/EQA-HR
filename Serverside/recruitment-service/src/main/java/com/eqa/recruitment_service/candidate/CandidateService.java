@@ -5,6 +5,8 @@ import com.eqa.recruitment_service.candidate.DTO.CandidateRequest;
 import com.eqa.recruitment_service.candidate.DTO.CandidateResponse;
 import com.eqa.recruitment_service.document.Document;
 import com.eqa.recruitment_service.document.DocumentService;
+import com.eqa.recruitment_service.job_post.JobPost;
+import com.eqa.recruitment_service.job_post.JobPostRepository;
 import com.eqa.recruitment_service.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 public class CandidateService {
 
     private final CandidateRepo candidateRepository;
+    private JobPostRepository jobPostRepository;
     private final ModelMapper modelMapper;
     private final DocumentService documentService;
 
@@ -62,6 +65,10 @@ public class CandidateService {
 
     public ApiResponse<?> createCandidate(CandidateRequest candidateRequest) {
         try {
+            // Fetch the job post
+            JobPost jobPost = jobPostRepository.findById(candidateRequest.getJobPostId())
+                    .orElseThrow(() -> new RuntimeException("Job post not found"));
+
             List<Document> documents = new ArrayList<>();
             documents.add(documentService.createDocument(candidateRequest.getCv(), "CV"));
             documents.add(documentService.createDocument(candidateRequest.getCoverLetter(), "Cover Letter"));
@@ -70,7 +77,7 @@ public class CandidateService {
 
             Candidate candidate = Candidate.builder()
                     .name(candidateRequest.getName())
-                    .designation(candidateRequest.getDesignation())
+                    .jobPost(jobPost)
                     .facility(candidateRequest.getFacility())
                     .idNumber(candidateRequest.getIdNumber())
                     .email(candidateRequest.getEmail())
@@ -80,11 +87,17 @@ public class CandidateService {
                     .build();
 
             Candidate savedCandidate = candidateRepository.save(candidate);
+
+            // Update job post status
+            jobPost.setStatus(JobPost.JobStatus.APPLIED);
+            jobPostRepository.save(jobPost);
+
             CandidateResponse candidateResponse = modelMapper.map(savedCandidate, CandidateResponse.class);
+            candidateResponse.setJobPost(modelMapper.map(jobPost, CandidateResponse.JobPostDetails.class));
 
             return new ApiResponse<>("Candidate created successfully", candidateResponse, HttpStatus.CREATED.value());
         } catch (Exception e) {
-            return new ApiResponse<>("An error occurred while creating candidate.", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            return new ApiResponse<>("An error occurred while creating candidate: " + e.getMessage(), null, HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
     }
 

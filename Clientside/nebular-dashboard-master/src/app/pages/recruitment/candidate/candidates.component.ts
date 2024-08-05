@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbDialogService } from '@nebular/theme';
 import { Candidate } from './candidate.model';
-
 import { UpdateCandidateDialogComponent } from './update-candidate-dialog.component';
 import { Column } from '../../../shared/smart-table/smart-table.component';
 import { CandidateService } from './candidate.service';
-
 
 @Component({
   selector: 'app-candidates',
