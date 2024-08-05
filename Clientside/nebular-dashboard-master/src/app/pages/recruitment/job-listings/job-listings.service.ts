@@ -109,11 +109,14 @@ export class JobListingsService {
   }    
 
   getJobsByStatus(status: string): Observable<JoblistingsRequest[]> {
+    console.log(`Fetching jobs with status: ${status}`);
     return this.http.get<ApiResponse<JoblistingsRequest[]>>(`${this.userApi}/status/${status}`, 
       { headers: this.getHeaders() })
       .pipe(
+        tap(response => console.log('Raw response:', response)),
         map(response => {
           if (response && response.entity && Array.isArray(response.entity)) {
+            console.log('Mapped response:', response.entity);
             return response.entity;
           } else {
             console.error('Unexpected response structure:', response);
@@ -126,6 +129,58 @@ export class JobListingsService {
         })
       );
   }
+
+
+
+
+  getJobRequisitions(): Observable<JoblistingsRequest[]> {
+    return this.http.get<ApiResponse<JoblistingsRequest[]>>(`${this.userApi}/requisitions`, 
+      { headers: this.getHeaders() })
+      .pipe(
+        map(response => {
+          if (response && response.entity && Array.isArray(response.entity)) {
+            return response.entity;
+          } else {
+            console.error('Unexpected response structure:', response);
+            return [];
+          }
+        }),
+        catchError(error => {
+          console.error('Error fetching job requisitions:', error);
+          return throwError(() => error);
+        })
+      );
+  }
+
+  getApprovedJobPosts(): Observable<JoblistingsRequest[]> {
+    return this.http.get<ApiResponse<JoblistingsRequest[]>>(`${this.userApi}`, 
+      { headers: this.getHeaders() })
+      .pipe(
+        map(response => {
+          if (response && response.entity && Array.isArray(response.entity)) {
+            return response.entity;
+          } else {
+            console.error('Unexpected response structure:', response);
+            return [];
+          }
+        }),
+        catchError(error => {
+          console.error('Error fetching approved job posts:', error);
+          return throwError(() => error);
+        })
+      );
+  }
+
+  approveJobRequest(id: string): Observable<any> {
+    return this.http.put(`${this.userApi}/approve/${id}`, {}, { headers: this.getHeaders() }).pipe(
+      tap(response => console.log('Response from approve job request:', response)),
+      catchError(error => {
+        console.error('Error approving job request:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
 
 
   deleteJobPost(id: string): Observable<any> {

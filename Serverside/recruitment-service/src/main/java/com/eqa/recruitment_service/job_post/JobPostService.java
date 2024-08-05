@@ -99,6 +99,49 @@ public class JobPostService {
         }
     }
 
+
+//    public ApiResponse<?> getJobRequisitions() {
+//        try {
+//            log.info("Fetching all job requisitions");
+//            List<JobPost> requisitions = jobPostRepository.findByStatus(JobPost.JobStatus.REQUISITION);
+//            List<JobPostResponse> requisitionResponses = requisitions.stream()
+//                    .map(requisition -> modelMapper.map(requisition, JobPostResponse.class))
+//                    .collect(Collectors.toList());
+//            log.info("Found {} job requisitions", requisitionResponses.size());
+//            return new ApiResponse<>("Job requisitions fetched successfully", requisitionResponses, HttpStatus.OK.value());
+//        } catch (Exception e) {
+//            log.error("An error occurred while fetching job requisitions: ", e);
+//            return new ApiResponse<>("An error occurred while fetching job requisitions.", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
+//        }
+//    }
+
+
+    public ApiResponse<?> approveJobRequest(Long id) {
+        try {
+            log.info("Approving job request with ID {}", id);
+            Optional<JobPost> optionalJobPost = jobPostRepository.findById(id);
+            if (optionalJobPost.isEmpty()) {
+                log.warn("Job post with ID {} not found", id);
+                return new ApiResponse<>("Job post not found", null, HttpStatus.NOT_FOUND.value());
+            }
+            JobPost jobPost = optionalJobPost.get();
+            if (jobPost.getStatus() != JobPost.JobStatus.REQUISITION) {
+                log.warn("Job post with ID {} is not in REQUISITION status", id);
+                return new ApiResponse<>("Job post is not in REQUISITION status", null, HttpStatus.BAD_REQUEST.value());
+            }
+            jobPost.setStatus(JobPost.JobStatus.OPEN);
+            JobPost savedJobPost = jobPostRepository.save(jobPost);
+            JobPostResponse jobPostResponse = modelMapper.map(savedJobPost, JobPostResponse.class);
+            log.info("Job post with ID {} approved and set to OPEN status successfully", id);
+            return new ApiResponse<>("Job post approved and set to OPEN status successfully", jobPostResponse, HttpStatus.OK.value());
+        } catch (Exception e) {
+            log.error("An error occurred while approving job post with ID {}: ", id, e);
+            return new ApiResponse<>("An error occurred while approving job post.", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+    }
+
+
+
     public ApiResponse<?> getJobPostById(Long id) {
         try {
             log.info("Fetching job post with ID {}", id);

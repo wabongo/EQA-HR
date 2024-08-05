@@ -19,6 +19,8 @@ public class JobPostResponse {
     private String facility;
     private String requirements;
     private LocalDate deadline;
+
+    //default value
     private JobPost.JobType jobType;
     private JobPost.JobStatus status;
 }

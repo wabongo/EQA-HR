@@ -81,6 +81,22 @@ public class JobPostController {
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
+//    @GetMapping("/requisitions")
+//    public ResponseEntity<?> getJobRequisitions() {
+//        logger.info("Received request for job requisitions");
+//        ApiResponse<?> response = jobPostService.getJobRequisitions();
+//        logger.info("Returning response with status: {}", response.getStatusCode());
+//        return ResponseEntity.status(response.getStatusCode()).body(response);
+//    }
+
+    @PutMapping("/approve/{id}")
+    public ResponseEntity<?> approveJobRequest(@PathVariable Long id) {
+        logger.info("Received request to approve job post with ID: {}", id);
+        ApiResponse<?> response = jobPostService.approveJobRequest(id);
+        logger.info("Returning response with status: {}", response.getStatusCode());
+        return ResponseEntity.status(response.getStatusCode()).body(response);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<?> createJobPost(@RequestBody JobPostRequest jobPostRequest) {
         logger.info("Received request to create job post: {}", jobPostRequest);
