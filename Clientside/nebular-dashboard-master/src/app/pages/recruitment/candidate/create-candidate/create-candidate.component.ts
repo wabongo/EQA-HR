@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NbDialogService, NbDialogRef } from '@nebular/theme';
 import { CandidateService } from '../candidate.service';
+import { JobListingsService } from '../../job-listings/job-listings.service';
+import { JoblistingsRequest } from '../../job-listings/job-listings.model';
 
 @Component({
   selector: 'app-create-candidate',
@@ -9,7 +12,10 @@ import { CandidateService } from '../candidate.service';
   styleUrls: ['./create-candidate.component.scss']
 })
 export class CreateCandidateComponent implements OnInit {
+  @ViewChild('jobLookupDialog', { static: true }) jobLookupDialog: TemplateRef<any>;
+
   candidateForm: FormGroup;
+  jobLookupForm: FormGroup;
   cv: File | null = null;
   coverLetter: File | null = null;
   license: File | null = null;
@@ -20,22 +26,99 @@ export class CreateCandidateComponent implements OnInit {
   licenseError: string | null = null;
   certificateError: string | null = null;
 
+  departments: string[] = [];
+  jobTypes: string[] = [];
+  designations: string[] = [];
+  searchResults: JoblistingsRequest[] = [];
+  dialogRef: NbDialogRef<any>;
+
   constructor(
     private fb: FormBuilder,
     private candidateService: CandidateService,
+    private jobListingsService: JobListingsService,
+    private dialogService: NbDialogService,
     private router: Router
   ) {
+    this.initForms();
+  }
+
+  ngOnInit(): void {
+    this.loadFilterOptions();
+  }
+
+  initForms(): void {
     this.candidateForm = this.fb.group({
       name: ['', Validators.required],
       designation: ['', Validators.required],
+      jobPostId: ['', Validators.required],
       facility: ['', Validators.required],
       idNumber: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', Validators.required],
     });
+
+    this.jobLookupForm = this.fb.group({
+      department: [''],
+      jobType: [''],
+      designation: [''],
+    });
   }
 
-  ngOnInit(): void {}
+  loadFilterOptions(): void {
+    this.jobListingsService.getDepartments().subscribe(depts => this.departments = depts);
+    this.jobListingsService.getJobTypes().subscribe(types => this.jobTypes = types);
+    this.jobListingsService.getDesignations().subscribe(desigs => this.designations = desigs);
+  }
+
+  openJobLookupDialog(): void {
+    this.dialogRef = this.dialogService.open(this.jobLookupDialog, {
+      context: {
+        title: 'Job Lookup',
+      },
+    });
+  }
+
+  searchJobs(): void {
+    if (this.isSearchValid()) {
+      const filters = this.jobLookupForm.value;
+      console.log('Searching with filters:', filters);
+      this.jobListingsService.searchJobs(filters).subscribe(
+        jobs => {
+          console.log('Received search results:', jobs);
+          this.searchResults = jobs;
+          if (jobs.length === 0) {
+            console.log('No results found');
+          }
+        },
+        error => {
+          console.error('Error searching jobs:', error);
+          // Optionally, display an error message to the user
+        }
+      );
+    } else {
+      console.log('Search is not valid. Please select at least two parameters.');
+    }
+  }
+
+  isSearchValid(): boolean {
+    const form = this.jobLookupForm;
+    const filledFields = ['department', 'jobType', 'designation'].filter(field => form.get(field).value).length;
+    console.log('Filled fields:', filledFields);
+    return filledFields >= 2;
+  }
+
+
+
+  selectJob(job: JoblistingsRequest): void {
+    this.candidateForm.patchValue({
+      designation: job.designation,
+      jobPostId: job.id,
+      facility: job.facility,
+    });
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    }
+  }
 
   onFileChange(event: Event, fileType: string): void {
     const input = event.target as HTMLInputElement;
@@ -74,12 +157,10 @@ export class CreateCandidateComponent implements OnInit {
     }
 
     const formData = new FormData();
-    formData.append('name', this.candidateForm.get('name')?.value);
-    formData.append('designation', this.candidateForm.get('designation')?.value);
-    formData.append('facility', this.candidateForm.get('facility')?.value);
-    formData.append('idNumber', this.candidateForm.get('idNumber')?.value);
-    formData.append('email', this.candidateForm.get('email')?.value);
-    formData.append('phoneNumber', this.candidateForm.get('phoneNumber')?.value);
+    Object.keys(this.candidateForm.value).forEach(key => {
+      formData.append(key, this.candidateForm.get(key).value);
+    });
+
     if (this.cv) formData.append('cv', this.cv);
     if (this.coverLetter) formData.append('coverLetter', this.coverLetter);
     if (this.license) formData.append('license', this.license);

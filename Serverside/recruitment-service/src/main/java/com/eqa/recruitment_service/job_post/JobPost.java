@@ -1,10 +1,8 @@
 package com.eqa.recruitment_service.job_post;
 
-import jakarta.annotation.Nullable;
-import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
 
+import jakarta.persistence.*;
+import lombok.Data;
 import java.time.LocalDate;
 
 @Data
