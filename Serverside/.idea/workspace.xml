@@ -5,12 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8421f6c7-68f8-44a8-8233-26ceaa72f356" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/config/JacksonConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/@theme/components/header/header.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/@theme/components/header/header.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/home/home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/home/home.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/candidate/candidate.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/candidate/candidate.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/candidate/candidate.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/candidate/candidate.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/candidate/candidates.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/candidate/candidates.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/candidate/candidates.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/candidate/candidates.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/candidate/create-candidate/create-candidate.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/candidate/create-candidate/create-candidate.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/candidate/create-candidate/create-candidate.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/candidate/create-candidate/create-candidate.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/candidate/update-candidate-dialog.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/candidate/update-candidate-dialog.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/job-listings/job-listings.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Clientside/nebular-dashboard-master/src/app/pages/recruitment/job-listings/job-listings.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/application/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/application/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/application/ApplicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/application/ApplicationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/application/ApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/application/ApplicationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/application/DTO/ApplicationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/application/DTO/ApplicationRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/application/DTO/ApplicationResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/application/DTO/ApplicationResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/Candidate.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/Candidate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/CandidateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/CandidateService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/DTO/CandidateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/DTO/CandidateRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/DTO/CandidateResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/candidate/DTO/CandidateResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/document/Document.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/document/Document.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/job_post/JobPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/job_post/JobPost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,20 +89,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Auth-service [:AuthServiceApplication.main()].executor": "Run",
-    "Gradle.api-gateway [:ApiGatewayApplication.main()].executor": "Run",
-    "Gradle.eureka [:EurekaApplication.main()].executor": "Run",
-    "Gradle.recruitment-service [:RecruitmentServiceApplication.main()].executor": "Run",
-    "Gradle.systemConfig [:SystemConfigApplication.main()].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "david",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/EGF-Health/EQA-HR/Serverside/recruitment-service/src/main/java/com/eqa/recruitment_service",
-    "settings.editor.selected.configurable": "vcs.Git"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Auth-service [:AuthServiceApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-gateway [:ApiGatewayApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.eureka [:EurekaApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.recruitment-service [:RecruitmentServiceApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.systemConfig [:SystemConfigApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;david&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/EGF-Health/EQA-HR/Serverside/recruitment-service/src/main/java/com/eqa/recruitment_service&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\EGF-Health\EQA-HR\Serverside\recruitment-service\src\main\java\com\eqa\recruitment_service" />

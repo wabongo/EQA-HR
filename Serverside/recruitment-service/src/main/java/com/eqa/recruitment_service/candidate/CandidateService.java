@@ -1,20 +1,17 @@
 package com.eqa.recruitment_service.candidate;
 
-
 import com.eqa.recruitment_service.candidate.DTO.CandidateRequest;
 import com.eqa.recruitment_service.candidate.DTO.CandidateResponse;
 import com.eqa.recruitment_service.document.Document;
 import com.eqa.recruitment_service.document.DocumentService;
-import com.eqa.recruitment_service.job_post.JobPost;
-import com.eqa.recruitment_service.job_post.JobPostRepository;
 import com.eqa.recruitment_service.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,16 +22,16 @@ import java.util.stream.Collectors;
 public class CandidateService {
 
     private final CandidateRepo candidateRepository;
-    private JobPostRepository jobPostRepository;
     private final ModelMapper modelMapper;
     private final DocumentService documentService;
 
+    @Transactional(readOnly = true)
     public ApiResponse<?> getAllCandidates() {
         try {
             log.info("Fetching all candidates");
             List<Candidate> candidates = candidateRepository.findAll();
             List<CandidateResponse> candidateResponses = candidates.stream()
-                    .map(candidate -> modelMapper.map(candidate, CandidateResponse.class))
+                    .map(this::mapToCandidateResponse)
                     .collect(Collectors.toList());
             log.info("Found {} candidates", candidateResponses.size());
             return new ApiResponse<>("Candidates fetched successfully", candidateResponses, HttpStatus.OK.value());
@@ -44,13 +41,33 @@ public class CandidateService {
         }
     }
 
+    private CandidateResponse mapToCandidateResponse(Candidate candidate) {
+        CandidateResponse response = new CandidateResponse();
+        response.setId(candidate.getId());
+        response.setName(candidate.getName());
+        response.setIdNumber(candidate.getIdNumber());
+        response.setEmail(candidate.getEmail());
+        response.setPhoneNumber(candidate.getPhoneNumber());
+
+        if (candidate.getCv() != null) {
+            CandidateResponse.DocumentDTO documentDTO = new CandidateResponse.DocumentDTO();
+            documentDTO.setId(candidate.getCv().getId());
+            documentDTO.setFileName(candidate.getCv().getFileName());
+            documentDTO.setFileType(candidate.getCv().getFileType());
+            response.setCv(documentDTO);
+        }
+
+        return response;
+    }
+
+
     public ApiResponse<?> getCandidateById(Long id) {
         try {
             log.info("Fetching candidate with ID {}", id);
-            Optional<Candidate> candidateOptional = candidateRepository.findById(id);
+            var candidateOptional = candidateRepository.findById(id);
             if (candidateOptional.isPresent()) {
-                Candidate candidate = candidateOptional.get();
-                CandidateResponse candidateResponse = modelMapper.map(candidate, CandidateResponse.class);
+                var candidate = candidateOptional.get();
+                var candidateResponse = modelMapper.map(candidate, CandidateResponse.class);
                 log.info("Candidate with ID {} fetched successfully", id);
                 return new ApiResponse<>("Candidate fetched successfully", candidateResponse, HttpStatus.OK.value());
             } else {
@@ -65,35 +82,18 @@ public class CandidateService {
 
     public ApiResponse<?> createCandidate(CandidateRequest candidateRequest) {
         try {
-            // Fetch the job post
-            JobPost jobPost = jobPostRepository.findById(candidateRequest.getJobPostId())
-                    .orElseThrow(() -> new RuntimeException("Job post not found"));
-
-            List<Document> documents = new ArrayList<>();
-            documents.add(documentService.createDocument(candidateRequest.getCv(), "CV"));
-            documents.add(documentService.createDocument(candidateRequest.getCoverLetter(), "Cover Letter"));
-            documents.add(documentService.createDocument(candidateRequest.getLicense(), "License"));
-            documents.add(documentService.createDocument(candidateRequest.getCertificate(), "Certificate"));
+            Document cv = documentService.createDocument(candidateRequest.getCv(), "CV");
 
             Candidate candidate = Candidate.builder()
                     .name(candidateRequest.getName())
-                    .jobPost(jobPost)
-                    .facility(candidateRequest.getFacility())
                     .idNumber(candidateRequest.getIdNumber())
                     .email(candidateRequest.getEmail())
                     .phoneNumber(candidateRequest.getPhoneNumber())
-                    .documents(documents)
-                    .status(Candidate.ApplicationStatus.RECEIVED)
+                    .cv(cv)
                     .build();
 
             Candidate savedCandidate = candidateRepository.save(candidate);
-
-            // Update job post status
-            jobPost.setStatus(JobPost.JobStatus.APPLIED);
-            jobPostRepository.save(jobPost);
-
             CandidateResponse candidateResponse = modelMapper.map(savedCandidate, CandidateResponse.class);
-            candidateResponse.setJobPost(modelMapper.map(jobPost, CandidateResponse.JobPostDetails.class));
 
             return new ApiResponse<>("Candidate created successfully", candidateResponse, HttpStatus.CREATED.value());
         } catch (Exception e) {
@@ -104,14 +104,20 @@ public class CandidateService {
     public ApiResponse<?> updateCandidate(Long id, CandidateRequest candidateRequest) {
         try {
             log.info("Updating candidate with ID {}", id);
-            Optional<Candidate> optionalCandidate = candidateRepository.findById(id);
+            var optionalCandidate = candidateRepository.findById(id);
             if (optionalCandidate.isEmpty()) {
                 log.warn("Candidate with ID {} not found", id);
                 return new ApiResponse<>("Candidate not found", null, HttpStatus.NOT_FOUND.value());
             }
-            Candidate candidate = optionalCandidate.get();
-            modelMapper.map(candidateRequest, candidate);
-            candidate.setId(id); // Ensure ID is not overwritten
+            var candidate = optionalCandidate.get();
+            candidate.setName(candidateRequest.getName());
+            candidate.setIdNumber(candidateRequest.getIdNumber());
+            candidate.setEmail(candidateRequest.getEmail());
+            candidate.setPhoneNumber(candidateRequest.getPhoneNumber());
+
+            Document cv = documentService.createDocument(candidateRequest.getCv(), "CV");
+            candidate.setCv(cv);
+
             Candidate savedCandidate = candidateRepository.save(candidate);
             CandidateResponse candidateResponse = modelMapper.map(savedCandidate, CandidateResponse.class);
             log.info("Candidate with ID {} updated successfully", id);

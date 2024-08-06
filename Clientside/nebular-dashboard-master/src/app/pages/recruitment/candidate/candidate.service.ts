@@ -54,6 +54,7 @@ export class CandidateService {
     );
   }
 
+  
   updateCandidate(id: number, candidate: Candidate): Observable<Candidate> {
     return this.http.put<Candidate>(`${this.apiUrl}/${id}`, candidate, { headers: this.getHeaders() }).pipe(
       tap(response => console.log('Response from update candidate:', response)),

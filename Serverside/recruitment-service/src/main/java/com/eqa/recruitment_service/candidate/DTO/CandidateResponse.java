@@ -1,30 +1,21 @@
 package com.eqa.recruitment_service.candidate.DTO;
 
-import com.eqa.recruitment_service.candidate.Candidate;
-import com.eqa.recruitment_service.document.Document;
-import com.eqa.recruitment_service.job_post.JobPost;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class CandidateResponse {
     private Long id;
     private String name;
-//    private List<String> documents;
-    private String facility;
     private String idNumber;
     private String email;
     private String phoneNumber;
-    private Candidate.ApplicationStatus status;
-    private List<Document> documents;
-
-    private JobPostDetails jobPost;
+    private DocumentDTO cv;
 
     @Data
-    public static class JobPostDetails {
+    public static class DocumentDTO {
         private Long id;
-        private String designation;
-        private JobPost.JobStatus status;
+        private String fileName;
+        private String fileType;
+        // Add other necessary fields, but avoid including large data fields
     }
 }
