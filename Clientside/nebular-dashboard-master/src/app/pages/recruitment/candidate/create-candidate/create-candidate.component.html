@@ -15,7 +15,7 @@
         </div>
   
         <!-- Designation Field -->
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="designation">Designation</label>
           <div class="designation-group">
             <input nbInput
@@ -31,16 +31,16 @@
           <ng-container *ngIf="candidateForm.get('designation').invalid && candidateForm.get('designation').touched">
             <p class="error-message">Designation is required</p>
           </ng-container>
-        </div>
+        </div> -->
   
         <!-- Facility Field -->
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="facility">Facility</label>
           <input nbInput fullWidth placeholder="Facility" id="facility" formControlName="facility" />
           <div *ngIf="candidateForm.get('facility').invalid && candidateForm.get('facility').touched">
             <nb-alert status="danger">Facility is required.</nb-alert>
           </div>
-        </div>
+        </div> -->
   
         <!-- ID Number Field -->
         <div class="form-group">
@@ -77,25 +77,25 @@
         </div>
   
         <!-- Cover Letter Upload -->
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="coverLetter">Cover Letter</label>
           <input type="file" id="coverLetter" (change)="onFileChange($event, 'coverLetter')" />
           <div *ngIf="coverLetterError" class="error">{{coverLetterError}}</div>
-        </div>
+        </div> -->
   
         <!-- License Upload -->
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="license">License</label>
           <input type="file" id="license" (change)="onFileChange($event, 'license')" />
           <div *ngIf="licenseError" class="error">{{licenseError}}</div>
-        </div>
+        </div> -->
   
         <!-- Certificate Upload -->
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="certificate">Certificate</label>
           <input type="file" id="certificate" (change)="onFileChange($event, 'certificate')" />
           <div *ngIf="certificateError" class="error">{{certificateError}}</div>
-        </div>
+        </div> -->
   
         <!-- Submit Button -->
       <div class="form-group">
@@ -108,7 +108,7 @@
 
 
 <!-- Job Lookup Dialog -->
-<ng-template #jobLookupDialog let-data let-ref="dialogRef">
+<!-- <ng-template #jobLookupDialog let-data let-ref="dialogRef">
   <nb-card>
     <nb-card-header>
       {{ data.title }}
@@ -174,4 +174,4 @@
       <button nbButton status="danger" (click)="ref.close()">Close</button>
     </nb-card-footer>
   </nb-card>
-</ng-template>
+</ng-template> -->
