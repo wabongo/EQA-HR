@@ -15,12 +15,9 @@ export class CandidatesComponent implements OnInit {
   candidates: Candidate[] = [];
   columns: Column[] = [
     { key: 'name', title: 'Name' },
-    { key: 'designation', title: 'Designation' },
-    { key: 'facility', title: 'Facility' },
     { key: 'idNumber', title: 'ID Number' },
     { key: 'email', title: 'Email' },
-    { key: 'phoneNumber', title: 'Phone Number' },
-    { key: 'status', title: 'Status' }
+    { key: 'phoneNumber', title: 'Phone Number' }
   ];
 
   constructor(

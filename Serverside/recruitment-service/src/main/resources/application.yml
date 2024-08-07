@@ -6,7 +6,7 @@ spring:
 spring:
   config:
     activate:
-      on-profile: dev
+      on-profile: prod
   application:
     name: systemConfig
   datasource:
@@ -30,7 +30,7 @@ spring:
 spring:
   config:
     activate:
-      on-profile: prod
+      on-profile: dev
   application:
     name: systemConfig
   datasource:
