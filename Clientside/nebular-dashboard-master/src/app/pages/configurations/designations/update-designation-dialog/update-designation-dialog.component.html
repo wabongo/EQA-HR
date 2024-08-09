@@ -1,0 +1,38 @@
+<nb-card>
+    <nb-card-header>Update Designation</nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="designationForm" (ngSubmit)="submit()">
+        <div class="form-control-group">
+          <label class="label" for="title">Title</label>
+          <input nbInput fullWidth id="title" formControlName="title">
+          <ng-container *ngIf="designationForm.get('title').invalid && designationForm.get('title').touched">
+            <p class="error-message" *ngIf="designationForm.get('title').errors?.['required']">Title is required</p>
+            <p class="error-message" *ngIf="designationForm.get('title').errors?.['maxlength']">Title must not exceed 100 characters</p>
+          </ng-container>
+        </div>
+  
+        <div class="form-control-group">
+          <label class="label" for="description">Description</label>
+          <textarea nbInput fullWidth id="description" formControlName="description"></textarea>
+          <ng-container *ngIf="designationForm.get('description').invalid && designationForm.get('description').touched">
+            <p class="error-message" *ngIf="designationForm.get('description').errors?.['maxlength']">Description must not exceed 500 characters</p>
+          </ng-container>
+        </div>
+  
+        <div class="form-control-group">
+          <label class="label" for="departmentId">Department</label>
+          <nb-select fullWidth placeholder="Select Department" formControlName="departmentId">
+            <nb-option *ngFor="let department of departments" [value]="department.id">{{ department.name }}</nb-option>
+          </nb-select>
+          <ng-container *ngIf="designationForm.get('departmentId').invalid && designationForm.get('departmentId').touched">
+            <p class="error-message" *ngIf="designationForm.get('departmentId').errors?.['required']">Department is required</p>
+          </ng-container>
+        </div>
+  
+        <div class="button-group">
+          <button nbButton status="primary" type="submit" [disabled]="!designationForm.valid">Update</button>
+          <button nbButton status="basic" type="button" (click)="cancel()">Cancel</button>
+        </div>
+      </form>
+    </nb-card-body>
+</nb-card> 

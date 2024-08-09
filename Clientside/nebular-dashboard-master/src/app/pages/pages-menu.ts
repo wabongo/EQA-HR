@@ -41,7 +41,25 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Facilities',
         link: '/pages/business/facilities'
+      },
+      
+    ]
+  },
+
+  {
+    title: 'Configurations',
+    icon: 'options-2-outline',
+    link: '/pages/configurations',
+    children: [
+      {
+        title: 'Departments',
+        link: '/pages/configurations/departments'
+      },
+      {
+        title: 'Designations',
+        link: '/pages/configurations/designations'
       }
+
     ]
   },
 

@@ -1,0 +1,25 @@
+<nb-card>
+    <nb-card-header>Create New Department</nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()">
+        <div class="form-control-group">
+          <label class="label" for="name">Name</label>
+          <input nbInput fullWidth id="name" formControlName="name">
+          <ng-container *ngIf="departmentForm.get('name')?.invalid && departmentForm.get('name')?.touched">
+            <p class="error-message" *ngIf="departmentForm.get('name')?.errors?.['required']">Name is required</p>
+            <p class="error-message" *ngIf="departmentForm.get('name')?.errors?.['maxlength']">Name must not exceed 100 characters</p>
+          </ng-container>
+        </div>
+  
+        <div class="form-control-group">
+          <label class="label" for="description">Description</label>
+          <textarea nbInput fullWidth id="description" formControlName="description"></textarea>
+          <ng-container *ngIf="departmentForm.get('description')?.invalid && departmentForm.get('description')?.touched">
+            <p class="error-message" *ngIf="departmentForm.get('description')?.errors?.['maxlength']">Description must not exceed 500 characters</p>
+          </ng-container>
+        </div>
+  
+        <button nbButton status="primary" [disabled]="!departmentForm.valid" type="submit">Create Department</button>
+      </form>
+    </nb-card-body>
+</nb-card>  
