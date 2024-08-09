@@ -34,6 +34,15 @@ const routes: Routes = [{
       loadChildren: () => import('./business/business.module').then(m => m.BusinessModule),
       data: { breadcrumb: 'Business' }
     },
+    
+
+    {
+    path: 'configurations',
+    loadChildren: () => import('./configurations/configurations.module').then(m => m.ConfigurationsModule),
+    data: { breadcrumb: 'Configurations' }
+    },
+
+
     {
       path: 'user-management',
       loadChildren: () => import('./user-management/user-management.module').then(m => m.UserManagementModule),

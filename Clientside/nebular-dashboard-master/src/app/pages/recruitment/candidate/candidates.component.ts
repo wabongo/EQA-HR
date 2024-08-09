@@ -17,7 +17,8 @@ export class CandidatesComponent implements OnInit {
     { key: 'name', title: 'Name' },
     { key: 'idNumber', title: 'ID Number' },
     { key: 'email', title: 'Email' },
-    { key: 'phoneNumber', title: 'Phone Number' }
+    { key: 'phoneNumber', title: 'Phone Number' },
+
   ];
 
   constructor(

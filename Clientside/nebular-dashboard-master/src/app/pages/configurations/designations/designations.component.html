@@ -1,0 +1,10 @@
+<app-smart-table
+  [data]="designations"
+  [columns]="columns"
+  [itemsPerPage]="10"
+  [title]="'Designation Management'"
+  [createButtonText]="'CREATE DESIGNATION'"
+  (create)="navigateToCreateDesignation()"
+  (updateRow)="openUpdateModal($event)"
+  (deleteRow)="deleteDesignation($event)">
+</app-smart-table>

@@ -9,6 +9,6 @@ public class CandidateRequest {
     private String idNumber;
     private String email;
     private String phoneNumber;
-
     private MultipartFile cv;
+
 }

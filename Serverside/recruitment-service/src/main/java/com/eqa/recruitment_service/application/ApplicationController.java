@@ -23,16 +23,18 @@ public class ApplicationController {
 
     @GetMapping
     public ResponseEntity<?> getAllApplications() {
-        return ResponseEntity.ok(applicationService.getAllApplications());
+        ApiResponse<?> response = applicationService.getAllApplications();
+        return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getApplicationById(@PathVariable Long id) {
-        return ResponseEntity.ok(applicationService.getApplicationById(id));
+        ApiResponse<?> response = applicationService.getApplicationById(id);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<?> updateApplicationStatus(@PathVariable Long id, @RequestParam String status) {
+    public ResponseEntity<?> updateApplicationStatus(@PathVariable Long id, @RequestParam Application.ApplicationStatus status) {
         ApiResponse<?> response = applicationService.updateApplicationStatus(id, status);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }

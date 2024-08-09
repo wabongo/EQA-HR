@@ -4,6 +4,7 @@ import { LayoutService } from '../../../@core/utils.ts';
 import { map, filter, takeUntil } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 import { AuthService } from '../../../@auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
@@ -33,6 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private themeService: NbThemeService,
               private layoutService: LayoutService,
               private breakpointService: NbMediaBreakpointsService,
+              private router: Router,
               private authService: AuthService) {}
 
   ngOnInit() {
@@ -66,6 +68,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.isUserLoaded = true;
       },
       error => {
+        // this.router.navigate(['/login']);
         console.error('Error fetching user:', error);
       }
     );
@@ -73,6 +76,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // Ensure user profile is fetched if an access token exists
     if (this.authService.getAccessToken()) {
       this.authService.updateUserProfile();
+    }else
+    {
+      this.router.navigate(['/login']);
     }
   }
 

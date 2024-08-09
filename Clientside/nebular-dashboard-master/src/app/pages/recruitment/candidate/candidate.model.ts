@@ -14,3 +14,4 @@ export interface Candidate {
   email: string;
   phoneNumber: string;
 }
+

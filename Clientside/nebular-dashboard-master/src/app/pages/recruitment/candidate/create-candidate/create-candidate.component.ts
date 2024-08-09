@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NbDialogService, NbDialogRef } from '@nebular/theme';
 import { CandidateService } from '../candidate.service';
 
 @Component({
@@ -19,12 +18,12 @@ export class CreateCandidateComponent implements OnInit {
     private candidateService: CandidateService,
     private router: Router
   ) {
-    this.initForms();
+    this.initForm();
   }
 
   ngOnInit(): void {}
 
-  initForms(): void {
+  initForm(): void {
     this.candidateForm = this.fb.group({
       name: ['', Validators.required],
       idNumber: ['', Validators.required],
@@ -33,14 +32,13 @@ export class CreateCandidateComponent implements OnInit {
     });
   }
 
-  onFileChange(event: Event, fileType: string): void {
+  onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     const file = input.files ? input.files[0] : null;
 
-    if (fileType === 'cv') {
-      this.cv = file;
-      this.cvError = this.validateFile(file);
-    }
+    this.cv = file;
+    this.cvError = this.validateFile(file);
+
   }
 
   validateFile(file: File): string | null {

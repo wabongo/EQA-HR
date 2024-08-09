@@ -1,12 +1,17 @@
 package com.eqa.recruitment_service.document;
 
-
-import com.eqa.recruitment_service.application.Application;
+import com.eqa.recruitment_service.candidate.Candidate;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,11 +21,12 @@ public class Document {
     private String fileType;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "data", columnDefinition="LONGBLOB")
     private byte[] data;
 
-//    @ManyToOne
-//    @JoinColumn(name = "application_id")
-//    private Application application;
+    private String documentType; // CV, Cover Letter, Other
 
-    private String documentType;
+//    @OneToOne(mappedBy = "document")
+//    private Candidate candidate;
 }

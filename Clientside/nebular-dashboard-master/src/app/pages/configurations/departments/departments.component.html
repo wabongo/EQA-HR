@@ -1,0 +1,10 @@
+<app-smart-table
+  [data]="departments"
+  [columns]="columns"
+  [itemsPerPage]="10"
+  [title]="'Department Management'"
+  [createButtonText]="'CREATE DEPARTMENT'"
+  (create)="navigateToCreateDepartment()"
+  (updateRow)="openUpdateModal($event)"
+  (deleteRow)="deleteDepartment($event)">
+</app-smart-table>

@@ -1,177 +1,57 @@
 <nb-card>
-    <nb-card-header>
-      <h2>Create Candidate</h2>
-    </nb-card-header>
-    <nb-card-body>
-      <form [formGroup]="candidateForm" (ngSubmit)="onSubmit()">
-        
-        <!-- Name Field -->
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input nbInput fullWidth placeholder="Name" id="name" formControlName="name" />
-          <div *ngIf="candidateForm.get('name').invalid && candidateForm.get('name').touched">
-            <nb-alert status="danger">Name is required.</nb-alert>
-          </div>
+  <nb-card-header>
+    <h2>Create Candidate</h2>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="candidateForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Name Field -->
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input nbInput fullWidth placeholder="Name" id="name" formControlName="name" />
+        <div *ngIf="candidateForm.get('name').invalid && candidateForm.get('name').touched">
+          <nb-alert status="danger">Name is required.</nb-alert>
         </div>
-  
-        <!-- Designation Field -->
-        <!-- <div class="form-group">
-          <label for="designation">Designation</label>
-          <div class="designation-group">
-            <input nbInput
-                   fullWidth
-                   id="designation"
-                   formControlName="designation"
-                   placeholder="Designation"
-                   [readonly]="true">
-            <button type="button" class="search-icon" (click)="openJobLookupDialog()">
-              <nb-icon icon="search-outline"></nb-icon>
-            </button>
-          </div>
-          <ng-container *ngIf="candidateForm.get('designation').invalid && candidateForm.get('designation').touched">
-            <p class="error-message">Designation is required</p>
-          </ng-container>
-        </div> -->
-  
-        <!-- Facility Field -->
-        <!-- <div class="form-group">
-          <label for="facility">Facility</label>
-          <input nbInput fullWidth placeholder="Facility" id="facility" formControlName="facility" />
-          <div *ngIf="candidateForm.get('facility').invalid && candidateForm.get('facility').touched">
-            <nb-alert status="danger">Facility is required.</nb-alert>
-          </div>
-        </div> -->
-  
-        <!-- ID Number Field -->
-        <div class="form-group">
-          <label for="idNumber">ID Number</label>
-          <input nbInput fullWidth placeholder="ID Number" id="idNumber" formControlName="idNumber" />
-          <div *ngIf="candidateForm.get('idNumber').invalid && candidateForm.get('idNumber').touched">
-            <nb-alert status="danger">ID Number is required.</nb-alert>
-          </div>
+      </div>
+
+      <!-- ID Number Field -->
+      <div class="form-group">
+        <label for="idNumber">ID Number</label>
+        <input nbInput fullWidth placeholder="ID Number" id="idNumber" formControlName="idNumber" />
+        <div *ngIf="candidateForm.get('idNumber').invalid && candidateForm.get('idNumber').touched">
+          <nb-alert status="danger">ID Number is required.</nb-alert>
         </div>
-  
-        <!-- Email Field -->
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input nbInput fullWidth placeholder="Email" id="email" formControlName="email" />
-          <div *ngIf="candidateForm.get('email').invalid && candidateForm.get('email').touched">
-            <nb-alert status="danger">Email is required.</nb-alert>
-          </div>
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input nbInput fullWidth placeholder="Email" id="email" formControlName="email" />
+        <div *ngIf="candidateForm.get('email').invalid && candidateForm.get('email').touched">
+          <nb-alert status="danger">Email is required and must be a valid email address.</nb-alert>
         </div>
-  
-        <!-- Phone Number Field -->
-        <div class="form-group">
-          <label for="phoneNumber">Phone Number</label>
-          <input nbInput fullWidth placeholder="Phone Number" id="phoneNumber" formControlName="phoneNumber" />
-          <div *ngIf="candidateForm.get('phoneNumber').invalid && candidateForm.get('phoneNumber').touched">
-            <nb-alert status="danger">Phone Number is required.</nb-alert>
-          </div>
+      </div>
+
+      <!-- Phone Number Field -->
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number</label>
+        <input nbInput fullWidth placeholder="Phone Number" id="phoneNumber" formControlName="phoneNumber" />
+        <div *ngIf="candidateForm.get('phoneNumber').invalid && candidateForm.get('phoneNumber').touched">
+          <nb-alert status="danger">Phone Number is required.</nb-alert>
         </div>
-  
-        <!-- CV Upload -->
-        <div class="form-group">
-          <label for="cv">CV</label>
-          <input type="file" id="cv" (change)="onFileChange($event, 'cv')" />
-          <div *ngIf="cvError" class="error">{{cvError}}</div>
-        </div>
-  
-        <!-- Cover Letter Upload -->
-        <!-- <div class="form-group">
-          <label for="coverLetter">Cover Letter</label>
-          <input type="file" id="coverLetter" (change)="onFileChange($event, 'coverLetter')" />
-          <div *ngIf="coverLetterError" class="error">{{coverLetterError}}</div>
-        </div> -->
-  
-        <!-- License Upload -->
-        <!-- <div class="form-group">
-          <label for="license">License</label>
-          <input type="file" id="license" (change)="onFileChange($event, 'license')" />
-          <div *ngIf="licenseError" class="error">{{licenseError}}</div>
-        </div> -->
-  
-        <!-- Certificate Upload -->
-        <!-- <div class="form-group">
-          <label for="certificate">Certificate</label>
-          <input type="file" id="certificate" (change)="onFileChange($event, 'certificate')" />
-          <div *ngIf="certificateError" class="error">{{certificateError}}</div>
-        </div> -->
-  
-        <!-- Submit Button -->
+      </div>
+
+      <!-- CV Upload -->
+      <div class="form-group">
+        <label for="cv">CV</label>
+        <input type="file" id="cv" (change)="onFileChange($event)" />
+        <div *ngIf="cvError" class="error">{{cvError}}</div>
+      </div>
+
+      <!-- Submit Button -->
       <div class="form-group">
         <button nbButton status="primary" [disabled]="candidateForm.invalid" type="submit">Create Candidate</button>
       </div>
     </form>
   </nb-card-body>
 </nb-card>
-
-
-
-<!-- Job Lookup Dialog -->
-<!-- <ng-template #jobLookupDialog let-data let-ref="dialogRef">
-  <nb-card>
-    <nb-card-header>
-      {{ data.title }}
-    </nb-card-header>
-    <nb-card-body>
-      <form [formGroup]="jobLookupForm" (ngSubmit)="searchJobs()">
-        <div class="form-group">
-          <label for="department">Department</label>
-          <nb-select fullWidth formControlName="department">
-            <nb-option value="">All Departments</nb-option>
-            <nb-option *ngFor="let dept of departments" [value]="dept">{{ dept }}</nb-option>
-          </nb-select>
-        </div>
-        <div class="form-group">
-          <label for="jobType">Job Type</label>
-          <nb-select fullWidth formControlName="jobType">
-            <nb-option value="">All Job Types</nb-option>
-            <nb-option *ngFor="let type of jobTypes" [value]="type">{{ type }}</nb-option>
-          </nb-select>
-        </div>
-        <div class="form-group">
-          <label for="designation">Designation</label>
-          <nb-select fullWidth formControlName="designation">
-            <nb-option value="">All Designations</nb-option>
-            <nb-option *ngFor="let desig of designations" [value]="desig">{{ desig }}</nb-option>
-          </nb-select>
-        </div>
-        <button nbButton status="primary" type="submit" [disabled]="!isSearchValid()">Search</button>
-      </form>
-      
-      <div *ngIf="searchResults.length > 0" class="search-results mt-4">
-        <h3>Search Results ({{ searchResults.length }} found)</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Designation</th>
-              <th>Facility</th>
-              <th>Status</th>
-              <th>Job Type</th>
-              <th>Deadline</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let job of searchResults">
-              <td>{{ job.designation }}</td>
-              <td>{{ job.facility }}</td>
-              <td>{{ job.status }}</td>
-              <td>{{ job.jobType }}</td>
-              <td>{{ job.deadline | date:'mediumDate' }}</td>
-              <td>
-                <button nbButton size="small" (click)="selectJob(job)">Select</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div *ngIf="searchResults.length === 0 && jobLookupForm.dirty" class="mt-4">
-        <p>No results found. Please try different search criteria.</p>
-      </div>
-    </nb-card-body>
-    <nb-card-footer>
-      <button nbButton status="danger" (click)="ref.close()">Close</button>
-    </nb-card-footer>
-  </nb-card>
-</ng-template> -->

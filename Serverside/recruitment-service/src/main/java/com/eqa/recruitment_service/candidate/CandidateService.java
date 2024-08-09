@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,12 +25,14 @@ public class CandidateService {
     private final ModelMapper modelMapper;
     private final DocumentService documentService;
 
+    @Transactional(readOnly = true)
     public ApiResponse<?> getAllCandidates() {
         try {
             log.info("Fetching all candidates");
-            var candidates = candidateRepository.findAll();
-            var candidateResponses = candidates.stream()
-                    .map(candidate -> modelMapper.map(candidate, CandidateResponse.class))
+            List<Candidate> candidates = candidateRepository.findAll();
+            List<CandidateResponse> candidateResponses = candidates.stream()
+                    .map(this::mapToCandidateResponse)
+
                     .collect(Collectors.toList());
             log.info("Found {} candidates", candidateResponses.size());
             return new ApiResponse<>("Candidates fetched successfully", candidateResponses, HttpStatus.OK.value());
@@ -37,6 +41,26 @@ public class CandidateService {
             return new ApiResponse<>("An error occurred while fetching candidates.", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
     }
+
+    private CandidateResponse mapToCandidateResponse(Candidate candidate) {
+        CandidateResponse response = new CandidateResponse();
+        response.setId(candidate.getId());
+        response.setName(candidate.getName());
+        response.setIdNumber(candidate.getIdNumber());
+        response.setEmail(candidate.getEmail());
+        response.setPhoneNumber(candidate.getPhoneNumber());
+
+        if (candidate.getCv() != null) {
+            CandidateResponse.DocumentDTO documentDTO = new CandidateResponse.DocumentDTO();
+            documentDTO.setId(candidate.getCv().getId());
+            documentDTO.setFileName(candidate.getCv().getFileName());
+            documentDTO.setFileType(candidate.getCv().getFileType());
+            response.setCv(documentDTO);
+        }
+
+        return response;
+    }
+
 
     public ApiResponse<?> getCandidateById(Long id) {
         try {

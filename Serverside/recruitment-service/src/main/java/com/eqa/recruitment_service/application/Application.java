@@ -22,7 +22,9 @@ public class Application {
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+
+    private ApplicationStatus status = ApplicationStatus.RECEIVED;
 
     @ManyToOne
     @JoinColumn(name = "job_post_id")
@@ -31,4 +33,13 @@ public class Application {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "application_id")
     private List<Document> documents;
+
+
+    public enum ApplicationStatus {
+        RECEIVED,
+        INTERVIEW_SCHEDULED,
+        REVIEWING,
+        HIRE,
+        NO_HIRE
+    }
 }
