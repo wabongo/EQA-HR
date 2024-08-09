@@ -11,8 +11,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
+
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -32,6 +32,7 @@ public class CandidateService {
             List<Candidate> candidates = candidateRepository.findAll();
             List<CandidateResponse> candidateResponses = candidates.stream()
                     .map(this::mapToCandidateResponse)
+
                     .collect(Collectors.toList());
             log.info("Found {} candidates", candidateResponses.size());
             return new ApiResponse<>("Candidates fetched successfully", candidateResponses, HttpStatus.OK.value());

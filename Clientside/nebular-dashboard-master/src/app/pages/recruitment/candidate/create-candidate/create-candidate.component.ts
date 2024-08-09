@@ -38,6 +38,7 @@ export class CreateCandidateComponent implements OnInit {
 
     this.cv = file;
     this.cvError = this.validateFile(file);
+
   }
 
   validateFile(file: File): string | null {

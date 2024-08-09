@@ -9,7 +9,7 @@ export interface Document {
 export interface Candidate {
   id?: number;
   name: string;
-  documents: Document[];
+  cv: Document;
   idNumber: string;
   email: string;
   phoneNumber: string;

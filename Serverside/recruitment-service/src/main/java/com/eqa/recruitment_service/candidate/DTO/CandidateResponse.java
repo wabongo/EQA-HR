@@ -18,4 +18,5 @@ public class CandidateResponse {
         private String fileType;
         // Add other necessary fields, but avoid including large data fields
     }
+
 }

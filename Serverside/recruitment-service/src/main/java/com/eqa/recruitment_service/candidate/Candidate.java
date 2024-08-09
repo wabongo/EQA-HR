@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+
 @Entity
 @Data
 @Builder
@@ -21,6 +23,7 @@ public class Candidate {
     private String idNumber;
     private String email;
     private String phoneNumber;
+
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "document_id", referencedColumnName = "id")

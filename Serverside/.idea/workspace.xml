@@ -22,57 +22,21 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/eqa/api_gateway/config/GatewayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/eqa/api_gateway/config/GatewayConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/config/JacksonConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/recruitment-service/src/main/java/com/eqa/recruitment_service/config/JacksonConfig.java" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExternalProjectsData">
-    <projectState path="$PROJECT_DIR$/Auth-service">
-      <ProjectState />
-    </projectState>
-    <projectState path="$PROJECT_DIR$/api-gateway">
-      <ProjectState />
-    </projectState>
-    <projectState path="$PROJECT_DIR$/eureka">
-      <ProjectState />
-    </projectState>
-    <projectState path="$PROJECT_DIR$/recruitment-service">
-      <ProjectState />
-    </projectState>
-    <projectState path="$PROJECT_DIR$/systemConfig">
-      <ProjectState />
-    </projectState>
-  </component>
-  <component name="ExternalProjectsManager">
-    <system id="GRADLE">
-      <state>
-        <projects_view>
-          <tree_state>
-            <expand />
-            <select />
-          </tree_state>
-        </projects_view>
-      </state>
-    </system>
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Interface" />
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 6
+  &quot;associatedIndex&quot;: 5
 }</component>
-  <component name="ProjectId" id="2jHFNQsCuf5OSRPUyuM9lm7FRmL" />
+  <component name="ProjectId" id="2kHFWapNZDkg5S7UMHmR0FlGJmf" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -99,6 +63,7 @@
       <recent name="C:\EGF-Health\EQA-HR\Serverside\recruitment-service\src\main\java\com\eqa\recruitment_service" />
     </key>
   </component>
+
   <component name="RunManager" selected="Application.SystemConfigApplication">
     <configuration name="ApiGatewayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.eqa.api_gateway.ApiGatewayApplication" />
@@ -168,36 +133,22 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.EurekaApplication" />
-        <item itemvalue="Application.ApiGatewayApplication" />
-        <item itemvalue="Application.AuthServiceApplication" />
         <item itemvalue="Application.RecruitmentServiceApplication" />
         <item itemvalue="Application.SystemConfigApplication" />
+        <item itemvalue="Application.AuthServiceApplication" />
+        <item itemvalue="Application.ApiGatewayApplication" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="8421f6c7-68f8-44a8-8233-26ceaa72f356" name="Changes" comment="" />
-      <created>1721036059531</created>
+      <changelist id="103bb7af-c135-41e9-892c-055958751a02" name="Changes" comment="" />
+      <created>1722932702703</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1721036059531</updated>
+      <updated>1722932702703</updated>
     </task>
     <servers />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>
